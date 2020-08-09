@@ -24,9 +24,12 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -119,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "kaizenchallenge-web"
+    }
+  },
+  "defaultProject": "kaizenchallenge-web",
+  "cli": {
+    "analytics": false
+  }
 }
