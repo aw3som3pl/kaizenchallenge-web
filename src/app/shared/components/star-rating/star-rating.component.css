@@ -1,3 +1,7 @@
 .filled{
   color: gold;
 }
+
+.empty{
+  color: grey;
+}

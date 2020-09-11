@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Authorized skeleton view</title>
+</head>
+
+<body>
+<div class="wrapper">
+  <!-- Sidebar Holder -->
+  <div class="sidebar">
+    <nav id="sidebar" class="sticky-top" [ngClass]="{ 'active': !sidebarOpen }">
+      <div class="sidebar-header">
+        <svg-icon src="../../assets/img/svg/kaizenchallenge_logo_white.svg" [stretch]="false"
+                  [svgStyle]="{'width.px':'200', 'height.px':'120'}"></svg-icon>
+      </div>
+      <ul class="profile-info">
+        <li>
+          <div class="row">
+            <div class="col-5 image-holder-center"><img class="profile-large" src="../../assets/img/placeholder/circular-photo.jpg" alt="none"></div>
+            <div class="col-7">
+              <div class="row text-large">
+                Jan Kowalski
+              </div>
+              <div class="row">
+                <jn-star-rating [ngModel]="starRating"></jn-star-rating>
+              </div>
+              <div class="row">
+                <a class="interactive-button-small text-small">
+                  <span class="container">Profil</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <ul class="Options">
+        <li class="profile-info-small">
+          <a class="interactive-button-profile">
+            <span class="container menu-item text-large">Profil</span>
+            <svg-icon src="../../assets/img/svg/profile.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li class="active">
+          <a class="interactive-button">
+            <span class="container menu-item text-large">Zgłoszenia</span>
+            <svg-icon src="../../assets/img/svg/new_submission.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button">
+            <span class="container menu-item text-large">Komunikator</span>
+            <svg-icon src="../../assets/img/svg/chat.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button">
+            <span class="container menu-item text-large">Baza Wiedzy</span>
+            <svg-icon src="../../assets/img/svg/knowledge.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button">
+            <span class="container menu-item text-large">Powiadomienia</span>
+            <svg-icon src="../../assets/img/svg/notifications.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button">
+            <span class="container menu-item text-large">Użytkownicy</span>
+            <svg-icon src="../../assets/img/svg/users.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button-long">
+            <span class="container menu-item text-medium">Ranking Kreatywności</span>
+            <svg-icon src="../../assets/img/svg/ranking.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button">
+            <span class="container menu-item text-large">OEE Simulator</span>
+            <svg-icon src="../../assets/img/svg/oee.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button-long admin">
+            <span class="container menu-item text-medium">Panel Administracyjny</span>
+            <svg-icon src="../../assets/img/svg/admin_panel.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+        <li>
+          <a class="interactive-button logout text-large" (click)="onLogout()">
+            <span class="container p-0">Wyloguj</span>
+            <svg-icon src="../../assets/img/svg/logout.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <!-- Page Content Holder -->
+  <div id="content">
+
+    <nav id="top-navbar" class="navbar sticky-top">
+      <div class="container-fluid navbar-container">
+        <button type="button" id="sidebarCollapse" (click)="toggleNavbar()" class="navbar-btn" [ngClass]="{ 'rotate': !sidebarOpen }">
+          <svg-icon src="../../assets/img/svg/menu_arrow.svg" applyClass class="menu-control" [svgStyle]="{'width.px': '30', 'height.px': '30'}">"></svg-icon>
+        </button>
+        <ul class="navbar-options">
+          <li>
+            <a class="interactive-button">
+              <span class="container menu-item text-header">Zgłoszenie</span>
+              <svg-icon src="../../assets/img/svg/kaizen.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+            </a>
+          </li>
+          <li>
+            <a class="interactive-button">
+              <span class="container menu-item text-header">Wyszukiwarka</span>
+              <svg-icon src="../../assets/img/svg/search.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+            </a>
+          </li>
+          <li class="active">
+            <a class="interactive-button">
+              <span class="container menu-item text-header">Raporty</span>
+              <svg-icon src="../../assets/img/svg/report.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="content-holder">
+      <router-outlet></router-outlet>
+    </div>
+
+
+  </div>
+</div>
+
+</body>
+
+</html>

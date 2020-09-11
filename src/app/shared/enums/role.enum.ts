@@ -1,0 +1,8 @@
+export enum Role {
+  USER,
+  LEADER,
+  SUPERVISOR,
+  COORDINATOR,
+  ADMIN,
+  SYS_ADMIN
+}

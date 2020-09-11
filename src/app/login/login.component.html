@@ -1,1 +1,60 @@
-<p>login works!</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <title>Login page</title>
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="d-flex justify-content-center vh-100">
+    <div class="user_card">
+      <div class="d-flex justify-content-center">
+        <div class="brand_logo_container">
+          <img src="../../assets/img/png/kazen_challenge_logo.png" class="brand_logo" alt="Logo">
+        </div>
+      </div>
+      <div class="d-flex justify-content-center form_container">
+        <form id="loginForm" name="loginForm" [formGroup]="loginForm">
+          <div class="input-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input type="email" name="" class="form-control input_user" formControlName="login" value="" placeholder="identyfikator" [ngClass]="{ 'input-error' : submitted && f.login.errors}">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="password" name="" class="form-control input_pass" formControlName="password" value="" placeholder="hasło" [ngClass]="{ 'input-error' : submitted && f.password.errors}">
+          </div>
+          <div class="mb-3">
+            <div *ngIf="statusLabel" class="notification_container">
+              <div class="text-center">{{statusLabel}}</div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center login_container">
+            <button *ngIf="isLoggingIn" type="button" name="button" class="btn login_btn" (click)="onSubmit()">
+              {{'Login.Labels.LoginButton.loginInProgress' | translate}}
+              <mat-progress-spinner mode="indeterminate" diameter="25" class="d-inline-block float-right"></mat-progress-spinner>
+            </button>
+            <button *ngIf="!isLoggingIn" type="button" name="button" class="btn login_btn" (click)="onSubmit()">
+              {{'Login.Labels.LoginButton.doLogin' | translate}}
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="mt-4">
+        <div class="d-flex justify-content-center">
+          <a>{{'Login.Labels.forgotPassword' | translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

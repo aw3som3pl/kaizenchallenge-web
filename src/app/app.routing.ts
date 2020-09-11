@@ -1,16 +1,22 @@
 import { Routes, RouterModule } from '@angular/router';
-import {AppComponent} from './app.component';
-import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
+import {StaticElementsComponent} from './authorized/static-elements/static-elements.component';
+import {SubmissionComponent} from './authorized/submission/submission.component';
+import {IsAuthenticatedGuard} from './shared/guards/is-authenticated.guard';
 
 
 
 const routes: Routes = [
-  { path: '' , component: HomeComponent},
-  { path: 'home', component: HomeComponent },
+  { path: '' , canActivate: [IsAuthenticatedGuard], component: LoginComponent},
+  { path: 'authenticated', canActivate: [IsAuthenticatedGuard], component: StaticElementsComponent,
+    children: [
+      {path: '', canActivate: [IsAuthenticatedGuard], component: SubmissionComponent},
+      {path: 'submission', component: SubmissionComponent}
+    ]
+    },
   { path: 'login', component: LoginComponent },
 // { path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
-  { path: '**', component: HomeComponent },
+  { path: '**', canActivate: [IsAuthenticatedGuard], component: LoginComponent },
 ];
 
 export const routing = RouterModule.forRoot(routes);

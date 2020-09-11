@@ -1,0 +1,28 @@
+{
+  "Login": {
+    "Status": {
+      "afterLogout": "Pomyślnie wylogowano z systemu",
+      "connFailure": "Brak połączenia z serwerem",
+      "invalidCredentials": "Błędne dane logowania",
+      "passwordResetSent": "Wysłano e-mail z linkiem resetu hasła",
+      "passwordResetFailure": "Brak konta przypisanego do adresu e-mail",
+      "loginInvalid": "Wpisz poprawny login!",
+      "passwordInvalid": "Podane hasło jest za krótkie!"
+    },
+    "Validation": {
+      "loginFormInvalid": "Wpisz poprawne dane logowania!",
+      "loginInvalid": "Wpisz poprawny login!",
+      "passwordInvalid": "Podane hasło jest za krótkie!"
+    },
+    "Labels": {
+      "forgotPassword": "Zapomniałeś/aś hasło?",
+      "LoginButton": {
+        "doLogin": "Zaloguj",
+        "loginInProgress": "Loguję..."
+      }
+    },
+    "Hints": {
+
+    }
+  }
+}

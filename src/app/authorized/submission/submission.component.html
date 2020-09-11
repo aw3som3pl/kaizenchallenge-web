@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Authorized skeleton view</title>
+</head>
+
+<body class="content-holder">
+<div class="search-filter-base sticky-top ">
+  <div class="search-filter-container">
+    <div id="search-filter" class="row m-0">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-6 filter-option">
+            <select class="form-control form-control-sm">
+              <option>Wybierz obszar...</option>
+            </select>
+          </div>
+          <div class="col-6 filter-option">
+            <select class="form-control form-control-sm">
+              <option>Wybierz status...</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 filter-option">
+            <select class="form-control form-control-sm">
+              <option>Wybierz kategorię...</option>
+            </select>
+          </div>
+          <div class="col-6 filter-option">
+            <select class="form-control form-control-sm">
+              <option>Wybierz typ zestawienia...</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 filter-option">
+            <mat-form-field color="accent" style="font-size: 12px" appearance="outline">
+              <mat-label>Wyszukaj OD</mat-label>
+              <input matInput [matDatepicker]="picker1">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field color="accent" style="font-size: 12px; margin-left: 10px" appearance="outline">
+              <mat-label>Wyszukaj DO</mat-label>
+              <input matInput [matDatepicker]="picker2">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2 color="primary"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row">
+          <div class="col-12">
+            <a class="interactive-button-export text-center">
+              <span class="container text-large">Eksportuj dane do .XLS</span>
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <a class="interactive-button-generate text-center">
+              <span class="container text-large">Pobierz raport</span>
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <a class="interactive-button-search text-center">
+              <span class="container text-large">Wygeneruj zestawienie</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </div>
+</div>
+
+
+<div id="reports-container">
+  <div class="row chart-layout">
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-12 chart-container">
+          <div class="row">
+            <div class="col-lg-12 chart-title">
+              Liczność zgłoszeń na okres [maj ~ sierpień 2020] w ramach całego zakładu
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div>
+                <div>
+                  <div style="display: block">
+                    <canvas baseChart
+                            [datasets]="barChartData"
+                            [labels]="barChartLabels"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [legend]="barChartLegend"
+                            [chartType]="barChartType">
+                    </canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-12 chart-container">
+          <div class="row">
+            <div class="col-lg-12 chart-title">
+              Ilość zgłoszeń na poszczególnych obszarach zakładu w okresie [maj ~ sierpień 2020]
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">Obszar</th>
+                  <th scope="col">Liczba zgłoszeń</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>DRIVES SYSTEM</td>
+                  <td>12</td>
+                </tr>
+                <tr>
+                  <td>DC DRIVES</td>
+                  <td>22</td>
+                </tr>
+                <tr>
+                  <td>TRACTION</td>
+                  <td>18</td>
+                </tr>
+                <tr>
+                  <td>DC TPS</td>
+                  <td>28</td>
+                </tr>
+                <tr>
+                  <td>EXCITATION SYSTEMS</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>MAGAZYN</td>
+                  <td>5</td>
+                </tr>
+                <tr>
+                  <td>ADMINISTRACJA</td>
+                  <td>15</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row chart-layout">
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-12 chart-container">
+          <div class="row">
+            <div class="col-lg-12 chart-title">
+              Liczność zgłoszeń w danym statusie na okres [maj ~ sierpień 2020] w ramach DRIVES SYSTEM
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div>
+                <div>
+                  <div style="display: block">
+                    <canvas baseChart
+                            [datasets]="radarChartData"
+                            [options]="radarChartOptions"
+                            [labels]="radarChartLabels"
+                            [chartType]="radarChartType">
+                    </canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

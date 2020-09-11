@@ -1,0 +1,474 @@
+/* Extra small devices (phones, up to 480px) */
+@media screen and (max-width: 746px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 8px;
+  }
+
+  .text-small{
+    font-size: 9px;
+  }
+
+  .text-medium{
+    font-size: 10px;
+  }
+
+  .text-large{
+    font-size: 12px;
+  }
+
+  .text-header{
+    font-size: 14px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .search-filter-base{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .search-filter-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  #search-filter{
+    margin: 10px 10px 0 10px;
+    padding: 10px 10px 0 10px;
+  }
+
+  #search-filter .filter-option{
+    padding: 0 10px 10px 0;
+    display: inline;
+  }
+
+  #search-filter .interactive-button-export{
+    margin-top: 10px;
+    padding: 5px;
+    display: block;
+    background:  var(--green);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-search{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--blue);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-generate{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--orange);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .icon-button{
+    margin-right: 10px;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+  }
+
+  #search-filter .button-icon{
+    fill: var(--white);
+  }
+
+  #reports-container .chart-layout{
+    margin: 0;
+  }
+
+  #reports-container .chart-container{
+    padding: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white;
+    background-color: var(--lightgrey);
+    border-radius: 10px;
+  }
+  #reports-container .chart-title{
+    color: var(--black);
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 9px;
+  }
+
+  .text-small{
+    font-size: 11px;
+  }
+
+  .text-medium{
+    font-size: 13px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header{
+    font-size: 16px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .search-filter-base{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .search-filter-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  #search-filter{
+    margin: 10px 10px 0 10px;
+    padding: 10px 10px 0 10px;
+  }
+
+  #search-filter .filter-option{
+    padding: 0 10px 10px 0;
+    display: inline;
+  }
+
+  #search-filter .interactive-button-export{
+    margin-top: 10px;
+    padding: 5px;
+    display: block;
+    background:  var(--green);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-search{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--blue);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-generate{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--orange);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .icon-button{
+    margin-right: 10px;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+  }
+
+  #search-filter .button-icon{
+    fill: var(--white);
+  }
+
+  #reports-container .chart-layout{
+    margin: 0;
+  }
+
+  #reports-container .chart-container{
+    padding: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white;
+    background-color: var(--lightgrey);
+    border-radius: 10px;
+  }
+  #reports-container .chart-title{
+    color: var(--black);
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 10px;
+  }
+
+  .text-small{
+    font-size: 12px;
+  }
+
+  .text-medium{
+    font-size: 14px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header{
+    font-size: 18px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .search-filter-base{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .search-filter-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  #search-filter{
+    margin: 10px 10px 0 10px;
+    padding: 10px 10px 0 10px;
+  }
+
+  #search-filter .filter-option{
+    padding: 0 10px 10px 0;
+    display: inline;
+  }
+
+  #search-filter .interactive-button-export{
+    margin-top: 10px;
+    padding: 5px;
+    display: block;
+    background:  var(--green);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-search{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--blue);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-generate{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--orange);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .icon-button{
+    margin-right: 10px;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+  }
+
+  #search-filter .button-icon{
+    fill: var(--white);
+  }
+
+  #reports-container .chart-layout{
+    margin: 0;
+  }
+
+  #reports-container .chart-container{
+    padding: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white;
+    background-color: var(--lightgrey);
+    border-radius: 10px;
+  }
+  #reports-container .chart-title{
+    color: var(--black);
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 12px;
+  }
+
+  .text-small{
+    font-size: 14px;
+  }
+
+  .text-medium{
+    font-size: 15px;
+  }
+
+  .text-large{
+    font-size: 18px;
+  }
+
+  .text-header{
+    font-size: 20px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .search-filter-base{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .search-filter-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  #search-filter{
+    margin: 10px 10px 0 10px;
+    padding: 10px 10px 0 10px;
+  }
+
+  #search-filter .filter-option{
+    padding: 0 10px 10px 0;
+    display: inline;
+  }
+
+  #search-filter .interactive-button-export{
+    margin-top: 10px;
+    padding: 5px;
+    display: block;
+    background:  var(--green);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-search{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--blue);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .interactive-button-generate{
+    margin-top: 5px;
+    padding: 5px;
+    display: block;
+    background:  var(--orange);
+    color:  var(--white);
+    border-radius: 10px;
+  }
+
+  #search-filter .icon-button{
+    margin-right: 10px;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+  }
+
+  #search-filter .button-icon{
+    fill: var(--white);
+  }
+
+  #reports-container .chart-layout{
+    margin: 0;
+  }
+
+  #reports-container .chart-container{
+    padding: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: white;
+    background-color: var(--lightgrey);
+    border-radius: 10px;
+  }
+   #reports-container .chart-title{
+     color: var(--black);
+     text-align: center;
+     margin-bottom: 10px;
+     padding: 0;
+   }
+}
+
+
