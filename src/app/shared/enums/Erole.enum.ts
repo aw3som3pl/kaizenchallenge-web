@@ -1,0 +1,8 @@
+export enum Erole{
+  USER,
+  LEADER,
+  SUPERVISOR,
+  COORDINATOR,
+  ADMIN,
+  SYS_ADMIN
+}

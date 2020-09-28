@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {AuthService} from '../shared/services/auth.service';
 import {LoginService} from './service/login.service';
 import {TranslateService} from '@ngx-translate/core';
-import {LoginStatus} from '../shared/enums/misc/login-status.enum';
 
 @Component({
   selector: 'app-login',
@@ -124,10 +123,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
   onLoginSuccess(): void {
     this.submitted = false;
     this.isLoggingIn = false;
-    this.router.navigate(['authenticated/submission']);
+    this.router.navigate(['authenticated/home']);
   }
+}
+
+enum LoginStatus {
+  CONN_REFUSED,
+  INVALID_CREDENTIALS,
+  RECENT_LOGOUT,
+  LOGIN_INVALID,
+  PASSWORD_INVALID
 }

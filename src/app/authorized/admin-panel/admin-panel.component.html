@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin panel</title>
+</head>
+
+<body class="content-holder">
+<div class="background-layer">
+  <div class="content-container vh-100">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header class="" style="background-color: var(--blue)">
+          <mat-panel-title class="w-100" style="color: var(--white)">
+            Formularz rejestracyjny
+          </mat-panel-title>
+          <mat-panel-description class="w-auto"  style="color: var(--white)">
+            <mat-icon style="fill: var(--white)">account_circle</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <form [formGroup]="registrationForm" class="text-medium">
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="row align-content-md-start align-content-sm-around">
+              <mat-form-field class="form-field ml-2" appearance="outline">
+                <mat-label>Imię</mat-label>
+                <input formControlName="name" matInput required>
+              </mat-form-field>
+              <mat-form-field class="form-field ml-2" appearance="outline">
+                <mat-label>Nazwisko</mat-label>
+                <input formControlName="surname" matInput required>
+              </mat-form-field>
+              <mat-form-field class="form-field ml-2" appearance="outline">
+                <mat-label>ID Pracownika</mat-label>
+                <input formControlName="employeeID" matInput required>
+              </mat-form-field>
+              <mat-form-field class="form-field ml-2" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input formControlName="email" matInput type="email" required>
+              </mat-form-field>
+              <mat-form-field class="form-field ml-2" appearance="outline">
+                <mat-label>Hasło</mat-label>
+                <input formControlName="password" matInput required>
+              </mat-form-field>
+              <mat-form-field class="form-field ml-2" appearance="outline">
+                <mat-label>Uprawnienia</mat-label>
+                <mat-select formControlName="role" required>
+                  <mat-option *ngFor="let roleIndex of roleArrayPrototype(6); let i = index" [value]="i">
+                    {{parseService.parseRole(i) | translate}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+            <mat-form-field class="d-block w-100 ml-2" appearance="outline">
+              <mat-label>Obszary</mat-label>
+              <mat-select formControlName="areas" required multiple>
+                <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
+                  {{parseService.parseArea(i) | translate}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            </div>
+            <div class="row m-0">
+              <div class="mb-3 w-100">
+                <div *ngIf="statusLabelFailure" class="notification_container_failure">
+                  <div class="text-center">{{statusLabelFailure}}</div>
+                </div>
+              </div>
+              <div class="mb-3 w-100">
+                <div *ngIf="statusLabelSuccess" class="notification_container_success">
+                  <div class="text-center">{{statusLabelSuccess}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row m-0 justify-content-end">
+              <button mat-raised-button class="d-flex d-block m-2 float-right" type="submit" (click)="onSubmit()" style="background-color: var(--darkblue); color: var(--white)">Zarejestruj</button>
+              <button mat-raised-button class="d-flex d-block m-2 float-right" type="reset" style="background-color: var(--red); color: var(--white)">Wyczyść</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+</body>
+
+</html>

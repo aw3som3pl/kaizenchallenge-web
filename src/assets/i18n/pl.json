@@ -1,4 +1,60 @@
 {
+  "Shared" : {
+    "areaArray": {
+      "0": "Kontrola Jakości Produkcji",
+      "1": "Jakość",
+      "2": "Techniczne Przygotowanie Produkcji",
+      "3": "Laboratorium Pomiarowe",
+      "4": "Logistyka",
+      "5": "Narzędziownia",
+      "6": "Narzędziownia Tryout",
+      "7": "Nowa Narzędziownia",
+      "8": "Produkcja",
+      "9": "Utrzymanie Ruchu",
+      "10": "Tłocznia KP1",
+      "11": "Tłocznia KP2",
+      "12": "Zgrzewalnia",
+      "13": "BHP",
+      "14": "CME",
+      "15": "Controlling",
+      "16": "Technika i Rozwój",
+      "17": "Sales Controlling",
+      "18": "Księgowość",
+      "19": "Zasoby Ludzkie",
+      "20": "KAPS"
+    },
+    "categoryArray": {
+      "0": "Jakość Braki Odpady",
+      "1": "Wydajność Technologia",
+      "2": "Komunikacja Współpraca",
+      "3": "Zapasy Transport",
+      "4": "Produkcja w Toku Layout",
+      "5": "Awarie Przestoje",
+      "6": "Przezbrojenie Setup",
+      "7": "BHP Ergonomia Środowisko"
+    },
+    "roleArray": {
+      "0": "Użytkownik",
+      "1": "Lider",
+      "2": "Kierownik",
+      "3": "Koordynator",
+      "4": "Administrator",
+      "5": "SYS ADMIN"
+    },
+    "additionalUnitArray": {
+      "0": "Zmiana",
+      "1": "Dzień",
+      "2": "Tydzień",
+      "3": "Miesiąc",
+      "4": "Kwartał",
+      "5": "Rok"
+    },
+    "Labels": {
+      "yes": "Tak",
+      "no": "Nie"
+    }
+  },
+
   "Login": {
     "Status": {
       "afterLogout": "Pomyślnie wylogowano z systemu",
@@ -23,6 +79,69 @@
     },
     "Hints": {
 
+    }
+  },
+
+  "Register" : {
+
+  },
+
+  "Home" : {
+    "Labels" : {
+      "ideaButtonTitle": "Masz pomysł usprawnienia?",
+      "ideaButtonDescription": "Kliknij i podziel się nim teraz!",
+      "problemButtonTitle": "Zauważyłeś problem?",
+      "problemButtonDescription": "Powiadom załogę oraz przełożonego!",
+      "resetStepper": "Wyczyść formularz",
+      "previousStep": "Cofnij",
+      "nextStep": "Przejdź dalej",
+      "sendButtonLabel": "Zapisz i wyślij"
+    },
+    "SubmissionForm" : {
+      "1" : {
+        "topLabel": "Wypełnij formularz zgłaszanego pomysłu",
+        "Stepper": {
+          "1": "Treść zgłoszenia",
+          "2": "Załączniki",
+          "3": "Gotowe!"
+        },
+        "Contents" : {
+          "areaPlaceholder": "Wybierz Obszar",
+          "categoryPlaceholder": "Wybierz Kategorię",
+          "titlePlaceholder": "Tytuł",
+          "titleHint": "Wpisz tytuł pomysłu",
+          "descriptionPlaceholder": "Opis",
+          "descriptionHint": "Opisz swój pomysł",
+          "additionalLabel": "Czy potrafisz określić koszt wdrożenia?",
+          "additionalPlaceholder": "Krótko opisz kryteria na podstawie których opierasz prognozę",
+          "additionalValueLabel": "Czy potrafisz określić potencjalne oszczędności?",
+          "addAttachmentsLabel": "Kliknij bądź przeciągnij załącznik do środka by dodać zdjęcie / załącznik",
+          "addAttachmentsHint": "*Możesz dodać maksymalnie 3 załączniki",
+          "selectReviewerPlaceholder": "Wybierz recenzenta zgłoszenia"
+        }
+      },
+      "2" : {
+        "topLabel": "Wypełnij formularz zgłaszanego problemu",
+        "Stepper": {
+          "1": "Treść zgłoszenia",
+          "2": "Załączniki",
+          "3": "Gotowe!"
+        },
+        "Contents" : {
+          "areaPlaceholder": "Wybierz Obszar",
+          "categoryPlaceholder": "Wybierz Kategorię",
+          "titlePlaceholder": "Tytuł",
+          "titleHint": "Wpisz tytuł problemu",
+          "descriptionPlaceholder": "Opis",
+          "descriptionHint": "Opisz swój problem",
+          "additionalLabel": "Czy potrafisz określić straty finansowe, procesowe, inne?",
+          "additionalPlaceholder": "Krótko opisz kryteria na podstawie których opierasz prognozę",
+          "additionalValueLabel": "Czy potrafisz określić zbliżone straty finansowe?",
+          "addAttachmentsLabel": "Kliknij bądź przeciągnij załącznik do środka by dodać zdjęcie / załącznik",
+          "addAttachmentsHint": "*Możesz dodać maksymalnie 3 załączniki",
+          "selectReviewerPlaceholder": "Wybierz recenzenta zgłoszenia"
+        }
+      }
     }
   }
 }

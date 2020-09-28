@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "promotionalresources-7d57f": {
-      "hosting": {
-        "kaizenchallenge-web": [
-          "promotionalresources-7d57f"
-        ]
-      }
-    }
+  "projects": {
+    "default": "kaizenchallenge-demo"
   }
 }

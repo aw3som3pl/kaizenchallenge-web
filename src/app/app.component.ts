@@ -19,12 +19,15 @@ export class AppComponent {
       ['darkblue', '#192655'],
       ['blue', '#374785'],
       ['green', '#69AA56'],
+      ['lightgreen', '#CBDFC5'],
       ['red', '#E35151'],
+      ['lightred', '#F1C7C7'],
       ['orange', '#F5800C'],
       ['white', '#ffffff'],
       ['lightgrey', '#F4F4F4'],
       ['grey', '#E1E1E1'],
       ['black', '#000000'],
+      ['yellow', '#F7DD7D']
     ]);
 
     Array.from(colors.entries()).forEach(([name, value]) => {

@@ -1,0 +1,266 @@
+/* GLOBAL */
+
+.notification_container_failure {
+  position: relative;
+  width: 100%;
+  border-radius: 5px;
+  border-style: dashed;
+  border-width: 4px;
+  border-color: var(--red);
+  background: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
+
+.notification_container_success {
+  position: relative;
+  width: 100%;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: var(--green);
+  background: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Extra small devices (phones, up to 480px) */
+@media screen and (max-width: 746px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 8px;
+  }
+
+  .text-small{
+    font-size: 9px;
+  }
+
+  .text-medium{
+    font-size: 10px;
+  }
+
+  .text-large{
+    font-size: 12px;
+  }
+
+  .text-header{
+    font-size: 14px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .background-layer{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .content-container{
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  .accordion-header-align{
+    margin-left: 8px;
+  }
+
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 9px;
+  }
+
+  .text-small{
+    font-size: 11px;
+  }
+
+  .text-medium{
+    font-size: 13px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header{
+    font-size: 16px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .background-layer{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .content-container{
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+  .interactive-button{
+    width: 100%;
+  }
+
+  .accordion-header-align{
+    margin-left: 8px;
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 10px;
+  }
+
+  .text-small{
+    font-size: 12px;
+  }
+
+  .text-medium{
+    font-size: 14px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header{
+    font-size: 18px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .background-layer{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .content-container{
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  .accordion-header-align{
+    margin-left: 8px;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 12px;
+  }
+
+  .text-small{
+    font-size: 14px;
+  }
+
+  .text-medium{
+    font-size: 15px;
+  }
+
+  .text-large{
+    font-size: 18px;
+  }
+
+  .text-header{
+    font-size: 20px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  hr{
+    display: block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--darkblue);
+  }
+
+  .background-layer{
+    background-color: var(--darkblue);
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    position: sticky;
+  }
+
+  .content-container{
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+  .interactive-button{
+
+  }
+
+  .accordion-header-align {
+    margin-left: 8px;
+  }
+
+  .mat-accordion-indicator::after { color: red;}
+
+}
+
+
