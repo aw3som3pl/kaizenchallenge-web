@@ -1,0 +1,655 @@
+
+/* --------GLOBAL--------- */
+
+body {
+
+}
+
+.content-container{
+  height: 100vh;
+  overflow: auto;
+  padding: 20px 20px 30% 20px;
+  background-color: var(--white);
+}
+
+.step-button-next {
+  background-color: var(--darkblue);
+  color: var(--white);
+}
+
+.step-button-back {
+  background-color: var(--orange);
+  color: var(--white);
+}
+
+.step-button-reset {
+  background-color: var(--white);
+  color: var(--red);
+}
+
+.step-button-finish {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.notification-bubble-local {
+  position: relative;
+  background: var(--yellow);
+  border-radius: 20px 20px 0px 20px;
+}
+
+.notification-bubble-local:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border: 32px solid transparent;;
+  border-left-color: var(--yellow);
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -32px;
+  margin-right: -32px;
+}
+
+.submission-type-header {
+  text-align: center;
+  font-weight: bold;
+}
+
+.file-cta{
+  border: 3px var(--lightgrey) solid;
+  border-radius: 5px;
+  padding: 4px;
+  color: var(--blue) !important;
+}
+
+.file-cta:hover{
+  border: 3px var(--darkblue) solid;
+}
+
+
+/* Extra small devices (phones, up to 480px)  bootstrap SM*/
+@media screen and (max-width: 767px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 8px;
+  }
+
+  .text-small{
+    font-size: 9px;
+  }
+
+  .text-medium{
+    font-size: 10px;
+  }
+
+  .text-large{
+    font-size: 12px;
+  }
+
+  .text-header{
+    font-size: 14px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  .button-wrapper{
+
+  }
+
+  .button-toggle-true {
+    background-color: var(--green);
+    color: var(--white);
+  }
+  .button-toggle-false {
+    background-color: var(--red);
+    color: var(--white);
+  }
+  .interactive-button-idea{
+
+  }
+
+  .interactive-button-problem{
+
+  }
+
+  .submission-idea-description{
+    display: none;
+  }
+
+  .submission-problem-description{
+    display: none;
+  }
+
+  .submission-idea-icon-container{
+    display: inline-flex;
+    border-radius: 20px 0 0 20px;
+    background-color: var(--green);
+    padding: 20px;
+  }
+
+  .submission-idea-icon,
+  .submission-problem-icon{
+    height: 40px;
+    width: 80px;
+  }
+
+  .submission-problem-icon-container{
+    display: inline-flex;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--red);
+    padding: 20px;
+  }
+
+  .submission-problem-icon{
+    font-size: 40px;
+  }
+
+  .submission-button-title{
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .submission-button-description{
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .interactive-button-idea:hover .submission-idea-description {
+    color: var(--white);
+    background: var(--green);
+    cursor: pointer;
+  }
+
+  .interactive-button-problem:hover .submission-problem-description {
+    color: var(--white);
+    background: var(--red);
+    cursor: pointer;
+  }
+
+  .interactive-button-idea:hover svg-icon.submission-idea-icon-container {
+    background-color: var(--lightgreen);
+  }
+
+  .interactive-button-problem:hover svg-icon.submission-problem-icon-container  {
+    background-color: var(--lightred);
+  }
+
+  .submission-idea-icon-container:hover,
+  .submission-problem-icon-container:hover{
+    cursor: pointer;
+  }
+
+  .not-selected {
+    background-color: var(--lighgrey);
+    color:  var(--grey);
+  }
+
+  .dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    font-weight: 200;
+    height: 120px;
+    border: 2px dashed #f16624;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+  }
+
+  .dropzone:hover {
+    border: 2px solid #f16624;
+    color: #dadada !important;
+  }
+
+  progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 9px;
+  }
+
+  .text-small{
+    font-size: 11px;
+  }
+
+  .text-medium{
+    font-size: 13px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header{
+    font-size: 24px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  .button-wrapper{
+
+  }
+
+  .button-toggle-true {
+    background-color: var(--green);
+    color: var(--white);
+  }
+  .button-toggle-false {
+    background-color: var(--red);
+    color: var(--white);
+  }
+
+  .interactive-button-idea{
+
+  }
+
+  .interactive-button-problem{
+
+  }
+
+  .submission-idea-description{
+    text-decoration: none;
+    background: var(--lightgreen);
+    color:  var(--black);
+  }
+
+  .submission-problem-description{
+    text-decoration: none;
+    background: var(--lightred);
+    color:  var(--black);
+  }
+
+  .submission-idea-icon-container{
+    display: inline-flex;
+    border-radius: 20px 0 0 20px;
+    background-color: var(--green);
+    padding: 20px
+  }
+
+  .submission-idea-icon,
+  .submission-problem-icon{
+    height: 80px;
+    width: 80px;
+  }
+
+  .submission-problem-icon-container{
+    display: inline-flex;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--red);
+    padding: 20px
+  }
+
+  .submission-button-title{
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .submission-button-description{
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .interactive-button-idea:hover .submission-idea-description {
+    color: var(--white);
+    background: var(--green);
+    cursor: pointer;
+  }
+
+  .interactive-button-problem:hover .submission-problem-description {
+    color: var(--white);
+    background: var(--red);
+    cursor: pointer;
+  }
+
+  .interactive-button-idea:hover svg-icon.submission-idea-icon-container {
+    background-color: var(--lightgreen);
+  }
+
+  .interactive-button-problem:hover svg-icon.submission-problem-icon-container  {
+    background-color: var(--lightred);
+  }
+
+  .submission-idea-icon-container:hover,
+  .submission-problem-icon-container:hover{
+    cursor: pointer;
+  }
+
+  .not-selected {
+    background-color: var(--lighgrey);
+    color:  var(--grey);
+  }
+
+  .dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    font-weight: 200;
+    height: 150px;
+    border: 2px dashed #f16624;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+  }
+
+  .dropzone:hover {
+    border: 2px solid #f16624;
+    color: #dadada !important;
+  }
+
+  progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 993px) and (max-width: 1199px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 10px;
+  }
+
+  .text-small{
+    font-size: 12px;
+  }
+
+  .text-medium{
+    font-size: 14px;
+  }
+
+  .text-large{
+    font-size: 18px;
+  }
+
+  .text-header{
+    font-size: 24px;
+  }
+
+  /* ---------------------------------------------------
+SEARCH FILTER STYLE
+----------------------------------------------------- */
+
+  .button-toggle-true {
+    background-color: var(--green);
+    color: var(--white);
+  }
+  .button-toggle-false {
+    background-color: var(--red);
+    color: var(--white);
+  }
+
+  .interactive-button-idea{
+
+  }
+
+  .interactive-button-problem{
+
+  }
+
+  .submission-idea-description{
+    text-decoration: none;
+    background: var(--lightgreen);
+    color:  var(--black);
+  }
+
+  .submission-problem-description{
+    text-decoration: none;
+    background: var(--lightred);
+    color:  var(--black);
+  }
+
+  .submission-idea-icon-container{
+    display: inline-flex;
+    border-radius: 20px 0 0 20px;
+    background-color: var(--green);
+    padding: 20px
+  }
+
+  .submission-idea-icon,
+  .submission-problem-icon{
+    height: 90px;
+    width: 90px;
+  }
+
+  .submission-problem-icon-container{
+    display: inline-flex;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--red);
+    padding: 20px
+  }
+
+  .submission-button-title{
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .submission-button-description{
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .interactive-button-idea:hover .submission-idea-description {
+    color: var(--white);
+    background: var(--green);
+    cursor: pointer;
+  }
+
+  .interactive-button-problem:hover .submission-problem-description {
+    color: var(--white);
+    background: var(--red);
+    cursor: pointer;
+  }
+
+  .interactive-button-idea:hover svg-icon.submission-idea-icon-container {
+    background-color: var(--lightgreen);
+  }
+
+  .interactive-button-problem:hover svg-icon.submission-problem-icon-container  {
+    background-color: var(--lightred);
+  }
+
+  .submission-idea-icon-container:hover,
+  .submission-problem-icon-container:hover{
+    cursor: pointer;
+  }
+
+  .not-selected {
+    background-color: var(--lighgrey);
+    color:  var(--grey);
+  }
+
+  .dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    font-weight: 200;
+    height: 300px;
+    border: 2px dashed #f16624;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+  }
+
+  .dropzone:hover {
+    border: 2px solid #f16624;
+    color: #dadada !important;
+  }
+
+  progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+  }
+
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 12px;
+  }
+
+  .text-small{
+    font-size: 14px;
+  }
+
+  .text-medium{
+    font-size: 15px;
+  }
+
+  .text-large{
+    font-size: 18px;
+  }
+
+  .text-header{
+    font-size: 28px;
+  }
+
+  /* ---------------------------------------------------
+Home Style
+----------------------------------------------------- */
+
+  .button-toggle-true {
+    background-color: var(--green);
+    color: var(--white);
+  }
+  .button-toggle-false {
+    background-color: var(--red);
+    color: var(--white);
+  }
+
+  .interactive-button-idea {
+
+  }
+
+  .interactive-button-problem {
+  }
+
+  .submission-idea-description {
+    text-decoration: none;
+    background-color: var(--lightgreen);
+    color:  var(--black);
+  }
+
+  .submission-problem-description {
+    text-decoration: none;
+    background-color: var(--lightred);
+    color:  var(--black);
+  }
+
+  .submission-idea-icon-container{
+    display: inline-flex;
+    border-radius: 20px 0 0 20px;
+    background-color: var(--green);
+    padding: 20px
+  }
+
+  .submission-idea-icon,
+  .submission-problem-icon{
+    height: 90px;
+    width: 90px;
+  }
+
+  .submission-problem-icon-container{
+    display: inline-flex;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--red);
+    padding: 20px
+  }
+
+  .submission-button-title{
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .submission-button-description{
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .interactive-button-idea:hover .submission-idea-description {
+    color: var(--white);
+    background: var(--green);
+    cursor: pointer;
+  }
+
+  .interactive-button-problem:hover .submission-problem-description {
+    color: var(--white);
+    background: var(--red);
+    cursor: pointer;
+  }
+
+  .interactive-button-idea:hover svg-icon.submission-idea-icon-container {
+    background-color: var(--lightgreen);
+  }
+
+  .interactive-button-problem:hover svg-icon.submission-problem-icon-container  {
+    background-color: var(--lightred);
+  }
+
+  .submission-idea-icon-container:hover,
+  .submission-problem-icon-container:hover{
+    cursor: pointer;
+  }
+
+  .not-selected {
+    background-color: var(--lighgrey);
+    color:  var(--grey);
+  }
+
+  .dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    font-weight: 200;
+    height: 300px;
+    border: 2px dashed #f16624;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+  }
+
+  .dropzone:hover {
+    border: 2px solid #f16624;
+    color: #dadada !important;
+  }
+
+  progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+  }
+
+}
+
+

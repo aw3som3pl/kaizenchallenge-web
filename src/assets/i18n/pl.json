@@ -49,9 +49,45 @@
       "4": "Kwartał",
       "5": "Rok"
     },
+    "orderByArray": {
+      "0": "Największy zysk / strata",
+      "1": "Najbardziej aktywne",
+      "2": "Najmniej aktywne",
+      "3": "Najbardziej opóźnione",
+      "4": "Najnowsze"
+    },
+    "submissionSourceArray": {
+      "0": "Każdy",
+      "1": "Jestem autorem",
+      "2": "Jestem recenzentem"
+    },
+    "submissionStatusArray": {
+      "0": "Nowe zgłoszenie",
+      "1": "Edycja",
+      "2": "Do sprawdzenia Lider",
+      "3": "Zatwierdzono Lider",
+      "4": "Do sprawdzenia Kierownik",
+      "5": "Zatwierdzono Kierownik",
+      "6": "Do sprawdzenia Koordynator",
+      "7": "Zatwierdzono Koordynator",
+      "8": "Wdrożony",
+      "9": "Rozwiązany",
+      "10": "Archiwum",
+      "11": "Do poprawy",
+      "12": "Zmiana recenzenta"
+    },
+    "submissionTypeArray": {
+      "0": "Pomysł",
+      "1": "Problem"
+    },
     "Labels": {
       "yes": "Tak",
       "no": "Nie"
+    },
+    "resultsType": {
+      "0": "Liczność zgłoszeń w czasie",
+      "1": "Liczność zgłoszeń o danym statusie w okresie",
+      "2": "Tabela aktywności obszarów w czasie"
     }
   },
 
@@ -98,7 +134,7 @@
       "sendButtonLabel": "Zapisz i wyślij"
     },
     "SubmissionForm" : {
-      "1" : {
+      "0" : {
         "topLabel": "Wypełnij formularz zgłaszanego pomysłu",
         "Stepper": {
           "1": "Treść zgłoszenia",
@@ -120,7 +156,7 @@
           "selectReviewerPlaceholder": "Wybierz recenzenta zgłoszenia"
         }
       },
-      "2" : {
+      "1" : {
         "topLabel": "Wypełnij formularz zgłaszanego problemu",
         "Stepper": {
           "1": "Treść zgłoszenia",
@@ -140,6 +176,18 @@
           "addAttachmentsLabel": "Kliknij bądź przeciągnij załącznik do środka by dodać zdjęcie / załącznik",
           "addAttachmentsHint": "*Możesz dodać maksymalnie 3 załączniki",
           "selectReviewerPlaceholder": "Wybierz recenzenta zgłoszenia"
+        }
+      }
+    },
+    "Search": {
+      "SubmissionView": {
+        "0" : {
+          "additionalLabel": "Korzyści oraz koszt wdrożenia",
+          "additionalValueLabel": "Spodziewany zysk"
+        },
+        "1": {
+          "additionalLabel": "Straty oraz koszt usunięcia problemu",
+          "additionalValueLabel": "Spodziewane straty"
         }
       }
     }

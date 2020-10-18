@@ -1,0 +1,215 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+#review-creator {
+  position: fixed;
+  background-color: var(--blue);
+  border-radius: 0 10px 0 0;
+  bottom: 0;
+}
+
+.reviews-container {
+  background-color: var(--white);
+  width: 100%;
+}
+
+#review-creator.disabled {
+  display: none;
+}
+
+#review-creator .mat-form-field{
+  flood-color: white;
+}
+
+#review-creator .review-creator-container {
+
+}
+
+#review-creator .review-creator-toggle-button{
+
+}
+
+#review-creator.folded .review-creator-form{
+  display: none;
+}
+
+
+#review-creator .review-creator-toggle-icon{
+  fill: var(--white);
+}
+
+#review-creator.folded .review-creator-toggle-icon{
+  transform: rotate(180deg);
+}
+
+.review-entry {
+  padding: 5px 5px 5px 5px;
+}
+
+@media screen and (max-width: 746px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+
+  #review-creator {
+    position: fixed;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 100vw;
+  }
+
+  #review-creator.folded {
+    position: fixed;
+    height: 50px;
+  }
+
+  #review-creator .send-review-button{
+    width: 50px;
+    height: 50px;
+    background-color: var(--orange);
+  }
+
+  #review-creator .send-review-icon{
+    width: 30px;
+    height: 30px;
+    fill: var(--white);
+  }
+
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+  #review-creator {
+    position: fixed;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 85vw;
+  }
+
+  #review-creator.folded {
+    position: fixed;
+    background-color: var(--blue);
+    height: 50px;
+    bottom: 0;
+  }
+
+  #review-creator .send-review-button{
+    width: 50px;
+    height: 50px;
+    background-color: var(--orange);
+  }
+
+  #review-creator .send-review-icon{
+    width: 30px;
+    height: 30px;
+    fill: var(--white);
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+  #review-creator {
+    position: fixed;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 60vw;
+  }
+
+  #review-creator.folded {
+    position: fixed;
+    background-color: var(--blue);
+    height: 50px;
+    bottom: 0;
+  }
+
+  #review-creator .send-review-button{
+    width: 70px;
+    height: 70px;
+    background-color: var(--orange);
+  }
+
+  #review-creator .send-review-icon{
+    width: 50px;
+    height: 50px;
+    fill: var(--white);
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+  #review-creator {
+    position: fixed;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 70vw;
+    transition: height 0.5s;
+  }
+
+  #review-creator.folded {
+    position: fixed;
+    background-color: var(--blue);
+    height: 50px;
+    bottom: 0;
+    transition: height 0.5s;
+  }
+
+  #review-creator .send-review-button{
+    width: 90px;
+    height: 90px;
+    background-color: var(--orange);
+  }
+
+  #review-creator .send-review-icon{
+    width: 60px;
+    height: 60px;
+    fill: var(--white);
+  }
+}

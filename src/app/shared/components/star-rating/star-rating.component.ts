@@ -20,6 +20,7 @@ export class StarRatingComponent implements ControlValueAccessor{
 
   // Allow the input to be disabled, and when it is make it somewhat transparent.
   @Input() disabled = false;
+
   @HostBinding('style.opacity')
   get opacity(): number {
     return this.disabled ? 1 : 1;
@@ -35,7 +36,7 @@ export class StarRatingComponent implements ControlValueAccessor{
 
 
   get value(): number {
-    if(!this.disabled){
+    if (!this.disabled){
       return this.stars.reduce((total, starred) => {
         return total + (starred ? 1 : 0);
       }, 0);
@@ -72,7 +73,5 @@ export class StarRatingComponent implements ControlValueAccessor{
   // Allows Angular to disable the input.
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-
-
   }
 }

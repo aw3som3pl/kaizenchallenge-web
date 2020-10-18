@@ -1,0 +1,97 @@
+fieldset {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px !important;
+  border-color: var(--blue) !important;
+  background-color: var(--white);
+  width: fit-content;
+}
+
+.comment{
+  width: 100%;
+  padding: 2px;
+}
+
+.comment-header{
+  border-radius: 10px;
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.send-comment-button{
+  background-color: var(--orange);
+  color: var(--white);
+}
+
+@media screen and (max-width: 746px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+
+  #comment-creator {
+    position: fixed;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 100vw;
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+  #comment-creator {
+    position: fixed;
+    border-radius: 0 10px 0 0;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 85vw;
+  }
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+  #comment-creator {
+    position: fixed;
+    border-radius: 0 10px 0 0;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 60vw;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+  #comment-creator {
+    position: fixed;
+    border-radius: 0 10px 0 0;
+    background-color: var(--blue);
+    height: fit-content;
+    bottom: 0;
+    width: 70vw;
+    transition: height 0.5s;
+  }
+
+}

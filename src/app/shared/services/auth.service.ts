@@ -17,7 +17,7 @@ export class AuthService {
 
   loginWithCredentials(email: string, password: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.afAuth.setPersistence(Persistence.SESSION)
+      this.afAuth.setPersistence(Persistence.LOCAL)
         .then( success => {
           this.afAuth.signInWithEmailAndPassword(email, password)
             .then(response => {

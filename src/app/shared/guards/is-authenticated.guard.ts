@@ -20,7 +20,7 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authService.checkUserAuth().then(valid => {
         if (state.url === '') {
-          this.router.navigate(['authenticated/home']);
+          this.router.navigate(['authenticated/home/create']);
         } else {
           return true;
         }
@@ -37,7 +37,7 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.authService.checkUserAuth().then(valid => {
         if (state.url === '') {
-          this.router.navigate(['authenticated/submission']);
+          this.router.navigate(['authenticated/home/create']);
         } else {
           return true;
         }

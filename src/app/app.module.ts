@@ -22,19 +22,29 @@ import { KnowledgebaseComponent } from './authorized/knowledgebase/knowledgebase
 import { UsersComponent } from './authorized/users/users.component';
 import { CreativityRankingComponent } from './authorized/creativity-ranking/creativity-ranking.component';
 import { OeeSimulatorComponent } from './authorized/oee-simulator/oee-simulator.component';
-import { SubmissionSearchComponent } from './authorized/submission-search/submission-search.component';
-import { SubmissionResultsComponent } from './authorized/submission-results/submission-results.component';
-import { NotificationsComponent } from './authorized/notifications/notifications.component';
-import { SubContentComponent } from './authorized/submission-search/sub-content/sub-content.component';
-import { SubReviewsComponent } from './authorized/submission-search/sub-reviews/sub-reviews.component';
-import { SubCommentsComponent } from './authorized/submission-search/sub-comments/sub-comments.component';
-import { SubAttachmentsComponent } from './authorized/submission-search/sub-attachments/sub-attachments.component';
-import { SubLikesComponent } from './authorized/submission-search/sub-likes/sub-likes.component';
-import { SubListingComponent } from './authorized/submission-search/sub-listing/sub-listing.component';
+import { SubmissionSearchComponent } from './authorized/home/submission-search/submission-search.component';
+import { SubmissionResultsComponent } from './authorized/home/submission-results/submission-results.component';
+import { SubReviewsComponent } from './authorized/home/submission-search/search-submission-view/sub-reviews/sub-reviews.component';
+import { SubCommentsComponent } from './authorized/home/submission-search/search-submission-view/sub-comments/sub-comments.component';
+import { SubAttachmentsComponent } from './authorized/home/submission-search/search-submission-view/sub-attachments/sub-attachments.component';
+import { SubLikesComponent } from './authorized/home/submission-search/search-submission-view/sub-likes/sub-likes.component';
 import {IdtokenHeaderInterceptor} from './shared/interceptors/idtoken-header.interceptor';
-import {RouterModule} from '@angular/router';
 import { FileDropzoneDirective } from './shared/directives/file-dropzone.directive';
-import { UploadTaskComponent } from './authorized/home/upload-task/upload-task.component';
+import { UploadTaskComponent } from './authorized/home/submission-create/upload-task/upload-task.component';
+import { SubmissionCreateComponent } from './authorized/home/submission-create/submission-create.component';
+import { SearchListingComponent } from './authorized/home/submission-search/search-listing/search-listing.component';
+import { SearchSubmissionViewComponent } from './authorized/home/submission-search/search-submission-view/search-submission-view.component';
+import { SubContentComponent } from './authorized/home/submission-search/search-submission-view/sub-content/sub-content.component';
+import { SubHistoryComponent } from './authorized/home/submission-search/search-submission-view/sub-history/sub-history.component';
+import { UsersListingComponent } from './authorized/users/users-search/users-listing/users-listing.component';
+import { UsersDetailsComponent } from './authorized/users/users-search/users-details/users-details.component';
+import { UsersSearchComponent } from './authorized/users/users-search/users-search.component';
+import { UploadTaskEditComponent } from './authorized/home/submission-search/search-submission-view/sub-attachments/upload-task-edit/upload-task-edit.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
+import { ChoiceDialogComponent } from './shared/components/choice-dialog/choice-dialog.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { NotificationsDialogComponent } from './notifications-dialog/notifications-dialog.component';
 
 
 @NgModule({
@@ -52,42 +62,54 @@ import { UploadTaskComponent } from './authorized/home/upload-task/upload-task.c
     OeeSimulatorComponent,
     SubmissionSearchComponent,
     SubmissionResultsComponent,
-    NotificationsComponent,
-    SubContentComponent,
     SubReviewsComponent,
     SubCommentsComponent,
     SubAttachmentsComponent,
     SubLikesComponent,
-    SubListingComponent,
     FileDropzoneDirective,
-    UploadTaskComponent
+    UploadTaskComponent,
+    SubmissionCreateComponent,
+    SearchListingComponent,
+    SearchSubmissionViewComponent,
+    SubContentComponent,
+    SubHistoryComponent,
+    UsersListingComponent,
+    UsersDetailsComponent,
+    UsersSearchComponent,
+    UploadTaskEditComponent,
+    NotificationDialogComponent,
+    ChoiceDialogComponent,
+    NotificationsDialogComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpTranslateLoader,
-        deps: [HttpClient]
-      }
-    }),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularSvgIconModule.forRoot(),
-    routing,
-    FormsModule,
-    BrowserAnimationsModule,
-    AppMaterialModules,
-    ReactiveFormsModule,
-    ChartsModule,
-    TranslateModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpTranslateLoader,
+                deps: [HttpClient]
+            }
+        }),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularSvgIconModule.forRoot(),
+        routing,
+        FormsModule,
+        BrowserAnimationsModule,
+        AppMaterialModules,
+        ReactiveFormsModule,
+        ChartsModule,
+        TranslateModule,
+        MatDialogModule,
+        MatBadgeModule
+    ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: IdtokenHeaderInterceptor,
     multi: true,
   }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NotificationDialogComponent, ChoiceDialogComponent]
 })
 export class AppModule { }
 

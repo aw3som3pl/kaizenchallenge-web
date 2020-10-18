@@ -1,0 +1,117 @@
+<div class="container-fluid content-container pr-0 pl-0">
+  <div class="row">
+    <div *ngIf="isEditor && areAttachmentsLoaded" class="col-lg-4 m-0">
+        <div class="p-2">
+          <form [formGroup]="fileDescriptionForm">
+            <mat-form-field appearance="outline" class="w-100 text-small">
+              <mat-label>Opis załącznika</mat-label>
+              <input matInput formControlName="fileDescription" #fileName maxlength="120" placeholder="Nazwa pliku / plików">
+              <mat-hint align="end">{{fileName.value.length}} / 120</mat-hint>
+            </mat-form-field>
+          </form>
+          <div class="dropzone text-small" appFileDropzone
+               (hovered)="toggleHover($event)"
+               (dropped)="onDrop($event)"
+               [class.hovering]="isHoveringDropzone">
+            <p><strong>Dodano {{attachmentsURLs.length}} / 3 załączniki</strong></p>
+            <div class="file">
+              <label class="file-label">
+                <input class="file-input" style="display: none" type="file" (change)="onDrop($event.target.files)">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    <strong>  Kliknij by wybrać plik</strong>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div *ngFor="let file of files; let i = index">
+            <upload-task class="mt-lg-4 mt-md-4 mt-sm-2" [uploadRequest]="prepareFileForUpload(i)" (uploadAction)="interceptUploadEvent($event)"></upload-task>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="areAttachmentsLoaded && attachmentsListing.length > 0" class="col-lg p-0 m-0">
+        <table mat-table [dataSource]="attachmentsListing" multiTemplateDataRows class="mat-elevation-z0 text-medium">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of attachmentsTableHeaders; let i = index">
+            <th mat-header-cell class="text-center" *matHeaderCellDef> {{column}} </th>
+            <td mat-cell class="text-medium p-2 text-center align-items-center" style="cursor: pointer" *matCellDef="let element" [ngSwitch]="column">
+              <div *ngSwitchCase="attachmentsTableHeaders[0]">
+                <button mat-mini-fab class="attachment-preview-button m-1" (click)="expandedAttachment = expandedAttachment === element ? null : element" [disabled]="!isPreviewAvailable(element)">
+                  <mat-icon>remove_red_eye</mat-icon>
+                </button>
+                <a href="{{element.attachmentURL}}" target="_blank">
+                  <button mat-mini-fab class="attachment-download-button m-1">
+                    <mat-icon>get_app</mat-icon>
+                  </button>
+                </a>
+                <button *ngIf="isEditor" mat-mini-fab class="attachment-delete-button m-1" (click)="deleteUploadedAttachment(determineAttachmentIndex(element))">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              <div *ngSwitchCase="attachmentsTableHeaders[1]">
+                <span *ngIf="element.attachmentDescription.length === 0">{{element.attachmentName}}</span>
+                <span *ngIf="element.attachmentDescription.length > 0">{{element.attachmentDescription}}</span>
+              </div>
+              <div *ngSwitchCase="attachmentsTableHeaders[2]">
+                {{element.attachmentType}}
+              </div>
+              <div *ngSwitchCase="attachmentsTableHeaders[3]">
+                <strong>{{element.attachmentSize}}</strong>B
+              </div>
+              <div *ngSwitchCase="attachmentsTableHeaders[4]">
+                {{parseService.parseTimestampToDate(element.attachmentUploadDate)}}
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="attachmentsTableHeaders.length">
+              <div class="element-detail" [@detailExpand]="element == expandedAttachment ? 'expanded' : 'collapsed'">
+                <div class="row mt-3">
+                  <div class="col-12 d-flex justify-content-center">
+                    <img class="w-100" src="{{element.attachmentURL}}" alt="Nie można otworzyć podglądu pliku">
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="attachmentsTableHeaders; sticky: true"></tr>
+          <tr mat-row *matRowDef="let element; columns: attachmentsTableHeaders"
+              class="element-row"
+              [class.is-idea]="element.type === 0"
+              [class.is-problem]="element.type === 1"
+              [class.example-expanded-row]="attachmentsTableHeaders === element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" ></tr>
+        </table>
+      </div>
+  </div>
+  <div class="row m-0 w-100">
+    <div *ngIf="!areAttachmentsLoaded" class="col-12 m-0 p-0">
+      <div class="container-fluid">
+        <div class="row" style="height: 50vh">
+          <div class="col-12 d-flex justify-content-center">
+            <span class="text-header my-auto mr-5">Ładuję załączniki...</span>
+            <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-0 w-100">
+    <div *ngIf="areAttachmentsLoaded && attachmentsListing.length === 0" class="col-12 m-0 p-0">
+      <div class="container-fluid">
+        <div class="row" style="height: 50vh">
+          <div class="col-12 d-flex justify-content-center">
+            <span class="text-header my-auto mr-5">Brak załączników</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

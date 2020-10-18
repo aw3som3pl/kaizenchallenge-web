@@ -1,0 +1,84 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+}
+
+.is-idea{
+  background-color: var(--lightgreen);
+}
+
+.is-problem{
+  background-color: var(--lightred);
+}
+
+.users-container{
+  background-color: var(--white);
+  width: 100%;
+}
+
+fieldset {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px !important;
+  border-color: var(--grey) !important;
+  background-color: var(--white);
+  width: fit-content;
+}
+
+
+@media screen and (max-width: 746px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .content-container {
+    height: 90vh;
+    overflow: auto;
+    padding-bottom: 50%;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 50%;
+  }
+}

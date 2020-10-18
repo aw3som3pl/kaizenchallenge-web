@@ -1,0 +1,69 @@
+<div class="container-fluid content-container pr-0 pl-0">
+  <div class="container-fluid" *ngIf="!loadedSubmission">
+    <div class="row" style="height: 50vh">
+      <div class="col-12 d-flex justify-content-center">
+        <span class="text-header my-auto mr-5">Ładuję historię...</span>
+        <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="row m-0">
+    <div class="col-12 p-0 history-container">
+      <div *ngIf="loadedSubmission">
+        <table mat-table [dataSource]="loadedSubmission.history" multiTemplateDataRows class="mat-elevation-z1">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of historyTableHeaders; let i = index">
+            <th mat-header-cell class="text-center" *matHeaderCellDef> {{column}} </th>
+            <td mat-cell class="text-medium pl-2 pr-2 text-center" *matCellDef="let element" [ngSwitch]="column">
+              <div *ngSwitchCase="historyTableHeaders[0]">
+                <mat-chip-list>
+                  <mat-chip class="pointer-events-disabled p-2" [ngStyle]="parseService.parseHistoryAndReviewStatusChipDisplayStyle(element[historyObjectFields[i]])">
+                    <span class="text-medium text-uppercase chip-text">{{parseService.parseStatus(element[historyObjectFields[i]]) | translate}}</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+              <div *ngSwitchCase="historyTableHeaders[1]">
+                <span>{{element[historyObjectFields[i]]}}</span>
+              </div>
+              <div *ngSwitchCase="historyTableHeaders[2]">
+                <mat-chip-list>
+                  <mat-chip class="pointer-events-disabled p-2">
+                    <span class="text-medium text-uppercase chip-text">{{element[historyObjectFields[i]]}}</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+              <div *ngSwitchCase="historyTableHeaders[3]">
+                <mat-chip-list>
+                  <mat-chip class="pointer-events-disabled p-2" [ngStyle]="parseService.parseRoleChipDisplayStyle(element[historyObjectFields[i]])">
+                    <span class="text-medium text-uppercase chip-text">{{parseService.parseRole(element[historyObjectFields[i]]) | translate}}</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+              <div *ngSwitchCase="historyTableHeaders[4]">
+                <span>{{parseService.parseTimestampToDate(element[historyObjectFields[i]])}}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="historyTableHeaders.length">
+              <div class="element-detail" [@detailExpand]="element == expandedHistory ? 'expanded' : 'collapsed'">
+                <div class="text-medium text-center p-3">
+                  Opis wygenerowany na podstawie statusu historii
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="historyTableHeaders; sticky: true"></tr>
+          <tr mat-row *matRowDef="let element; columns: historyTableHeaders;"
+              class="element-row"
+              [class.example-expanded-row]="expandedHistory === element"
+              (click)="expandedHistory = expandedHistory === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

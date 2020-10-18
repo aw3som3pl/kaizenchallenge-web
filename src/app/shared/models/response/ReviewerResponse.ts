@@ -1,4 +1,3 @@
-
 import {IreviewerResponse} from './interfaces/ireviewer-response';
 import {Ireviewer} from '../interfaces/ireviewer';
 

@@ -1,0 +1,118 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+}
+
+.notification-bubble-local:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border: 32px solid transparent;;
+  border-left-color: var(--yellow);
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -32px;
+  margin-right: -32px;
+}
+
+.file-cta{
+  border: 3px var(--lightgrey) solid;
+  border-radius: 5px;
+  padding: 4px;
+  color: var(--blue) !important;
+}
+
+.file-cta:hover{
+  border: 3px var(--darkblue) solid;
+}
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  font-weight: 200;
+  height: 120px;
+  border: 2px dashed #f16624;
+  border-radius: 5px;
+  background: white;
+  margin: 10px 0;
+}
+
+.dropzone:hover {
+  border: 2px solid #f16624;
+  color: #dadada !important;
+}
+
+progress::-webkit-progress-value {
+  transition: width 0.1s ease;
+}
+
+.attachment-preview-button{
+  background-color: var(--darkblue);
+  color: var(--white);
+}
+
+.attachment-download-button{
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.attachment-delete-button{
+  background-color: var(--red);
+  color: var(--white);
+}
+
+@media screen and (max-width: 746px) {
+  .content-container {
+    height: 80vh;
+    overflow-y: auto;
+    padding-bottom: 50%;
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 30%;
+  }
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 30%;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 30%;
+  }
+}

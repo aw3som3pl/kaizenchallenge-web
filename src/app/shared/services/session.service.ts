@@ -4,10 +4,11 @@ import {AuthService} from './auth.service';
 import {HttpClient} from '@angular/common/http';
 import * as firebase from 'firebase';
 import {environment} from '../../../environments/environment';
-import {IauthorizedUser} from '../models/interfaces/iauthorized-user';
-import {AuthorizedUser} from '../models/AuthorizedUser';
-import {AutocompleteHarnessFilters} from '@angular/material/autocomplete/testing';
+import {IuserFull} from '../models/interfaces/iuserFull';
+import {UserFull} from '../models/UserFull';
 import {User} from 'firebase';
+import {Router} from '@angular/router';
+import {InotificationsListingResponse} from '../models/response/interfaces/inotifications-listing-response';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +17,24 @@ export class SessionService {
 
   private _user: firebase.User;
 
-  private authorizedUser: AuthorizedUser;
+  private authorizedUser: UserFull;
 
   constructor(private afAuth: AngularFireAuth,
               private authService: AuthService,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private router: Router) {
 
-                afAuth.authState
+                afAuth.authState  // Działa tylko przy loginie / logoucie
                   .subscribe((user: User | null) => {
                     if (user) {
                       this._user = user;
-                      this.fetchNewIdToken().then( idToken => {
-                      });
-                    } else {  // Jakimś cudem nie załapało usera
-                      this.removeUserIdToken();
+                      this.fetchNewIdToken();
+                    } else {
+                      this.navigateToLogin();
                     }
                   },
-                err => {  // Błąd połączenia z Firebase
-                  this.removeUserIdToken();
+                err => {
+                  this.navigateToLogin();
                 }
               );
   }
@@ -43,24 +44,26 @@ export class SessionService {
       this._user.getIdToken(true)
         .then((newToken: string) => {
             this.persistUserIdToken(newToken);
-            this.downloadUserData().then((userData: IauthorizedUser) => {
+            this.reloadUserData().then((userData: IuserFull) => {
                 this.persistUserData(userData);
-                resolve(newToken);  // Przekazujemy tokena tylko jak uda się odczytać dane z bazy
+                resolve(userData);  // Przekazujemy tokena tylko jak uda się odczytać dane z bazy
               },
               error => {
                 reject(error);    // Jeśli baza wywaliła to wracamy do loginu
+                this.navigateToLogin();
               });
           },
           error => {
+            this.navigateToLogin();
             reject(error);  // Błąd połączenia z FIrebase
           });
     });
   }
 
-  downloadUserData(): Promise<any> {
+  reloadUserData(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http.get(environment.fetchUserDataEndpointURL)
-        .subscribe( (data: IauthorizedUser) => {
+        .subscribe( (data: IuserFull) => {
             resolve(data);
           },
           error => {
@@ -69,9 +72,25 @@ export class SessionService {
     });
   }
 
-  getUserData(): AuthorizedUser {
-    this.authorizedUser = new AuthorizedUser(JSON.parse(sessionStorage.getItem('userData')));
+  getActiveNotificationsList(startIndex: number, batchSize: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http.get(`${environment.getActiveNotificationsCountEndpointURL}/${startIndex}/${batchSize}`)
+        .subscribe( (data: [InotificationsListingResponse]) => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          });
+    });
+  }
+
+  getUserData(): UserFull {
+    this.authorizedUser = new UserFull(JSON.parse(localStorage.getItem('userData')));
     return this.authorizedUser;
+  }
+
+  getUserId(): number {
+    return this.authorizedUser.uId;
   }
 
   getUserRole(): number {
@@ -82,25 +101,35 @@ export class SessionService {
     return this.authorizedUser.areas;
   }
 
-  persistUserData(user: AuthorizedUser): void {
+  getUserExp(): number {
+    return this.authorizedUser.experience;
+  }
+
+  persistUserData(user: UserFull): void {
     this.authorizedUser = user;
-    sessionStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   removeUserData(): void {
-    sessionStorage.removeItem('userData');
+    localStorage.removeItem('userData');
   }
 
   getUserIdToken(): string {
-    return sessionStorage.getItem('idt');
+    return localStorage.getItem('idt');
   }
 
   persistUserIdToken(idToken: string){
-    sessionStorage.setItem('idt', idToken);
+    localStorage.setItem('idt', idToken);
   }
 
   removeUserIdToken(){
-    sessionStorage.removeItem('idt');
+    localStorage.removeItem('idt');
+  }
+
+  navigateToLogin(): void {
+    this.removeUserIdToken();
+    this.removeUserData();
+    this.router.navigate(['login']);
   }
 
 }

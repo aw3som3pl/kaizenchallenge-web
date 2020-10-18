@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Authorized skeleton view</title>
+</head>
+
+<body>
+<div class="row m-0 p-0">
+  <div class="col-12 p-0">
+    <div class="search-filter-container" [ngClass]="{'search-filter-disabled': !this.usersService.isSearchFilterEnabled}">
+      <form [formGroup]="userSearchForm" class="text-small ml-2 mt-2" [ngClass]="{'search-filter-folded': this.usersService.isSearchFilterFolded}">
+        <div id="search-filter" class="row m-0">
+          <div class="col-8">
+            <div class="row">
+              <div class="col-sm-6 pl-2 pr-0">
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Filtruj po obszarze</mat-label>
+                      <mat-select formControlName="areas" multiple  [disabled]="this.userIdValid.value">
+                        <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
+                          {{parseService.parseArea(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6 pl-2">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Filtruj po roli</mat-label>
+                      <mat-select formControlName="roles" multiple  [disabled]="this.userIdValid.value">
+                        <mat-option *ngFor="let role of roleArrayPrototype(5); let i = index" [value]="i">
+                          {{parseService.parseRole(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 pl-2 pr-0">
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Ułóż w kolejności</mat-label>
+                      <mat-select formControlName="orderByExp"  [disabled]="this.userIdValid.value">
+                        <mat-option *ngFor="let orderByIndex of orderByExpArrayPrototype(5); let i = index" [value]="i">
+                          {{parseService.parseOrderBy(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6 pl-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>ID użytkownika</mat-label>
+                      <input matInput formControlName="userId" type="number" #userId maxlength="10" placeholder="ID użytkownika">
+                      <mat-hint align="start"><strong></strong>Wyszukaj po ID</mat-hint>
+                      <mat-hint align="end">{{userId.value.length}} / 10</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row h-100">
+              <div class="col-12 d-flex justify-content-center pb-4">
+                <button mat-fab class="search-button my-auto" (click)="onSearchConfirmed()">
+                  <svg-icon class="my-auto" src="../../assets/img/svg/submission_search.svg" [applyClass]="false" svgClass="search-button-icon"></svg-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div id="paginator-bar" class="row m-0 p-0">
+        <div class="col-12 d-inline-flex justify-content-between">
+          <button mat-button class="export-button text-medium my-auto">
+            <span class="sm-hidden mr-2">Eksportuj </span>
+            <svg-icon src="../../assets/img/svg/excel.svg" [applyClass]="false" svgClass="export-button-icon"></svg-icon>
+          </button>
+          <mat-paginator class="text-medium" style="background-color: transparent; color: var(--black)"
+                         [hidePageSize]="true"
+                         [length]=""
+                         [pageSize]="pageSize"
+                         (page)="pageEvent = $event">
+          </mat-paginator>
+          <button mat-button class="toggle-filter-button text-medium my-auto" (click)="this.usersService.toggleSearchFilterFolded()">
+            <span *ngIf="this.usersService.isSearchFilterFolded" class="sm-hidden mr-2">Pokaż filtry</span>
+            <span *ngIf="!this.usersService.isSearchFilterFolded" class="sm-hidden mr-2">Ukryj filtry</span>
+            <svg-icon *ngIf="this.usersService.isSearchFilterFolded" src="../../assets/img/svg/search.svg" class="toggle-filter-icon" [ngClass]="{'isOpen' : true}" [svgStyle]="{'width.px': '20', 'height.px': '30'}"></svg-icon>
+            <svg-icon *ngIf="!this.usersService.isSearchFilterFolded" src="../../assets/img/svg/arrow_up.svg" class="toggle-filter-icon" [ngClass]="{'isOpen' : true}" [svgStyle]="{'width.px': '20', 'height.px': '30'}"></svg-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row m-0 p-0 h-100">
+  <div class="col-12 pr-0 pl-0">
+    <div class="container-fluid p-0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

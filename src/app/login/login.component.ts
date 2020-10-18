@@ -126,7 +126,7 @@ export class LoginComponent implements OnInit {
   onLoginSuccess(): void {
     this.submitted = false;
     this.isLoggingIn = false;
-    this.router.navigate(['authenticated/home']);
+    this.router.navigate(['authenticated/home/create']);
   }
 }
 

@@ -38,12 +38,11 @@
             </div>
           </div>
           <div class="d-flex justify-content-center login_container">
-            <button *ngIf="isLoggingIn" type="button" name="button" class="btn login_btn" (click)="onSubmit()">
-              {{'Login.Labels.LoginButton.loginInProgress' | translate}}
-              <mat-progress-spinner mode="indeterminate" diameter="25" class="d-inline-block float-right"></mat-progress-spinner>
-            </button>
-            <button *ngIf="!isLoggingIn" type="button" name="button" class="btn login_btn" (click)="onSubmit()">
-              {{'Login.Labels.LoginButton.doLogin' | translate}}
+            <button type="submit" name="button" class="btn login_btn" (click)="onSubmit()">
+              <span *ngIf="isLoggingIn">{{'Login.Labels.LoginButton.loginInProgress' | translate}}
+                <mat-progress-spinner mode="indeterminate" diameter="25" class="d-inline-block float-right"></mat-progress-spinner>
+              </span>
+              <span *ngIf="!isLoggingIn"> {{'Login.Labels.LoginButton.doLogin' | translate}}</span>
             </button>
           </div>
         </form>

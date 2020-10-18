@@ -6,3 +6,240 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+button:focus, button:active:focus, button.active:focus {
+  outline: none !important;
+}
+
+/* GLOBAL */
+
+.pointer-events-disabled {
+  pointer-events: none;
+}
+
+.blue-chip {
+  background-color: var(--blue) !important;
+  color: var(--white) !important;
+}
+
+.darkblue-chip {
+  background-color: var(--darkblue) !important;
+  color: var(--white) !important;
+}
+
+.white-chip {
+  background-color: var(--white) !important;
+  color: var(--darkblue) !important;
+}
+
+.orange-chip {
+  background-color: var(--orange) !important;
+  color: var(--black) !important;
+}
+
+mat-chip {
+  width: fit-content;
+  max-width: 100%;
+}
+
+mat-chip-list.chips-inline .mat-chip-list-wrapper {
+  flex-wrap: nowrap;
+}
+
+.chip-text {
+  width: calc(100%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+button .mat-button-wrapper {
+  padding: 0 !important;
+}
+/* APP SEARCH SUBMISSION */
+
+app-submission .mat-tab-body-wrapper{
+
+}
+
+app-submission .mat-tab-body-content {
+
+}
+
+app-submission .mat-tab-header-pagination-chevron {
+  border-color: white;
+}
+
+app-submission .mat-tab-label{
+  padding: 0;
+  opacity: 1 !important;
+  height: 100%;
+  min-width: fit-content;
+}
+
+app-submission .mat-tab-labels{
+
+}
+
+app-submission .mat-ink-bar{
+  display: none;
+}
+
+app-submission .mat-tab-header{
+  border-bottom: none;
+}
+
+/* APP SEARCH SUBMISSION REVIEWS */
+
+app-sub-reviews mat-chip-list{
+  display: flex;
+  justify-content: center;
+}
+
+app-sub-reviews .mat-form-field-outline{
+  background-color: var(--white);
+  border-radius: 5px;
+}
+
+/* APP SEARCH SUBMISSION HISTORY */
+
+app-sub-history mat-chip-list{
+  display: flex;
+  justify-content: center;
+}
+
+/* APP USERS LISTING */
+
+app-users-listing mat-chip-list{
+  display: flex;
+  justify-content: center;
+}
+
+/* APP COMMENTS */
+app-sub-comments .mat-form-field-outline{
+  background-color: var(--white);
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 746px) {
+
+  .text-misc{
+    font-size: 8px;
+  }
+
+  .text-small{
+    font-size: 9px;
+  }
+
+  .text-medium{
+    font-size: 10px;
+  }
+
+  .text-large{
+    font-size: 12px;
+  }
+
+  .text-header{
+    font-size: 14px;
+  }
+
+  /* CONTROLS */
+  .sm-hidden{
+    display: none;
+  }
+
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  .text-misc{
+    font-size: 9px;
+  }
+
+  .text-small{
+    font-size: 11px;
+  }
+
+  .text-medium{
+    font-size: 13px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header{
+    font-size: 16px;
+  }
+
+  /* CONTROLS */
+
+  .md-hidden{
+    display: none;
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .text-misc{
+    font-size: 10px;
+  }
+
+  .text-small{
+    font-size: 12px;
+  }
+
+  .text-medium{
+    font-size: 14px;
+  }
+
+  .text-large{
+    font-size: 15px;
+  }
+
+  .text-header {
+    font-size: 18px;
+  }
+
+  /* CONTROLS */
+
+  .lg-hidden{
+    display: none;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  /* ---------------------------------------------------
+  TEXT STYLE
+----------------------------------------------------- */
+
+  .text-misc{
+    font-size: 12px;
+  }
+
+  .text-small{
+    font-size: 14px;
+  }
+
+  .text-medium{
+    font-size: 15px;
+  }
+
+  .text-large{
+    font-size: 18px;
+  }
+
+  .text-header{
+    font-size: 20px;
+  }
+
+  /* CONTROLS */
+
+  .xl-hidden{
+    display: none;
+  }
+}
+

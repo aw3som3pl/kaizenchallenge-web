@@ -11,7 +11,7 @@ body {
 #top-navbar.navbar {
   width: 100%;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   top: 0;
 }
 
@@ -52,29 +52,6 @@ a, a:hover, a:focus {
   }
 
   /* ---------------------------------------------------
-  TEXT STYLE
------------------------------------------------------ */
-  .text-misc{
-    font-size: 8px;
-  }
-
-  .text-small{
-    font-size: 10px;
-  }
-
-  .text-medium{
-    font-size: 12px;
-  }
-
-  .text-large{
-    font-size: 14px;
-  }
-
-  .text-header{
-    font-size: 16px;
-  }
-
-  /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
@@ -89,7 +66,7 @@ a, a:hover, a:focus {
     min-width: 250px;
     max-width: 250px;
     margin-left: -190px;
-    min-height: 100vh;
+    height: 100%;
     background: var(--darkblue);
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
@@ -326,7 +303,7 @@ a, a:hover, a:focus {
   #content {
     width: 100%;
     padding: 0 0 20px 0;
-    min-height: 100vh;
+    height: 100%;
     transition: all 0.3s;
   }
 }
@@ -355,34 +332,11 @@ a, a:hover, a:focus {
   }
 
   /* ---------------------------------------------------
-  TEXT STYLE
------------------------------------------------------ */
-  .text-misc{
-    font-size: 8px;
-  }
-
-  .text-small{
-    font-size: 10px;
-  }
-
-  .text-medium{
-    font-size: 12px;
-  }
-
-  .text-large{
-    font-size: 14px;
-  }
-
-  .text-header{
-    font-size: 16px;
-  }
-
-  /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
   .sidebar {
     max-width: 250px;
-    min-height: 100vh;
+    height: 100%;
     top: 0;
     z-index: 2;
   }
@@ -394,7 +348,7 @@ a, a:hover, a:focus {
   #sidebar {
     min-width: 250px;
     max-width: 250px;
-    min-height: 100vh;
+    height: 100%;
     background: var(--darkblue);
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
@@ -638,7 +592,7 @@ a, a:hover, a:focus {
   #content {
     width: 100%;
     padding: 0 0 20px 0;
-    min-height: 100vh;
+    height: 100%;
     transition: all 0.3s;
   }
 }
@@ -654,7 +608,6 @@ a, a:hover, a:focus {
     width: 100%;
     justify-content: space-between;
     align-items: stretch;
-    perspective: 1500px;
   }
 
   /* ---------------------------------------------------
@@ -667,34 +620,11 @@ a, a:hover, a:focus {
   }
 
   /* ---------------------------------------------------
-  TEXT STYLE
------------------------------------------------------ */
-  .text-misc{
-    font-size: 10px;
-  }
-
-  .text-small{
-    font-size: 12px;
-  }
-
-  .text-medium{
-    font-size: 14px;
-  }
-
-  .text-large{
-    font-size: 16px;
-  }
-
-  .text-header{
-    font-size: 18px;
-  }
-
-  /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
   .sidebar {
     max-width: 250px;
-    min-height: 100vh;
+    height: 100%;
     top: 50px;
     z-index: 2;
   }
@@ -708,7 +638,7 @@ a, a:hover, a:focus {
   #sidebar {
     min-width: 250px;
     max-width: 250px;
-    min-height: 100vh;
+    height: 100%;
     background: var(--darkblue);
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
@@ -945,8 +875,8 @@ a, a:hover, a:focus {
 
   #content {
     width: 100%;
-    padding: 0 0 20px 0;
-    min-height: 100vh;
+    padding: 0 0 0 0;
+    height: 100%;
     transition: all 0.3s;
   }
 }
@@ -975,38 +905,13 @@ a, a:hover, a:focus {
   }
 
 
-
-  /* ---------------------------------------------------
-  TEXT STYLE
------------------------------------------------------ */
-
-  .text-misc{
-    font-size: 12px;
-  }
-
-  .text-small{
-    font-size: 14px;
-  }
-
-  .text-medium{
-    font-size: 15px;
-  }
-
-  .text-large{
-    font-size: 18px;
-  }
-
-  .text-header{
-    font-size: 20px;
-  }
-
   /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
   .sidebar {
     max-width: 250px;
-    min-height: 100vh;
+    height: 100%;
     top: 50px;
     z-index: 2;
   }
@@ -1017,7 +922,7 @@ a, a:hover, a:focus {
   }
 
   #sidebar {
-    min-height: 100vh;
+    height: 100%;
     position: sticky;
     position: -webkit-sticky;
     min-width: 250px;
@@ -1039,8 +944,8 @@ a, a:hover, a:focus {
   }
 
   #sidebar img.profile-large {
-    width: 80px;
-    height:  80px;
+    width: 70px;
+    height:  70px;
     border-radius: 50%;
   }
 
@@ -1260,7 +1165,7 @@ a, a:hover, a:focus {
   #content {
     width: 100%;
     padding: 0 0 20px 0;
-    min-height: 100vh;
+    height: 100%;
     transition: all 0.3s;
   }
 }

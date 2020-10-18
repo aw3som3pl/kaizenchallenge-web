@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Authorized skeleton view</title>
+</head>
+
+<body>
+  <div class="content-container">
+    <div class="row mr-4 ml-4">
+      <div class="col-6">
+        <div class="interactive-button-idea" (click)="toggleSubmissionType(submissionType.IDEA)">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 p-0">
+              <svg-icon src="../../assets/img/svg/idea.svg" class="submission-idea-icon-container float-right" svgClass="submission-idea-icon" [ngClass]="{'not-selected' : currentSubmissionType === submissionType.PROBLEM}"></svg-icon>
+            </div>
+            <div class="col-9 p-2 submission-idea-description" [ngClass]="{'not-selected': currentSubmissionType === submissionType.PROBLEM}">
+              <div class="row">
+                <div class="col-12 pl-3 pr-3">
+                  <div class="submission-button-title text-large font-weight-bold">
+                    {{ 'Home.Labels.ideaButtonTitle' | translate}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 pl-3 pr-3">
+                  <div class="submission-button-description text-medium">
+                    {{ 'Home.Labels.ideaButtonDescription' | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="interactive-button-problem" (click)="toggleSubmissionType(submissionType.PROBLEM)">
+          <div class="row">
+            <div class="col-9 p-2 submission-problem-description" [ngClass]="{'not-selected' : currentSubmissionType === submissionType.IDEA}">
+              <div class="row">
+                <div class="col-12 pl-3 pr-3">
+                  <div class="submission-button-title text-large font-weight-bold ">
+                    {{ 'Home.Labels.problemButtonTitle' | translate}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 pl-3 pr-3">
+                  <div class="submission-button-description text-medium">
+                    {{ 'Home.Labels.problemButtonDescription' | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+              <svg-icon src="../../assets/img/svg/problem.svg" class="submission-problem-icon-container float-left" svgClass="submission-problem-icon" [ngClass]="{'not-selected' : currentSubmissionType === submissionType.IDEA}"></svg-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 submission-type-header" *ngIf="currentSubmissionType !== submissionType.NONE">
+      <div class="col-12">
+        <div class="text-large"> {{ parseTypedResource('topLabel') | translate}}</div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 p-0">
+        <div *ngIf="currentSubmissionType !== submissionType.NONE">
+          <mat-horizontal-stepper linear class="mb-4" #stepper>
+            <mat-step [stepControl]="submissionStep1Form">
+              <form [formGroup]="submissionStep1Form" class="text-large">
+                <ng-template matStepLabel>{{ parseTypedResource('Stepper.1') | translate}}</ng-template>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <mat-chip-list>
+                      <mat-chip class="blue-chip text-medium pointer-events-disabled"
+                                *ngFor="let area of areasValid.value">
+                        {{parseService.parseArea(area) | translate}}
+                      </mat-chip>
+                    </mat-chip-list>
+
+                    <mat-form-field class="w-100 mt-4" appearance="outline">
+                      <mat-label>{{ parseTypedResource('Contents.areaPlaceholder') | translate}}</mat-label>
+                      <mat-select formControlName="areas" required multiple>
+                        <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
+                          {{parseService.parseArea(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <p>
+                      <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>{{ parseTypedResource('Contents.categoryPlaceholder') | translate}}</mat-label>
+                        <mat-select formControlName="category" required>
+                          <mat-option *ngFor="let categoryIndex of categoryArrayPrototype(8); let i = index" [value]="i">
+                            {{parseService.parseCategory(i) | translate}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </p>
+                    <p>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label >Tytuł</mat-label>
+                        <input matInput formControlName="topic" #topic maxlength="120" placeholder="{{ parseTypedResource('Contents.titlePlaceholder') | translate}}" required>
+                        <mat-hint align="start"><strong></strong>{{ parseTypedResource('Contents.titleHint') | translate}}</mat-hint>
+                        <mat-hint align="end">{{topic.value.length}} / 120</mat-hint>
+                      </mat-form-field>
+                    </p>
+                    <p>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Opis</mat-label>
+                        <textarea matInput formControlName="description" #description maxlength="600" placeholder="" required>{{ parseTypedResource('Contents.descriptionPlaceholder') | translate}}</textarea>
+                        <mat-hint align="start">{{ parseTypedResource('Contents.descriptionHint') | translate}}</mat-hint>
+                        <mat-hint align="end">{{description.value.length}} / 600</mat-hint>
+                      </mat-form-field>
+                    </p>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-12 m-0 d-inline-flex align-content-between">
+                        <div class="row w-100 m-0 align-items-center">
+                          <div class="col-8">
+                            <div>{{ parseTypedResource('Contents.additionalLabel') | translate}}</div>
+                          </div>
+                          <div class="col-4">
+                            <mat-button-toggle-group #additionalGroup="matButtonToggleGroup" class=" d-inline-flex float-right" (change)="onAdditionalEnabledChange($event)" aria-label="Font Style">
+                              <mat-button-toggle [value]="true" [ngClass]="{'button-toggle-true' : isAdditionalEnabled}">{{ 'Shared.Labels.yes' | translate}}</mat-button-toggle>
+                              <mat-button-toggle [value]="false" [ngClass]="{'button-toggle-false' : !isAdditionalEnabled}">{{ 'Shared.Labels.no' | translate}}</mat-button-toggle>
+                            </mat-button-toggle-group>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+                      <mat-form-field appearance="outline" class="w-100 mt-2 align-items-center">
+                        <textarea matInput formControlName="additional" #additional maxlength="150" placeholder="{{ parseTypedResource('Contents.additionalPlaceholder') | translate}}"></textarea>
+                        <mat-hint align="end">{{additional.value.length}} / 150</mat-hint>
+                      </mat-form-field>
+                    </p>
+                    <div class="row">
+                      <div class="col-12 m-0 d-inline-flex align-content-between">
+                        <div class="row w-100 m-0 align-items-center">
+                          <div class="col-8">
+                            <div class="d-inline-flex">{{ parseTypedResource('Contents.additionalValueLabel') | translate}}</div>
+                          </div>
+                          <div class="col-4">
+                            <mat-button-toggle-group #additionalValueGroup="matButtonToggleGroup" class="d-inline-flex float-right" (change)="onAdditionalValueEnabledChange($event)" aria-label="Font Style">
+                              <mat-button-toggle [value]="true" [ngClass]="{'button-toggle-true' : isAdditionalValueEnabled}">{{ 'Shared.Labels.yes' | translate}}</mat-button-toggle>
+                              <mat-button-toggle [value]="false" [ngClass]="{'button-toggle-false' : !isAdditionalValueEnabled}">{{ 'Shared.Labels.no' | translate}}</mat-button-toggle>
+                            </mat-button-toggle-group>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-12 m-0">
+                        <div class="m-0 justify-content-between">
+                          <mat-form-field class="w-50" appearance="outline">
+                            <input matInput type="number" min="1" pattern="\d+" formControlName="additionalValue" placeholder="PLN">
+                          </mat-form-field>
+                          <mat-form-field class="w-50 pl-2"  appearance="outline">
+                            <mat-label>Jednostka</mat-label>
+                            <mat-select formControlName="additionalUnit">
+                              <mat-option *ngFor="let additionalUnitIndex of additionalUnitArrayPrototype(6); let i = index" [value]="i">
+                                {{parseService.parseAdditionalUnit(i) | translate}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row-cols-1">
+                  <button mat-raised-button matStepperNext class="float-right  step-button-next text-large" (click)="onStepNavigation(2)">Następny krok</button>
+                  <button mat-raised-button class="float-left  step-button-reset text-large" (click)="stepper.reset()">Resetuj</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="submissionStep2Form" label="{{ parseTypedResource('Stepper.2') | translate}}">
+              <form [formGroup]="submissionStep2Form" class="text-large">
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>{{ parseTypedResource('Contents.selectReviewerPlaceholder') | translate}}</mat-label>
+                      <mat-select formControlName="reviewer" required>
+                        <mat-select-trigger>
+                        <span *ngIf="selectedReviewerName">
+                          {{selectedReviewerName}}
+                        </span>
+                        </mat-select-trigger>
+                        <mat-option class="h-100" style="padding: 3%" *ngFor="let reviewer of reviewersList; let i = index" [value]="reviewersList[i]">
+                        <span class="text-header">
+                          <strong>{{ reviewer.reviewerName}} </strong>
+                          <mat-chip class="text-large text-capitalize" style="pointer-events: none; margin-left: 5%; color: var(--white); background-color: var(--darkblue)">{{parseService.parseRole(reviewer.reviewerRole) | translate}}</mat-chip>
+                          <jn-star-rating class="d-inline-flex" style="margin-left: 5%"></jn-star-rating>
+                        </span>
+                          <br>
+                          <span>
+                          <mat-chip-list class="d-inline-flex">
+                            <mat-chip class="text-medium" style="pointer-events: none; color: var(--white); background-color: var(--blue)" *ngFor="let area of reviewer.reviewerArea">
+                              {{parseService.parseArea(area) | translate}}
+                            </mat-chip>
+                          </mat-chip-list>
+                        </span>
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div *ngIf="isLoadingReviewers" class="text-large d-flex mb-3 justify-content-center">
+                      <span>Ładuję listę recenzentów...</span>
+                      <mat-spinner class="spinner ml-5" diameter="20"></mat-spinner>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Opis załącznika</mat-label>
+                      <input matInput formControlName="fileDescription" #topic maxlength="120" placeholder="Nazwa pliku / plików">
+                      <mat-hint align="start"><strong></strong>Możesz opatrzyć załączniki dodatkowym opisem</mat-hint>
+                      <mat-hint align="end">{{topic.value.length}} / 120</mat-hint>
+                    </mat-form-field>
+                    <div class="dropzone" appFileDropzone
+                         (hovered)="toggleHover($event)"
+                         (dropped)="onDrop($event)"
+                         [class.hovering]="isHoveringDropzone">
+                      <p><strong>Przeciągnij i upuść załączniki do zgłoszenia</strong></p>
+                      <p><h3>Dodano {{uploadedFilesUrls.length}} / 3 załączniki</h3>
+                      <div class="file">
+                        <label class="file-label">
+                          <input class="file-input" style="display: none" type="file" (change)="onDrop($event.target.files)">
+                          <span class="file-cta">
+                            <span class="file-icon">
+                              <i class="fa fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                              <strong>  Kliknij by wybrać plik</strong>
+                            </span>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="mt-4">
+                      <button mat-raised-button class="float-right step-button-finish text-large" (click)="onSendSubmissionData()">{{ 'Home.Labels.sendButtonLabel' | translate}}</button>
+                      <button mat-raised-button matStepperPrevious class="float-left step-button-back text-large" (click)="onStepNavigation(1)">{{ 'Home.Labels.previousStep' | translate}}</button>
+                      <button mat-raised-button class="ml-2 float-left step-button-reset text-large" (click)="stepper.reset()">Resetuj</button>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="row">
+                    </div>
+                    <div class="row mt-4">
+                      <div class="col-12 p-0">
+                        <div *ngFor="let file of files; let i = index">
+                          <upload-task class="mt-lg-4 mt-md-4 mt-sm-2" [uploadRequest]="prepareFileForUpload(i)" (uploadAction)="interceptUploadEvent($event)"></upload-task>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step label="{{ parseTypedResource('Stepper.3') | translate}}">
+              <div>
+                <h2 class="text-center">Zgłoszenie zostało wysłane!</h2>
+                <div class="row">
+                  <div class="col-6 justify-content-center">
+                    <svg-icon class="float-right" src="../../assets/img/svg/submission_success.svg" [svgStyle]="{'width.px': '130', 'height.px': '130'}"></svg-icon>
+                  </div>
+                  <div class="col-6">
+                    <mat-chip-list class="mat-chip-list-stacked float-left mt-3">
+                      <mat-chip class="text-large justify-content-center">
+                        <strong>{{this.submissionResponseId}}</strong>
+                      </mat-chip>
+                      <mat-chip class="text-medium justify-content-center">
+                        {{parseService.parseTimestampToDate(this.submissionCreationDate)}}
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="mt-4">
+                    <button mat-raised-button class="ml-2 float-left step-button-next text-large" (click)="stepper.reset()">Zamieść nowe zgłoszenie</button>
+                  </div>
+                </div>
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </div>
+        <div *ngIf="currentSubmissionType === submissionType.NONE">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-8">
+                <hgroup class="notification-bubble-local p-3">
+                  <h4 class="notification-bubble-text text-medium">Wiadomość dla zmiany od kierownika działu niewiadomojakiego bo tak sobie testuje</h4>
+                </hgroup>
+              </div>
+              <div class="col-4 mt-5">
+                <svg-icon src="../../assets/img/svg/idea.svg" class="float-left" [svgStyle]="{'width.px': '90', 'height.px': '90'}"></svg-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

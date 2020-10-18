@@ -1,16 +1,20 @@
-import {IauthorizedUser} from './interfaces/iauthorized-user';
+import {IuserFull} from './interfaces/iuserFull';
 import {Ireviewer} from './interfaces/ireviewer';
 
 export class Reviewer implements Ireviewer{
 
-  reviewerArea: [];
-  reviewerExp: number;
+  reviewerArea: [] | null;
+  reviewerExp: number | null;
   reviewerId: number;
   reviewerName: string;
-  reviewerRole: number;
+  reviewerRole: number | null;
 
-  constructor(init?: Partial<Reviewer>) {
-    Object.assign(this, init);
+  constructor(reviewerArea: [], reviewerExp: number, reviewerId: number, reviewerName: string, reviewerRole: number) {
+    this.reviewerArea = reviewerArea;
+    this.reviewerExp = reviewerExp;
+    this.reviewerId = reviewerId;
+    this.reviewerName = reviewerName;
+    this.reviewerRole = reviewerRole;
   }
 
 }

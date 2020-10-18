@@ -10,12 +10,12 @@
 </head>
 
 <body>
-  <div class="container-fluid px-0">
-  <div class="row no-gutters d-flex vh-100 position-relative">
+  <div class="container-fluid px-0 h-100">
+    <div class="row no-gutters d-flex h-100 position-relative overflow-hidden">
     <div class="p-0 h-100">
       <!-- fixed sidebar -->
-      <div class="position-fixed h-100 align-self-start sidebar" style="">
-        <nav id="sidebar" [ngClass]="{ 'folded': !sidebarOpen }">
+      <div class="position-fixed h-100 align-self-start sidebar">
+       <nav id="sidebar" [ngClass]="{ 'folded': !sidebarOpen }">
           <div class="sidebar-header">
             <svg-icon src="../../assets/img/svg/kaizenchallenge_logo_white.svg" [stretch]="false"
                       [svgStyle]="{'width.px':'200', 'height.px':'120'}"></svg-icon>
@@ -24,14 +24,14 @@
             <li>
               <div class="row">
                 <div class="col-5 image-holder-center"><img class="profile-large" src="../../assets/img/placeholder/circular-photo.jpg" alt="none"></div>
-                <div class="col-7">
-                  <div class="row text-large">
-                    {{this.sessonService.getUserData().name}} {{this.sessonService.getUserData().surname}}
+                <div class="col-7 m-0 pl-0">
+                  <div class="row m-0 text-medium text-left">
+                    {{this.sessionService.getUserData().name}} {{this.sessionService.getUserData().surname}}
                   </div>
-                  <div class="row">
-                    <jn-star-rating [ngModel]="starRating"></jn-star-rating>
+                  <div class="row m-0">
+                    <jn-star-rating [ngModel]="this.starRating"></jn-star-rating>
                   </div>
-                  <div class="row">
+                  <div class="row m-0">
                     <a class="interactive-button-small text-small">
                       <span class="container">Profil</span>
                     </a>
@@ -47,50 +47,52 @@
                 <svg-icon src="../../assets/img/svg/profile.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active' : currentSelection === menuSelector.SUBMISSIONS }">
-              <a class="interactive-button" (click)="navigateToSubmissions()">
+            <li [ngClass]="{ 'active' : currenMenutSelection === menuSelector.SUBMISSIONS }">
+              <a class="interactive-button" (click)="sidebarNavigateToSubmissions()">
                 <span class="container menu-item text-large">Zgłoszenia</span>
                 <svg-icon src="../../assets/img/svg/new_submission.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.COMMUNICATOR}">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.COMMUNICATOR}">
               <a class="interactive-button">
                 <span class="container menu-item text-large">Komunikator</span>
                 <svg-icon src="../../assets/img/svg/chat.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.KNOWLEDGEBASE }">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.KNOWLEDGEBASE }">
               <a class="interactive-button">
                 <span class="container menu-item text-large">Baza Wiedzy</span>
                 <svg-icon src="../../assets/img/svg/knowledge.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.NOTIFICATIONS }">
-              <a class="interactive-button">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.NOTIFICATIONS }">
+              <a class="interactive-button" matBadge="{{this.activeNotificationsCount}}"
+                 matBadgeSize="medium" matBadgePosition="above after" matBadgeColor="warn"
+                 [matBadgeHidden]="this.activeNotificationsCount === 0" (click)="openNotificationsDialog()">
                 <span class="container menu-item text-large">Powiadomienia</span>
                 <svg-icon src="../../assets/img/svg/notifications.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.USERS }">
-              <a class="interactive-button">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.USERS }">
+              <a class="interactive-button" (click)="sidebarNavigateToUsers()">
                 <span class="container menu-item text-large">Użytkownicy</span>
                 <svg-icon src="../../assets/img/svg/users.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.CREATIVITY_RANKING }">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.CREATIVITY_RANKING }">
               <a class="interactive-button-long">
                 <span class="container menu-item text-medium">Ranking Kreatywności</span>
                 <svg-icon src="../../assets/img/svg/ranking.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.OEE_SIMULATOR }">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.OEE_SIMULATOR }">
               <a class="interactive-button">
                 <span class="container menu-item text-large">OEE Simulator</span>
                 <svg-icon src="../../assets/img/svg/oee.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currentSelection === menuSelector.ADMIN_PANEL }">
-              <a class="interactive-button-long admin" (click)="navigateToAdminPanel()">
+            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.ADMIN_PANEL }">
+              <a class="interactive-button-long admin" (click)="sidebarNavigateToAdminPanel()">
                 <span class="container menu-item text-medium">Panel Administracyjny</span>
                 <svg-icon src="../../assets/img/svg/admin_panel.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
@@ -110,23 +112,23 @@
         <nav id="top-navbar" class="navbar">
           <div class="container-fluid navbar-container">
             <button type="button" id="sidebarCollapse" (click)="toggleNavbar()" class="navbar-btn" [ngClass]="{ 'rotate': !sidebarOpen }">
-              <svg-icon src="../../assets/img/svg/menu_arrow.svg" applyClass class="menu-control" [svgStyle]="{'width.px': '30', 'height.px': '30'}">"></svg-icon>
+              <svg-icon src="../../assets/img/svg/arrow_left.svg" applyClass class="menu-control" [svgStyle]="{'width.px': '30', 'height.px': '30'}">"></svg-icon>
             </button>
             <ul class="navbar-options">
-              <li class="active">
-                <a class="interactive-button">
+              <li [ngClass]="{ 'active' : currentNavbarSelection === navbarSelector.SUBMISSION }">
+                <a class="interactive-button" (click)="navbarNavigateToSubmissionForm()">
                   <span class="container menu-item text-header">Zgłoszenie</span>
                   <svg-icon src="../../assets/img/svg/kaizen.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
                 </a>
               </li>
-              <li>
-                <a class="interactive-button">
+              <li [ngClass]="{ 'active' : currentNavbarSelection === navbarSelector.SEARCH }">
+                <a class="interactive-button" (click)="navbarNavigateToSubmissionSearch()">
                   <span class="container menu-item text-header">Wyszukiwarka</span>
                   <svg-icon src="../../assets/img/svg/search.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
                 </a>
               </li>
-              <li>
-                <a class="interactive-button">
+              <li [ngClass]="{ 'active' : currentNavbarSelection === navbarSelector.RESULTS }">
+                <a class="interactive-button" (click)="navbarNavigateToSubmissionResults()">
                   <span class="container menu-item text-header">Raporty</span>
                   <svg-icon src="../../assets/img/svg/report.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
                 </a>
@@ -134,14 +136,13 @@
             </ul>
           </div>
         </nav>
-
         <div class="content-holder" [ngClass]="{'sidebar-active': sidebarOpen}">
           <router-outlet></router-outlet>
         </div>
       </div>
     </div>
   </div>
-</div>
+  </div>
 
 </body>
 

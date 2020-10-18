@@ -1,0 +1,64 @@
+<div #commentsContainer class="container-fluid content-container pr-0 pl-0">
+  <div class="row m-0 w-100">
+    <div *ngIf="!areCommentsLoaded" class="col-sm m-0 p-0">
+      <div class="container-fluid">
+        <div class="row" style="height: 50vh">
+          <div class="col-12 d-flex justify-content-center">
+            <span class="text-header my-auto mr-5">Ładuję komentarze...</span>
+            <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="areCommentsLoaded && !commentsListing" class="col-sm m-0 p-0">
+      <div class="container-fluid">
+        <div class="row" style="height: 50vh">
+          <div class="col-12 d-flex justify-content-center">
+            <span class="text-header my-auto mr-5">Brak komentarzy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="commentsListing" class="col-12 m-0 p-0">
+      <div *ngFor="let comment of this.commentsListing">
+        <div class="container-fluid">
+        <div class="comment row m-0 mt-2">
+          <div class="col-12 d-flex justify-content-center m-0 p-0">
+            <div class="row m-0 w-100">
+              <fieldset class="border p-2 w-100 h-100">
+                <legend class="comment-header w-auto text-medium d-inline-flex justify-content-start">
+                    <span class="ml-2 mr-2"><strong> {{comment.authorName}} </strong></span>
+                    <jn-star-rating class="mr-2">4</jn-star-rating>
+                </legend>
+                <span class="text-small">
+                  {{comment.commentMesage}}
+                </span>
+                <br>
+                <span class="text-misc d-block text-right">{{this.parseService.parseTimestampToDate(comment.timestampUpdated)}}</span>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div id="comment-creator" class="row text-large p-2">
+    <div class="row m-0 w-100 text-medium">
+      <div class="col-9 col-sm-10 m-0 p-0">
+        <form [formGroup]="commentForm">
+          <mat-form-field appearance="outline" class="w-100" >
+            <textarea matInput formControlName="commentMessage" #commentMessage maxlength="400" style="max-height: 100px" required ></textarea>
+            <mat-hint style="color: var(--white)" align="start">Komentarz</mat-hint>
+            <mat-hint style="color: var(--white)" align="end">{{commentMessage.value.length}} / 400</mat-hint>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="col-3 col-sm-2 m-0 p-0 my-auto text-center align-items-center">
+        <button mat-fab class="send-comment-button" type="submit" (click)="sendNewComment()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,7 @@ export class LoginService {
             resolve(success);
           },
           failure => {
-            console.log(JSON.parse(failure));
+            console.log(failure);
             reject(failure);
           });
     });

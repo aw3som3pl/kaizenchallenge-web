@@ -159,7 +159,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   testClick(): void {
-    this.sessionService.downloadUserData().then(success => {
+    this.sessionService.reloadUserData().then(success => {
       console.log(success);
     },
       failure => {

@@ -1,0 +1,135 @@
+<div class="container-fluid content-container">
+  <form *ngIf="isEditable" [formGroup]="contentEditForm" class="text-large">
+    <div class="row m-0">
+      <div class="col-12 mt-4 p-0 p-sm-2">
+        <mat-chip-list>
+          <mat-chip class="blue-chip text-medium pointer-events-disabled"
+                    *ngFor="let area of areasValid.value">
+            {{parseService.parseArea(area) | translate}}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+    <div class="row m-0 mt-2">
+      <div class="col-sm-8 p-0 p-sm-2">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label class="font-weight-bold">Edytuj Obszar</mat-label>
+            <mat-select formControlName="areas" required multiple>
+              <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
+                {{parseService.parseArea(i) | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="col-sm-4 p-0 p-sm-2">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label class="font-weight-bold">Edytuj Kategorię</mat-label>
+            <mat-select formControlName="category" required>
+              <mat-option *ngFor="let categoryIndex of categoryArrayPrototype(8); let i = index" [value]="i">
+                {{parseService.parseCategory(i) | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-12 mt-4 p-0 p-sm-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label class="font-weight-bold">Edytuj Tytuł</mat-label>
+            <input matInput formControlName="topic" #topic maxlength="120" placeholder="{{ parseTypedResource('Contents.titlePlaceholder') | translate}}" required>
+            <mat-hint align="end">{{topic.value.length}} / 120</mat-hint>
+          </mat-form-field>
+        </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-12 mt-4 p-0 p-sm-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label class="font-weight-bold">Edytuj Opis</mat-label>
+            <textarea matInput formControlName="description" #description maxlength="600" style="min-height: 120px" required>{{ parseTypedResource('Contents.descriptionPlaceholder') | translate}}</textarea>
+            <mat-hint align="end">{{description.value.length}} / 600</mat-hint>
+          </mat-form-field>
+        </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-12 mt-4 p-0 p-sm-2">
+          <mat-form-field appearance="outline" class="w-100 mt-2 align-items-center">
+            <mat-label class="font-weight-bold">Edytuj opis Zysków / Strat</mat-label>
+            <textarea matInput formControlName="additional" #additional maxlength="150"></textarea>
+            <mat-hint align="end">{{additional.value.length}} / 150</mat-hint>
+          </mat-form-field>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-sm-6 mt-4 p-0 p-sm-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label class="font-weight-bold">Edytuj wartość Zysków / Strat w PLN</mat-label>
+          <input matInput type="number" formControlName="additionalValue" maxlength="12" placeholder="PLN">
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 mt-4 p-0 p-sm-2">
+        <mat-form-field class="w-100 pl-2"  appearance="outline">
+          <mat-label class="font-weight-bold">Edytuj jednostkę czasu</mat-label>
+          <mat-select formControlName="additionalUnit">
+            <mat-option *ngFor="let additionalUnitIndex of additionalUnitArrayPrototype(6); let i = index" [value]="i">
+              {{parseService.parseAdditionalUnit(i) | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="!isEditable">
+    <div class="row m-0">
+      <div class="col-sm-8 mt-4 p-0 p-sm-2">
+        <fieldset class="border p-2 w-100 h-100">
+          <legend class="w-auto text-header"><strong> Obszar </strong></legend>
+          <mat-chip-list class="d-inline-flex">
+            <mat-chip class="text-medium pointer-events-disabled blue-chip" *ngFor="let area of this.loadedSubmission.areas">
+              {{parseService.parseArea(area) | translate}}
+            </mat-chip>
+          </mat-chip-list>
+        </fieldset>
+      </div>
+      <div class="col-sm-4 mt-4 p-0 p-sm-2">
+        <fieldset class="border p-2 w-100 h-100">
+          <legend class="w-auto text-header"><strong> Kategoria </strong></legend>
+          <mat-chip-list class="d-inline-flex">
+            <mat-chip class="text-medium pointer-events-disabled darkblue-chip">
+              {{parseService.parseCategory(this.loadedSubmission.category) | translate}}
+            </mat-chip>
+          </mat-chip-list>
+        </fieldset>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-12 mt-4 p-0 p-sm-2">
+        <fieldset class="border p-2 w-100 h-100">
+          <legend class="w-auto text-header"><strong> Temat </strong></legend>
+          {{this.loadedSubmission.topic}}
+        </fieldset>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-12 mt-4 p-0 p-sm-2">
+        <fieldset class="border p-2 w-100 h-100">
+          <legend class="w-auto text-header"><strong> Opis </strong></legend>
+          {{this.loadedSubmission.description}}
+        </fieldset>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-sm-6 mt-4 p-0 p-sm-2">
+        <fieldset class="border p-2 w-100 h-100">
+          <legend class="w-auto text-header"><strong>{{parseTypedResource('additionalLabel') | translate}}</strong></legend>
+          <span *ngIf="this.loadedSubmission.additional">{{this.loadedSubmission.additional}}</span>
+        </fieldset>
+      </div>
+      <div class="col-sm-6 mt-4 p-0 p-sm-2">
+        <fieldset class="border p-2 w-100 h-100">
+          <legend class="w-auto text-header"><strong>{{parseTypedResource('additionalValueLabel') | translate}}</strong></legend>
+          <span *ngIf="this.loadedSubmission.additionalValue">{{this.loadedSubmission.additionalValue}} / {{parseService.parseAdditionalUnit(this.loadedSubmission.additionalUnit) | translate}}</span>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

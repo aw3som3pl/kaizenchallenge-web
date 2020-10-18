@@ -15,6 +15,7 @@ export class NewSubmission implements InewSubmission{
   topic: string;
   type: number;
 
+
   constructor(additional: string, additionalUnit: number, additionalValue: number, area: [], attachment: string[], category: [], description: string, designatedReviewerId: number, topic: string, type: number) {
     this.additional = additional;
     this.additionalUnit = additionalUnit;

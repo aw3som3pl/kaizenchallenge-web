@@ -1,0 +1,40 @@
+fieldset {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px !important;
+  border-color: var(--grey) !important;
+  width: fit-content;
+}
+
+@media screen and (max-width: 746px) {
+  .content-container {
+    height: 80vh;
+    overflow-y: auto;
+    padding-bottom: 50%;
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 30%;
+  }
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 30%;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+  .content-container {
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 30%;
+  }
+}
+

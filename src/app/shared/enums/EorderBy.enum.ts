@@ -1,0 +1,7 @@
+export enum EorderByEnum {
+  MAX_ADDITIONAL_VALUE,
+  MOST_ACTIVE,
+  LEAST_ACTIVE,
+  MOST_DELAYED,
+  NEWEST
+}

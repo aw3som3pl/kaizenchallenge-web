@@ -1,0 +1,190 @@
+/* ---------------------------------------------------
+GLOBAL
+----------------------------------------------------- */
+
+body{
+
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.search-filter-disabled {
+  display: none;
+}
+
+.search-filter-container{
+  padding: 0;
+  background-color: var(--white);
+}
+
+.search-filter-folded {
+  display: none;
+  transition: 0.5s;
+}
+
+.search-button{
+  background-color: var(--blue);
+}
+
+.search-button-icon{
+  fill: var(--white);
+}
+
+#paginator-bar {
+  background-color: var(--lightgrey);
+}
+
+#paginator-bar .search-button{
+  background-color: var(--blue);
+  height: 90px;
+  width: 90px;
+}
+
+#paginator-bar .search-button-icon{
+  fill: var(--white);
+}
+
+#paginator-bar .advanced-filter-button{
+  color: var(--white);
+  background-color: var(--blue);
+}
+
+#paginator-bar .advanced-filter-icon .isOpen{
+  transform: rotate(180deg);
+}
+
+#paginator-bar .toggle-filter-button{
+  color: var(--black);
+  background-color: var(--white);
+}
+
+#paginator-bar .toggle-filter-icon{
+  fill: var(--black);
+}
+
+#paginator-bar .export-button{
+  color: var(--green);
+  background-color: var(--white);
+}
+
+#paginator-bar .export-button-icon{
+  fill: var(--green);
+}
+
+::ng-deep .mat-paginator .mat-paginator-container{
+  justify-content: center;
+}
+::ng-deep .mat-paginator .mat-paginator-range-label {
+  margin: 0;
+}
+
+/* Extra small devices (phones, up to 480px) */
+@media screen and (max-width: 746px) {
+
+
+  .search-button{
+    width: 50px;
+    height: 50px;
+    background-color: var(--blue);
+  }
+
+  .search-button-icon{
+    width: 30px;
+    height: 30px;
+    fill: var(--white);
+  }
+
+  .export-button{
+    background-color: var(--blue);
+  }
+
+  .export-button-icon{
+    width: 20px;
+    height: 20px;
+    fill: var(--white);
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+  .search-button{
+    width: 70px;
+    height: 70px;
+    background-color: var(--blue);
+  }
+
+  .search-button-icon{
+    width: 40px;
+    height: 40px;
+    fill: var(--white);
+  }
+
+  .export-button{
+    background-color: var(--blue);
+  }
+
+  .export-button-icon{
+    width: 20px;
+    height: 20px;
+    fill: var(--white);
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .search-button{
+    width: 90px;
+    height: 90px;
+    background-color: var(--blue);
+  }
+
+  .search-button-icon{
+    fill: var(--white);
+    width: 60px;
+    height: 60px;
+  }
+
+  .export-button{
+    background-color: var(--blue);
+  }
+
+  .export-button-icon{
+    width: 20px;
+    height: 20px;
+    fill: var(--white);
+  }
+
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  .search-button{
+    width: 90px;
+    height: 90px;
+    background-color: var(--blue);
+  }
+
+  .search-button-icon{
+    fill: var(--white);
+    width: 60px;
+    height: 60px;
+  }
+
+  .export-button{
+    background-color: var(--blue);
+  }
+
+  .export-button-icon{
+    width: 20px;
+    height: 20px;
+    fill: var(--white);
+  }
+
+}
+
+
