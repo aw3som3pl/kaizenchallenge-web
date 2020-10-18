@@ -8,6 +8,7 @@ import {EuploadAction} from '../../../../shared/enums/Eupload-action.enum';
 import {FormGroup} from '@angular/forms';
 import {NewSubmission} from '../../../../shared/models/NewSubmission';
 import {InewSubmissionResponse} from '../../../../shared/models/response/interfaces/inew-submission-response';
+import {projectConfig} from '../../../../../config/project-config';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class CreateSubmissionService {
 
   getReviewersList(searchParams: ReviewerRequest): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.getReviewerListEndpointURL, JSON.stringify(searchParams))
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.getReviewerListEndpointURL}`, JSON.stringify(searchParams))
         .subscribe( (data: IreviewerResponse) => {
             console.log(JSON.stringify(data));
             resolve(data);
@@ -47,7 +48,7 @@ export class CreateSubmissionService {
   sendNewSubmissionData(newSubmission: NewSubmission): Promise<any> {
     console.log(JSON.stringify(newSubmission));
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.sendNewSubmissionEndpointURL, JSON.stringify(newSubmission))
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.sendNewSubmissionEndpointURL}`, JSON.stringify(newSubmission))
         .subscribe( (data: InewSubmissionResponse) => {
             resolve(data);
           },

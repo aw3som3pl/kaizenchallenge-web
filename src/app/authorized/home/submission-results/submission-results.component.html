@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Authorized skeleton view</title>
+</head>
+
+<body>
+<div class="row m-0 p-0">
+  <div class="col-12 p-0">
+    <div class="search-filter-container" [ngClass]="{'search-filter-disabled': !this.submissionResultsService.isSearchFilterEnabled}">
+      <form [formGroup]="resultsForm" class="text-small ml-2 mt-2" [ngClass]="{'search-filter-folded': this.submissionResultsService.isSearchFilterFolded}">
+        <div id="search-filter" class="row m-0">
+          <div class="col-9">
+            <div class="row">
+              <div class="col-sm-6 pl-2 pr-0">
+                <div class="row">
+                  <div class="col-12 pr-0">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Wybierz typ zestawienia</mat-label>
+                      <mat-select #resultsType formControlName="resultsType">
+                        <mat-option *ngFor="let orderByIndex of resultsTypeArrayPrototype(3); let i = index" [value]="i">
+                          {{parseService.parseResultsType(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                      <button mat-button *ngIf="resultsType.value !== 0 " matSuffix mat-icon-button aria-label="Clear" (click)="resultsTypeValid.setValue(0); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-sm-6 pl-2 pr-0">
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Filtruj po typie</mat-label>
+                      <mat-select #type formControlName="type" multiple>
+                        <mat-option *ngFor="let typeIndex of typeArrayPrototype(2); let i = index" [value]="i">
+                          {{parseService.parseType(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                      <button mat-button *ngIf="type.value" matSuffix mat-icon-button aria-label="Clear" (click)="typeValid.setValue(null); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6 pl-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Okres przeszukiwania</mat-label>
+                      <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate #pickerStart formControlName="dateRangeStart" placeholder="Szukaj OD">
+                        <input matEndDate #pickerEnd formControlName="dateRangeEnd" placeholder="Szukaj DO">
+                      </mat-date-range-input>
+                      <mat-datepicker-toggle *ngIf="!pickerStart.value" matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-date-range-picker #picker></mat-date-range-picker>
+                      <button mat-button *ngIf="pickerStart.value" matSuffix mat-icon-button aria-label="Clear" (click)="dateRangeStartValid.setValue(null); dateRangeEndValid.setValue(null);  $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 pl-2 pr-0">
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Filtruj po obszarze</mat-label>
+                      <mat-select #areas formControlName="areas" multiple>
+                        <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
+                          {{parseService.parseArea(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                      <button mat-button *ngIf="areas.value" matSuffix mat-icon-button aria-label="Clear" (click)="areasValid.setValue(null); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-6 pl-2">
+                    <mat-form-field class="w-100" appearance="outline">
+                      <mat-label>Filtruj po kategorii</mat-label>
+                      <mat-select #category formControlName="category" multiple>
+                        <mat-option *ngFor="let categoryIndex of categoryArrayPrototype(8); let i = index" [value]="i">
+                          {{parseService.parseCategory(i) | translate}}
+                        </mat-option>
+                      </mat-select>
+                      <button mat-button *ngIf="category.value" matSuffix mat-icon-button aria-label="Clear" (click)="categoryValid.setValue(null); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="row h-100">
+              <div class="col-12 d-flex justify-content-center pb-4">
+                <button mat-fab class="search-button my-auto" type="submit">
+                  <svg-icon class="my-auto" src="../../assets/img/svg/submission_search.svg" svgClass="search-button-icon"></svg-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div id="paginator-bar" class="row m-0 p-0">
+        <div class="col-12 d-inline-flex justify-content-between">
+          <button mat-button class="export-button text-medium my-auto">
+            <span class="sm-hidden mr-2">Eksportuj </span>
+            <svg-icon src="../../assets/img/svg/excel.svg" [applyClass]="false" svgClass="export-button-icon"></svg-icon>
+          </button>
+          <button mat-button class="toggle-filter-button text-medium my-auto" (click)="this.submissionResultsService.toggleSearchFilterFolded()">
+            <span *ngIf="this.submissionResultsService.isSearchFilterFolded" class="sm-hidden mr-2">Pokaż filtry</span>
+            <span *ngIf="!this.submissionResultsService.isSearchFilterFolded" class="sm-hidden mr-2">Ukryj filtry</span>
+            <svg-icon *ngIf="this.submissionResultsService.isSearchFilterFolded" src="../../assets/img/svg/search.svg" class="toggle-filter-icon" [ngClass]="{'isOpen' : true}" [svgStyle]="{'width.px': '20', 'height.px': '30'}"></svg-icon>
+            <svg-icon *ngIf="!this.submissionResultsService.isSearchFilterFolded" src="../../assets/img/svg/arrow_up.svg" class="toggle-filter-icon" [ngClass]="{'isOpen' : true}" [svgStyle]="{'width.px': '20', 'height.px': '30'}"></svg-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row m-0 p-0 h-100">
+  <div class="col-12 pr-0 pl-0">
+    <div class="container-fluid p-0" style="overflow-y: auto; height: 70vh;">
+      <div class="row m-0 mt-4">
+        <div class="col-12 m-0 d-flex justify-content-center">
+          <div class="text-medium w-75" style="display: block;">
+            <canvas baseChart class="text-medium"
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [plugins]="barChartPlugins"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType">
+            </canvas>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0 mt-4">
+        <div class="col-12 m-0 d-flex justify-content-center">
+          <div class="text-medium w-75" style="display: block;">
+            <div style="display: block;">
+              <canvas baseChart
+                      [datasets]="radarChartData"
+                      [options]="radarChartOptions"
+                      [labels]="radarChartLabels"
+                      [chartType]="radarChartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

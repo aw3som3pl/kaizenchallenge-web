@@ -10,6 +10,7 @@ import {Erole} from '../../../../../shared/enums/Erole.enum';
 import {SessionService} from '../../../../../shared/services/session.service';
 import {LikeActionRequest} from '../../../../../shared/models/request/LikeActionRequest';
 import {IlikeActionResponse} from '../../../../../shared/models/response/interfaces/ilike-action-response';
+import {projectConfig} from '../../../../../../config/project-config';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class SubmissionViewService {
 
   getSubmissionContents(submissionId: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.get(`${environment.getSubmissionContentsEndpointURL}/${submissionId}`)
+      this.http.get(`${projectConfig.apiBaseUrl}${environment.getSubmissionContentsEndpointURL}/${submissionId}`)
         .subscribe( (data: IsubmissionContent) => {
             resolve(data);
           },
@@ -33,7 +34,7 @@ export class SubmissionViewService {
 
   sendSubmissionUpdateData( submissionUpdate: SubmissionUpdate): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.updateSubmissionDataEndpointURL,
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.updateSubmissionDataEndpointURL}`,
         JSON.stringify(submissionUpdate))
         .subscribe( (data: IsubmissionUpdateResponse) => {
             resolve(data);
@@ -46,7 +47,7 @@ export class SubmissionViewService {
 
   sendSubmissionLike(request: LikeActionRequest){
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.sendNewLikeActionEndpointURL, request)
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.sendNewLikeActionEndpointURL}`, request)
         .subscribe( (data: IlikeActionResponse) => {
             resolve(data);
           },

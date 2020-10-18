@@ -1,0 +1,36 @@
+<div *ngIf="percentage | async as pct">
+  <div class="row m-0">
+    <div class="col-10 align-items-center">
+      <progress class="w-100 h-100" [value]="pct" max="100"></progress>
+    </div>
+    <div class="col-2 text-center">
+      {{ pct | number:'1.0-0' }}%
+    </div>
+  </div>
+</div>
+
+<div *ngIf="snapshot | async as snap">
+  <!--{{ snap.bytesTransferred }} z {{ snap.totalBytes }}-->
+  <div class="row-cols-1">
+    <div class="row m-0">
+      <div class="col-12 m-0">
+        <div class="float-left overflow-hidden">
+          <strong>{{this.uploadRequest.file.name}}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0">
+      <div class="col-12">
+        <div class="float-right">
+          <button mat-chip class="upload-cancel-button" (click)="task.cancel() && emitUploadAction(this.uploadRequest.fileIndex, null, euploadAction.ABORTED)" [disabled]="!isActive(snap)">Przerwij</button>
+          <button mat-chip class="upload-delete-button" (click)="deleteFile()" [disabled]="isActive(snap)">Usuń</button>
+        </div>
+      </div>
+    </div>
+    <!--
+    <div *ngIf="downloadURL as url">
+      <a [href]="url" target="_blank" rel="noopener">Pobierz</a>
+    </div>
+    -->
+  </div>
+</div>

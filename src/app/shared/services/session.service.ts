@@ -9,6 +9,7 @@ import {UserFull} from '../models/UserFull';
 import {User} from 'firebase';
 import {Router} from '@angular/router';
 import {InotificationsListingResponse} from '../models/response/interfaces/inotifications-listing-response';
+import {projectConfig} from '../../../config/project-config';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class SessionService {
 
   reloadUserData(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.get(environment.fetchUserDataEndpointURL)
+      this.http.get(`${projectConfig.apiBaseUrl}${environment.fetchUserDataEndpointURL}`)
         .subscribe( (data: IuserFull) => {
             resolve(data);
           },
@@ -74,7 +75,7 @@ export class SessionService {
 
   getActiveNotificationsList(startIndex: number, batchSize: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.get(`${environment.getActiveNotificationsCountEndpointURL}/${startIndex}/${batchSize}`)
+      this.http.get(`${projectConfig.apiBaseUrl}${environment.getActiveNotificationsCountEndpointURL}/${startIndex}/${batchSize}`)
         .subscribe( (data: [InotificationsListingResponse]) => {
             resolve(data);
           },

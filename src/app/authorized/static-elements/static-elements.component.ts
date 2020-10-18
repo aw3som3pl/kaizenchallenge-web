@@ -58,7 +58,7 @@ export class StaticElementsComponent implements OnInit {
       this.sidebarOpen = isVisible;
     });
 
-    const userSessionTimerSubscription = timer(0, 15000).pipe(  // Co 10 sekund update
+    const userSessionTimerSubscription = timer(0, 180000).pipe(  // Co 10 sekund update
       switchMap(() => this.sessionService.fetchNewIdToken()))
       .subscribe((userData: IuserFull) => {
         console.log('USER UPDATED');

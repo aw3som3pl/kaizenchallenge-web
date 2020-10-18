@@ -1,0 +1,202 @@
+<body>
+  <div class="container-fluid" *ngIf="isLoadingContents">
+    <div class="row" style="height: 50vh">
+      <div class="col-12 d-flex justify-content-center">
+        <span class="text-header my-auto mr-5">Ładuję zgłoszenie... </span>
+        <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="loadedSubmission && !isLoadingContents">
+    <div class="row m-0 mt-0 mt-sm-3 ml-sm-3 p-0 submission-view-header" [ngClass]="{'type-idea': this.loadedSubmission.type === 0, 'type-problem': this.loadedSubmission.type === 1}">
+      <div class="col-12 p-0">
+        <div class="row m-0 p-0">
+          <div class="col-sm-7 text-large p-0">
+            <div class="row m-0 p-0">
+              <div class="col-4 p-2">
+                <div class="my-auto">
+                  <mat-chip-list>
+                    <mat-chip class="text-large back-to-search-button p-2" (click)="onBacktoSearch()">
+                      <svg-icon src="../../assets/img/svg/back_search.svg" class="mr-2" [svgStyle]="{'width.px': '20', 'height.px': '20'}"></svg-icon>
+                      <span class="text-uppercase mr-2">Wróć</span>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+              <div class="col-2 p-2 d-flex justify-content-end">
+                <mat-chip-list>
+                  <mat-chip class="text-large pointer-events-disabled">
+                {{this.loadedSubmission.submissionId}}
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+              <div class="col-6 p-0 d-flex justify-content-center">
+                <div class="my-auto">
+                  <mat-chip-list>
+                    <mat-chip class="text-medium status-indicator pointer-events-disabled p-2" [ngStyle]="parseService.parseSubmissionStatusChipDisplayStyle(loadedSubmission.status)">
+                      <span class="text-uppercase"><strong>{{parseService.parseStatus(loadedSubmission.status) | translate}}</strong></span>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5 text-large p-0">
+            <div class="row m-0 p-2 h-100">
+              <div class="col-12 p-0 d-inline-flex justify-content-center my-auto">
+                <span class="my-auto text-large ml-2"><strong>{{this.loadedSubmission.authorName}}</strong></span>
+                <span class="my-auto text-small ml-2">{{ this.parseService.parseTimestampToDate(this.loadedSubmission.timestampCreated)}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loadedSubmission.currentReviewerRole!==null || loadedSubmission.editorRole!==null" class="row m-0 ml-sm-3" style="background-color: var(--darkblue)">
+      <div class="col-12 m-0 p-0 p-sm-2 pl-sm-3">
+        <div class="row m-0">
+          <div class="col-12 p-0 m-0">
+            <div class="d-inline-flex justify-content-center current-reviewer-info-container">
+              <span class="d-flex align-items-center">
+                <mat-icon class="editable-icon" *ngIf="isEditable">spellcheck</mat-icon>
+                <mat-icon class="reviewer-icon" *ngIf="!isEditable">rate_review</mat-icon>
+              </span>
+              <span style="color: var(--white)" class="my-auto ml-2 text-medium">
+                {{determineReviewerName()}}
+              </span>
+              <mat-chip-list class="my-auto ml-2 sm-hidden">
+                <mat-chip class="text-small pointer-events-disabled p-2 text-center ml-2">
+                  <span class="text-uppercase">{{determineReviewerId()}}</span>
+                </mat-chip>
+                <mat-chip class="text-small pointer-events-disabled p-2 text-center ml-2" [ngStyle]="parseService.parseRoleChipDisplayStyle(determineReviewerRole())">
+                  <span class="text-uppercase" style="color: var(--white)">{{parseService.parseRole(determineReviewerRole()) | translate}}</span>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 p-0 ml-sm-3">
+      <div class="col-12 submission-data-container pr-0">
+        <div class="row m-0 p-0">
+          <div class="col-12 pt-2 pl-0 pr-0" style="background-color: var(--darkblue)">
+            <mat-tab-group id="submission-navigation" class="" [selectedIndex]="currentActiveTab" (selectedTabChange)="onTabChange($event)">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div [ngClass]="{'active': currentActiveTab === activeTabs.CONTENTS}">
+                    <a class="interactive-button">
+                      <span class="container menu-item text-large">Treść</span>
+                      <span *ngIf="isEditable && !isContentsDataValid()">
+                        <mat-icon class="editable-icon">new_releases</mat-icon>
+                      </span>
+                      <span *ngIf="isEditable && isContentsDataValid()">
+                        <mat-icon class="editable-icon-valid">check_circle</mat-icon>
+                      </span>
+                    </a>
+                  </div>
+                </ng-template>
+                <ng-template matTabContent>
+                  <div class="tab-content mh-100">
+                    <app-sub-content [updateValidityCheck]="editableContentValidityCheck.asObservable()"
+                                     [loadedSubmission]="loadedSubmission" [isEditable]="isEditable"
+                                     (submissionContentUpdateAction)="interceptContentUpdateAction($event)"></app-sub-content>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div [ngClass]="{'active': currentActiveTab === activeTabs.REVIEWS}">
+                    <a class="interactive-button">
+                      <span class="container menu-item text-large">Recenzje</span>
+                    </a>
+                  </div>
+                </ng-template>
+                <div class="tab-content mh-100">
+                  <app-sub-reviews [loadedSubmission]="loadedSubmission" (reviewAction)="interceptNewReviewAction($event)"></app-sub-reviews>
+                </div>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div [ngClass]="{'active': currentActiveTab === activeTabs.COMMENTS}">
+                    <a class="interactive-button">
+                      <span class="container menu-item text-large">Komentarze</span>
+                    </a>
+                  </div>
+                </ng-template>
+                <div class="tab-content mh-100">
+                  <app-sub-comments [submissionId]="this.loadedSubmission.submissionId"></app-sub-comments>
+                </div>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div [ngClass]="{'active': currentActiveTab === activeTabs.ATTACHMENTS}">
+                    <a class="interactive-button">
+                      <span class="container menu-item text-large">Załączniki</span>
+                      <span *ngIf="isEditable && !isAttachmentsDataValid()">
+                        <mat-icon class="editable-icon">new_releases</mat-icon>
+                      </span>
+                      <span *ngIf="isEditable && isAttachmentsDataValid()">
+                        <mat-icon class="editable-icon-valid">check_circle</mat-icon>
+                      </span>
+                    </a>
+                  </div>
+                </ng-template>
+                <div class="tab-content">
+                  <app-sub-attachments [updateValidityCheck]="editableAttachmentsValidityCheck.asObservable()"
+                                       [loadedSubmission]="loadedSubmission" [isEditor]="isEditable"
+                                       (submissionAttachmentsUpdateAction)="interceptAttachmentsUpdateAction($event)"></app-sub-attachments>
+                </div>
+              </mat-tab>
+             <!-- <mat-tab>
+                <ng-template mat-tab-label>
+                  <div [ngClass]="{'active': currentActiveTab === activeTabs.LIKES}">
+                    <a class="interactive-button">
+                      <span class="container menu-item text-large">Wsparcie</span>
+                    </a>
+                  </div>
+                </ng-template>
+                <div class="tab-content mh-100">
+                  <app-sub-likes [submissionId]="this.loadedSubmission.submissionId"></app-sub-likes>
+                </div>
+              </mat-tab> -->
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <div [ngClass]="{'active': currentActiveTab === activeTabs.HISTORY}">
+                    <a class="interactive-button">
+                      <span class="container menu-item text-large">Historia</span>
+                    </a>
+                  </div>
+                </ng-template>
+                <div class="tab-content mh-100">
+                  <app-sub-history [loadedSubmission]="loadedSubmission"></app-sub-history>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="currentActiveTab!== activeTabs.REVIEWS && currentActiveTab!== activeTabs.COMMENTS" id="interaction-options" class="row text-large p-2">
+      <div class="col">
+        <button *ngIf="isUpdatedDataReadyForUpload()" (click)="updateSubmissionData()"
+                mat-raised-button class="upload-edit-button mr-2" [ngClass]="{'valid' : isLocalDataValid(currentActiveTab), 'invalid' : !isLocalDataValid(currentActiveTab)}">
+          <mat-icon>save</mat-icon>
+          <span class="sm-hidden ml-2 mr-2">Zapisz i aktualizuj</span>
+        </button>
+        <button *ngIf="isEditConfirmationRequired()"
+                mat-raised-button class="confirm-edit-button mr-2" [ngClass]="{'valid' : isLocalDataValid(currentActiveTab), 'invalid' : !isLocalDataValid(currentActiveTab)}" (click)="validateLocalData()">
+          <mat-icon>check</mat-icon>
+          <span class="sm-hidden ml-2 mr-2">Zatwierdź zmiany</span>
+        </button>
+        <button mat-raised-button class="like-button mr-2" [ngClass]="{'already-liked' : isLiked}" (click)="performLikeAction()">
+          <mat-icon class="ml-2">thumb_up</mat-icon>
+          <span class="sm-hidden ml-2">Wesprzyj</span>
+          <mat-chip class="ml-2 text-large pointer-events-disabled white-chip">
+            {{this.loadedSubmission.likeCount}}
+          </mat-chip>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>

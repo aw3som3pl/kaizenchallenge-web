@@ -1,0 +1,76 @@
+
+/* --------GLOBAL--------- */
+
+.background-layer{
+  background-color: var(--darkblue);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.content-container{
+  overflow-y: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Extra small devices (phones, up to 480px)  bootstrap SM*/
+@media screen and (max-width: 767px) {
+
+  .background-layer{
+    top: 60px;
+
+    position: sticky;
+  }
+
+  .content-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .background-layer{
+    top: 60px;
+    position: sticky;
+  }
+
+  .content-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 993px) and (max-width: 1199px) {
+
+  .background-layer{
+    top: 60px;
+    position: sticky;
+  }
+
+  .content-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+  .background-layer{
+
+  }
+
+  .content-container{
+    background-color: var(--white);
+    border-radius: 10px 0 0 0;
+  }
+
+
+}
+
+

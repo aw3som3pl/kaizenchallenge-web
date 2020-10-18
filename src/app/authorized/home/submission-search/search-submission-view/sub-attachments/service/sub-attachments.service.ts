@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import {take} from 'rxjs/operators';
 import {UploadState} from '../../../../../../shared/models/events/UploadState';
 import {EuploadAction} from '../../../../../../shared/enums/Eupload-action.enum';
+import {projectConfig} from '../../../../../../../config/project-config';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class SubAttachmentsService {
 
   getSubmissionAttachments(submissionId: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.get(`${environment.getSubmissionAttachmentsEndpointURL}/${submissionId}`)
+      this.http.get(`${projectConfig.apiBaseUrl}${environment.getSubmissionAttachmentsEndpointURL}/${submissionId}`)
         .subscribe( (data: IattachmentsResponse) => {
             resolve(data);
           },

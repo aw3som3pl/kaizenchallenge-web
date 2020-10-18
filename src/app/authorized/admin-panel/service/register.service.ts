@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment';
 import {catchError, retry, tap} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {RegistrationForm} from '../../../shared/models/RegistrationForm';
+import {projectConfig} from '../../../../config/project-config';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class RegisterService {
 
   preformRegistrationAttempt(registrationForm: RegistrationForm): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.registerUserEndpointURL, JSON.stringify(registrationForm))
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.registerUserEndpointURL}`, JSON.stringify(registrationForm))
         .subscribe( data => {
             console.log(JSON.stringify(data));
             resolve(data);

@@ -1,0 +1,64 @@
+/* Extra small devices (phones, up to 480px) */
+
+
+.notification{
+  border-radius: 10px;
+  border-color: var(--lightgrey);
+  background-color: var(--blue);
+  border-width: 3px;
+  border-style: solid;
+  width: 100%;
+}
+
+.notification:hover{
+  border-color: var(--orange);
+  cursor: pointer;
+}
+
+.notification-header{
+  padding: 4px;
+  color: var(--white);
+}
+
+.notification-body{
+  background-color: var(--white);
+  color: var(--black);
+  padding: 10px;
+}
+
+.notification-footer{
+  padding-right: 10px;
+  color: var(--white);
+}
+
+@media screen and (max-width: 746px) {
+  .notifications-container {
+    height: 50vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+  .notifications-container {
+    height: 50vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .notifications-container {
+    height: 50vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+  .notifications-container {
+    height: 50vh;
+    overflow: auto;
+    padding-bottom: 80%;
+  }
+}

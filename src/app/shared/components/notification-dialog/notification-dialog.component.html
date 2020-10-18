@@ -1,0 +1,39 @@
+<div class="row m-0">
+  <div class="col-12 d-inline-flex justify-content-between">
+    <span class="text-header my-auto">Powiadomienia</span>
+    <mat-icon (click)="close()">close</mat-icon>
+  </div>
+</div>
+<mat-dialog-content class="p-0">
+  <div class="row m-0">
+    <div class="col-12 m-0 p-0">
+      <div class="notifications-container p-2 m-0">
+        <div *ngFor="let notification of this.notificationsListing">
+          <div class="notification m-0 mt-4" (click)="openNotificationLink(notification.url)">
+            <div class="row m-0 notification-header text-medium">
+              <div class="col-12 m-0 d-inline-flex justify-content-between">
+                <span class="text-uppercase my-auto">{{notification.header}}</span>
+                <mat-chip-list>
+                  <mat-chip class="pointer-events-disabled p-2" [ngStyle]="parseService.parseHistoryAndReviewStatusChipDisplayStyle(notification.type)">
+                    <span class="text-small text-uppercase text-center">{{parseService.parseStatus(notification.type) | translate}}</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+            <div class="row m-0 text-small">
+              <div class="col-12 notification-body">
+                <strong>{{notification.title}}: </strong>
+                {{notification.description}}
+              </div>
+            </div>
+            <div class="row m-0 notification-footer text-misc">
+              <div class="col-12 p-0 d-block text-right">
+                {{parseService.parseTimestampToDate(notification.created)}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

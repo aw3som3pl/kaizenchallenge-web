@@ -45,6 +45,7 @@ import { NotificationDialogComponent } from './shared/components/notification-di
 import { ChoiceDialogComponent } from './shared/components/choice-dialog/choice-dialog.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { NotificationsDialogComponent } from './notifications-dialog/notifications-dialog.component';
+import {projectConfig} from '../config/project-config';
 
 
 @NgModule({
@@ -91,7 +92,7 @@ import { NotificationsDialogComponent } from './notifications-dialog/notificatio
                 deps: [HttpClient]
             }
         }),
-        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireModule.initializeApp(projectConfig.firebase),
         AngularSvgIconModule.forRoot(),
         routing,
         FormsModule,

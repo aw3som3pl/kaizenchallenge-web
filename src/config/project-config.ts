@@ -9,5 +9,5 @@ export const projectConfig = {
     appId: '1:38818715791:web:451b52b27cc08190feb8fa',
     measurementId: 'G-D32R4V8NNR'
   },
-  apiBaseUrl: 'https://kaizenonline.azurewebsites.net/'
+  apiBaseUrl: 'https://kaizenonline.azurewebsites.net'
 };

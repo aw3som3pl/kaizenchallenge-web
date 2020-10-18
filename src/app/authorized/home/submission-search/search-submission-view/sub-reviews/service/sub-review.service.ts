@@ -16,6 +16,7 @@ import {Reviewer} from '../../../../../../shared/models/Reviewer';
 import {SubmissionContent} from '../../../../../../shared/models/SubmissionContent';
 import {isLineBreak} from 'codelyzer/angular/sourceMappingVisitor';
 import {EreviewersSourceEnum} from '../../../../../../shared/enums/Ereviewers-source.enum';
+import {projectConfig} from '../../../../../../../config/project-config';
 
 
 @Injectable({
@@ -29,7 +30,7 @@ export class SubReviewService {
   getSubmissionReviews(submissionId: number): Promise<any> {
     console.log(submissionId);
     return new Promise<any>((resolve, reject) => {
-      this.http.get(`${environment.getSubmissionReviewsEndpointURL}/${submissionId}`)
+      this.http.get(`${projectConfig.apiBaseUrl}${environment.getSubmissionReviewsEndpointURL}/${submissionId}`)
         .subscribe( (data: IsubmissionReviewsResponse) => {
             resolve(data);
           },
@@ -41,7 +42,7 @@ export class SubReviewService {
 
   getNextReviewersListFromDatabase(searchParams: ReviewerRequest): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.getReviewerListEndpointURL, JSON.stringify(searchParams))
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.getReviewerListEndpointURL}`, JSON.stringify(searchParams))
         .subscribe( (data: IreviewerResponse) => {
             console.log(JSON.stringify(data));
             resolve(data);
@@ -301,7 +302,7 @@ export class SubReviewService {
     }
 
     return new Promise<any>((resolve, reject) => {
-      this.http.post(environment.sendNewSubmissionReviewDataEndpointURL,
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.sendNewSubmissionReviewDataEndpointURL}`,
         JSON.stringify(reviewBody))
         .subscribe( (data: InewReviewResponse) => {
             console.log(JSON.stringify(data));
