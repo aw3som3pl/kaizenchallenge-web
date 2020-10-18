@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "kaizenchallenge-demo"
+    "prod": "kaizenchallenge-demo"
+    "dev": "kaizenchallenge-testdev"
   }
 }
