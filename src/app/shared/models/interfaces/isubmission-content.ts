@@ -4,6 +4,7 @@ export interface IsubmissionContent {
   submissionId: number;
   type: number;
   authorId: number;
+  authorEmployeeId: string;
   authorName: string;
   status: number;
   category: number;
@@ -16,6 +17,7 @@ export interface IsubmissionContent {
   currentReviewerName: string;
   currentReviewerRole: number;
   currentReviewerId: number;
+  currentReviewerEmployeeId: string;
   history: [IsubmissionHistory];
   timestampCreated: string;
   likeCount: number;
@@ -25,5 +27,6 @@ export interface IsubmissionContent {
   editor: number;
   editorRole: number;
   editorName: string;
+  editorEmployeeId: string;
   isLiked: boolean;
 }

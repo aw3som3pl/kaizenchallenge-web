@@ -9,6 +9,7 @@ import {FormGroup} from '@angular/forms';
 import {NewSubmission} from '../../../../shared/models/NewSubmission';
 import {InewSubmissionResponse} from '../../../../shared/models/response/interfaces/inew-submission-response';
 import {projectConfig} from '../../../../../config/project-config';
+import {Erole} from '../../../../shared/enums/Erole.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,20 @@ export class CreateSubmissionService {
       step1Form.value.topic,
       submissionType
     );
+  }
+
+  getNextReviewerRole(userRole: number): [number] {
+    const r = Erole;
+
+    switch (userRole) {
+      case r.USER:
+        return [1];
+      case r.LEADER:
+      case r.SUPERVISOR:
+        return [userRole + 1];
+      case r.COORDINATOR:
+        return [userRole];
+    }
   }
 
   sendNewSubmissionData(newSubmission: NewSubmission): Promise<any> {

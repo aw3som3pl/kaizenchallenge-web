@@ -22,8 +22,8 @@
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Filtruj po obszarze</mat-label>
                     <mat-select #areas formControlName="areas" multiple  [disabled]="this.submissionIdValid.value">
-                      <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
-                        {{parseService.parseArea(i) | translate}}
+                      <mat-option *ngFor="let areaIndex of arraysService.areaArrayPrototype(sessionService.getUserState(), sessionService.getUserAreas())" [value]="areaIndex">
+                        {{parseService.parseArea(areaIndex) | translate}}
                       </mat-option>
                     </mat-select>
                     <button mat-button *ngIf="areas.value" matSuffix mat-icon-button aria-label="Clear" (click)="areasValid.setValue(null); $event.stopPropagation()">
@@ -35,8 +35,8 @@
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Filtruj po kategorii</mat-label>
                     <mat-select #category formControlName="category" multiple  [disabled]="this.submissionIdValid.value">
-                      <mat-option *ngFor="let categoryIndex of categoryArrayPrototype(8); let i = index" [value]="i">
-                        {{parseService.parseCategory(i) | translate}}
+                      <mat-option *ngFor="let categoryIndex of arraysService.categoryArrayPrototype()" [value]="categoryIndex">
+                        {{parseService.parseCategory(categoryIndex) | translate}}
                       </mat-option>
                     </mat-select>
                     <button mat-button *ngIf="category.value" matSuffix mat-icon-button aria-label="Clear" (click)="categoryValid.setValue(null); $event.stopPropagation()">
@@ -52,7 +52,7 @@
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Filtruj po statusie</mat-label>
                     <mat-select #status formControlName="status" multiple  [disabled]="this.submissionIdValid.value">
-                      <mat-option *ngFor="let statusIndex of statusArrayPrototype(); let i = index" [value]="statusIndex">
+                      <mat-option *ngFor="let statusIndex of arraysService.statusArrayPrototype(sessionService.getUserRole())" [value]="statusIndex">
                         {{parseService.parseStatus(statusIndex) | translate}}
                       </mat-option>
                     </mat-select>
@@ -65,8 +65,8 @@
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Ułóż w kolejności</mat-label>
                     <mat-select #orderBy formControlName="orderBy"  [disabled]="this.submissionIdValid.value">
-                      <mat-option *ngFor="let orderByIndex of orderByArrayPrototype(5); let i = index" [value]="i">
-                        {{parseService.parseOrderBy(i) | translate}}
+                      <mat-option *ngFor="let orderByIndex of arraysService.orderByArrayPrototype_SubmissionSearch()" [value]="orderByIndex">
+                        {{parseService.parseOrderBy_SUB(orderByIndex) | translate}}
                       </mat-option>
                     </mat-select>
                     <button mat-button *ngIf="orderBy.value !== 4 " matSuffix mat-icon-button aria-label="Clear" (click)="orderByValid.setValue(4); $event.stopPropagation()">
@@ -84,8 +84,8 @@
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Filtruj po typie</mat-label>
                     <mat-select #type formControlName="type" multiple  [disabled]="this.submissionIdValid.value">
-                      <mat-option *ngFor="let typeIndex of typeArrayPrototype(2); let i = index" [value]="i">
-                        {{parseService.parseType(i) | translate}}
+                      <mat-option *ngFor="let typeIndex of arraysService.typeArrayPrototype()" [value]="typeIndex">
+                        {{parseService.parseType(typeIndex) | translate}}
                       </mat-option>
                     </mat-select>
                     <button mat-button *ngIf="type.value" matSuffix mat-icon-button aria-label="Clear" (click)="typeValid.setValue(null); $event.stopPropagation()">
@@ -126,8 +126,8 @@
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Ogranicz do autora</mat-label>
                     <mat-select #author formControlName="authorType" [disabled]="this.submissionIdValid.value">
-                      <mat-option *ngFor="let authorIndex of authorArrayPrototype(3); let i = index" [value]="i">
-                        {{parseService.parseAuthorType(i) | translate}}
+                      <mat-option *ngFor="let authorIndex of arraysService.authorTypeArrayPrototype()" [value]="authorIndex">
+                        {{parseService.parseAuthorType(authorIndex) | translate}}
                       </mat-option>
                     </mat-select>
                     <button mat-button *ngIf="author.value" matSuffix mat-icon-button aria-label="Clear" (click)="authorTypeValid.setValue(0); $event.stopPropagation()">

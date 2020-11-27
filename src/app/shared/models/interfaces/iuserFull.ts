@@ -1,6 +1,7 @@
 
 export interface IuserFull {
   uId: number;
+  employeeId: string;
   name: string;
   surname: string;
   receivedLikeCount: number;
@@ -13,4 +14,5 @@ export interface IuserFull {
   areas: [];
   problemCount: number;
   upgradeCount: number;
+  state: string;
 }

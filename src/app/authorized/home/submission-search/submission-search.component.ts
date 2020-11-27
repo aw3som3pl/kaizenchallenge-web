@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import {SessionService} from '../../../shared/services/session.service';
@@ -7,10 +7,10 @@ import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 import {SubmissionSearchService} from './service/submission-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {distinctUntilChanged} from 'rxjs/operators';
-import {Erole} from '../../../shared/enums/Erole.enum';
 import {Subscription} from 'rxjs';
 import {APP_DATE_FORMATS, AppDateAdapter} from '../../../shared/adapters/format-datepicker';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
+import {ArraysService} from '../../../shared/parsers/arrays.service';
 
 @Component({
   selector: 'app-submission-search',
@@ -56,6 +56,7 @@ export class SubmissionSearchComponent implements OnInit {
               public submissionSearchService: SubmissionSearchService,
               public sessionService: SessionService,
               public parseService: ParseService,
+              public arraysService: ArraysService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
 
@@ -97,10 +98,8 @@ export class SubmissionSearchComponent implements OnInit {
     const newListingSub = this.activatedRoute.queryParamMap
       .subscribe((params) => {
         this.searchForm.reset();
-
         params.has('type') ? this.searchForm.get('type').setValue(params.getAll('type').map(Number)) : this.searchForm.get('type').setValue(null);
         params.has('areas') ? this.searchForm.get('areas').setValue(params.getAll('areas').map(Number)) : this.searchForm.get('areas').setValue(null);
-        console.log(params.getAll('areas').map(Number));
         params.has('category') ? this.searchForm.get('category').setValue(params.getAll('category').map(Number)) : this.searchForm.get('category').setValue(null);
         params.has('status') ? this.searchForm.get('status').setValue(params.getAll('status').map(Number)) : this.searchForm.get('status').setValue(null);
         params.has('timestampSearchStart') ? this.searchForm.get('dateRangeStart').setValue(params.get('timestampSearchStart')) : this.searchForm.get('dateRangeStart').setValue(null);
@@ -131,34 +130,6 @@ export class SubmissionSearchComponent implements OnInit {
     this.dateRangeEndValid.updateValueAndValidity();
     this.submissionIdValid.updateValueAndValidity();
     this.authorTypeValid.updateValueAndValidity();
-  }
-
-  areaArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  categoryArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  statusArrayPrototype(): any[] {
-    const statusArray = Array.from(Array(13).keys());
-    statusArray.splice(0, 2); // Bez NOWE_ZGLOSZENIE + EDYCJA
-    statusArray.splice(8, 1);
-    statusArray.splice(8, 2);
-    return statusArray;
-  }
-
-  typeArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  orderByArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  authorArrayPrototype(n: number): any[] {
-    return Array(n);
   }
 
   getUTCDate() {
@@ -200,7 +171,7 @@ export class SubmissionSearchComponent implements OnInit {
         type: this.typeValid ? this.typeValid.value : null,
         areas: this.areasValid ? this.areasValid.value : Array.from(Array(21).keys()),
         category: this.categoryValid ? this.categoryValid.value : Array.from(Array(8).keys()),
-        status: this.statusValid ? this.statusValid.value : this.statusArrayPrototype(),
+        status: this.statusValid ? this.statusValid.value : this.arraysService.statusArrayPrototype(this.sessionService.getUserRole()),
         timestampSearchStart: this.dateRangeStartValid.value ? this.dateRangeStartValid.value.toISOString() : null,
         timestampSearchEnd: this.dateRangeEndValid.value ? this.dateRangeEndValid.value.toISOString() : this.getLocalDate().toISOString(),
         orderBy: this.orderByValid ? this.orderByValid.value : null,

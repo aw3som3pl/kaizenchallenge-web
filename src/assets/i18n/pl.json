@@ -1,4 +1,34 @@
 {
+  "Messages" : {
+    "Admin" : {
+      "RegistrationSuccess": "Pomyślnie zarejestrowano nowego użytkownika"
+    }
+  },
+  "Errors" : {
+    "Api" : {
+      "0": "Niepoprawne dane wejściowe",
+      "1": "Niepoprawne warunki początkowe",
+      "2": "Przekazywana wartość poza określonym zasięgiem",
+      "3": "Brak autoryzacji użytkownika",
+      "4": "Brak uprawnień",
+      "5": "Zasób nie istnieje",
+      "6": "Wewnętrzny konflikt danych",
+      "7": "Przerwanie wykonywania operacji",
+      "8": "Podany e-mail jest już przypisany do istniejącego konta",
+      "9": "Osiągnięto próg maksymalnego wykorzystania zasobu",
+      "10": "Operacja przerwana",
+      "11": "Otrzymano niekompletne dane",
+      "12": "Niezidentyfikowany błąd",
+      "13": "Błąd wewnętrzny usługi FIREBASE",
+      "14": "Usługa bądź zasób nie jest dostępny",
+      "15": "Przekroczono termin obsługi zgłoszenia",
+      "16": "Błąd autoryzacji użytkownika",
+      "17": "Brak uprawnień dostępu do zasobu",
+      "18": "Wystąpił wewnętrzny błąd Azure",
+      "19": "Zasób niedostępny",
+      "20": "ID użytkownika jest już w użyciu"
+    }
+  },
   "Shared" : {
     "areaArray": {
       "0": "Kontrola Jakości Produkcji",
@@ -21,17 +51,18 @@
       "17": "Sales Controlling",
       "18": "Księgowość",
       "19": "Zasoby Ludzkie",
-      "20": "KAPS"
+      "20": "KAPS",
+      "21": "Reckitt Benckiser"
     },
     "categoryArray": {
-      "0": "Jakość Braki Odpady",
+      "0": "BHP Ergonomia Środowisko",
       "1": "Wydajność Technologia",
-      "2": "Komunikacja Współpraca",
+      "2": "Jakość Braki Odpady",
       "3": "Zapasy Transport",
-      "4": "Produkcja w Toku Layout",
+      "4": "Produkcja w Toku - Layout",
       "5": "Awarie Przestoje",
       "6": "Przezbrojenie Setup",
-      "7": "BHP Ergonomia Środowisko"
+      "7": "Komunikacja Współpraca"
     },
     "roleArray": {
       "0": "Użytkownik",
@@ -49,12 +80,20 @@
       "4": "Kwartał",
       "5": "Rok"
     },
-    "orderByArray": {
+    "orderBySUBArray": {
       "0": "Największy zysk / strata",
       "1": "Najbardziej aktywne",
       "2": "Najmniej aktywne",
       "3": "Najbardziej opóźnione",
       "4": "Najnowsze"
+    },
+    "orderByUSRArray": {
+      "0": "Najbardziej aktywni",
+      "1": "Najmniej aktywni",
+      "2": "Najnowsze rejestracje",
+      "3": "Najstarsze rejestracje",
+      "4": "Najwięcej zgłoszeń",
+      "5": "Najmniej zgłoszeń"
     },
     "submissionSourceArray": {
       "0": "Każdy",
@@ -88,6 +127,10 @@
       "0": "Liczność zgłoszeń w czasie",
       "1": "Liczność zgłoszeń o danym statusie w okresie",
       "2": "Tabela aktywności obszarów w czasie"
+    },
+    "userStatus": {
+      "A": "Konto aktywnego użytkownika",
+      "T": "Konto na potrzeby testów"
     }
   },
 
@@ -149,7 +192,7 @@
           "descriptionPlaceholder": "Opis",
           "descriptionHint": "Opisz swój pomysł",
           "additionalLabel": "Czy potrafisz określić koszt wdrożenia?",
-          "additionalPlaceholder": "Krótko opisz kryteria na podstawie których opierasz prognozę",
+          "additionalPlaceholder": "Podaj konkretne wartości",
           "additionalValueLabel": "Czy potrafisz określić potencjalne oszczędności?",
           "addAttachmentsLabel": "Kliknij bądź przeciągnij załącznik do środka by dodać zdjęcie / załącznik",
           "addAttachmentsHint": "*Możesz dodać maksymalnie 3 załączniki",
@@ -170,9 +213,9 @@
           "titleHint": "Wpisz tytuł problemu",
           "descriptionPlaceholder": "Opis",
           "descriptionHint": "Opisz swój problem",
-          "additionalLabel": "Czy potrafisz określić straty finansowe, procesowe, inne?",
-          "additionalPlaceholder": "Krótko opisz kryteria na podstawie których opierasz prognozę",
-          "additionalValueLabel": "Czy potrafisz określić zbliżone straty finansowe?",
+          "additionalLabel": "Czy potrafisz określić straty procesowe, inne?",
+          "additionalPlaceholder": "Krótko opisz straty, podając konkretne wartości",
+          "additionalValueLabel": "Czy potrafisz określić straty finansowe?",
           "addAttachmentsLabel": "Kliknij bądź przeciągnij załącznik do środka by dodać zdjęcie / załącznik",
           "addAttachmentsHint": "*Możesz dodać maksymalnie 3 załączniki",
           "selectReviewerPlaceholder": "Wybierz recenzenta zgłoszenia"

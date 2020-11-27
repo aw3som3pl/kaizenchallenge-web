@@ -13,7 +13,9 @@ export class UserFull implements IuserFull{
   public surname: string;
   public thumbnailUrl: string;
   public uId: number;
+  public employeeId: string;
   public upgradeCount: number;
+  public state: string;
 
   constructor(init?: Partial<UserFull>) {
     Object.assign(this, init);

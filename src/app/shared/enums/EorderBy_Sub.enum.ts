@@ -1,4 +1,4 @@
-export enum EorderByEnum {
+export enum EorderBy_SubEnum {
   MAX_ADDITIONAL_VALUE,
   MOST_ACTIVE,
   LEAST_ACTIVE,

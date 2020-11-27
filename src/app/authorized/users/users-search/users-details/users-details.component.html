@@ -1,1 +1,92 @@
-<p>users-details works!</p>
+<body>
+<div class="container-fluid" *ngIf="isloadingUser">
+  <div class="row" style="height: 50vh">
+    <div class="col-12 d-flex justify-content-center">
+      <span class="text-header my-auto mr-5">Ładuję zgłoszenie... </span>
+      <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+    </div>
+  </div>
+</div>
+<div *ngIf="loadedUser && !isloadingUser">
+  <div class="row m-0 mt-0 mt-sm-3 ml-sm-3 p-0 user-view-header">
+    <div class="col-12 p-0">
+      <div class="row m-0 p-0">
+        <div class="col-12 text-large p-0">
+          <div class="row m-0 p-0">
+            <div class="col-4 pl-3 pt-2">
+              <div class="my-auto d-inline-block">
+                <mat-chip-list>
+                  <mat-chip class="text-large back-to-search-button p-2" (click)="onBacktoSearch()">
+                    <svg-icon src="../../assets/img/svg/back_search.svg" class="mr-2" style="fill: var(--darkblue)" [svgStyle]="{'width.px': '20', 'height.px': '20'}"></svg-icon>
+                    <span class="text-uppercase mr-2">Wróć</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+            <div class="col-8 pl-3 pt-2">
+              <div class="my-auto">
+                <mat-chip-list class="float-right">
+                  <mat-chip *ngIf="isEditorOpened" class="text-large abort-changes-button p-2" (click)="toggleEditor(false)">
+                    <mat-icon>undo</mat-icon>
+                    <span class="text-uppercase ml-2 mr-2 sm-hidden">Anuluj</span>
+                  </mat-chip>
+                  <mat-chip *ngIf="isEditorOpened" class="text-large save-changes-button p-2">
+                    <mat-icon>save</mat-icon>
+                    <span class="text-uppercase ml-2 mr-2 sm-hidden">Zapisz</span>
+                  </mat-chip>
+                  <mat-chip *ngIf="isEditable && !isEditorOpened" class="text-large edit-profile-button p-2" (click)="toggleEditor(true)">
+                    <mat-icon>spellcheck</mat-icon>
+                    <span class="text-uppercase ml-2 mr-2 sm-hidden">Edytuj</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-0 p-0 ml-sm-3">
+    <div class="col-12 user-data-container pr-0">
+      <div class="row m-0 p-0">
+        <div class="col-12 pt-2 pl-0 pr-0" style="background-color: var(--darkblue)">
+          <mat-tab-group id="user-navigation" class="" [selectedIndex]="currentActiveTab" (selectedTabChange)="onTabChange($event)">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <div [ngClass]="{'active': currentActiveTab === activeTabs.ACCOUNT_DATA}">
+                  <a class="interactive-button">
+                    <span class="container menu-item text-large">Dane użytkownika</span>
+                  </a>
+                </div>
+              </ng-template>
+              <ng-template matTabContent>
+                <div class="tab-content mh-100">
+                  <app-usr-profile [loadedUser]="loadedUser" [isEditorVisible]="isEditorOpened"
+                                   [userDataValidCheck]="userDataValidityCheck.asObservable()"
+                  (userDataUpdateAction)="interceptUserUpdateAction($event)">
+                  </app-usr-profile>
+                </div>
+              </ng-template>
+            </mat-tab>
+            <mat-tab disabled>
+              <ng-template mat-tab-label>
+                <div [ngClass]="{'active': currentActiveTab === activeTabs.STATISTICS}">
+                  <a class="interactive-button">
+                    <span class="container menu-item text-large">Statystyki</span>
+                  </a>
+                </div>
+              </ng-template>
+              <div class="tab-content mh-100">
+
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentActiveTab!== activeTabs.STATISTICS" id="interaction-options" class="row text-large p-2">
+
+  </div>
+</div>
+</body>

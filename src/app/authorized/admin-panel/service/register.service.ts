@@ -18,11 +18,9 @@ export class RegisterService {
     return new Promise<any>((resolve, reject) => {
       this.http.post(`${projectConfig.apiBaseUrl}${environment.registerUserEndpointURL}`, JSON.stringify(registrationForm))
         .subscribe( data => {
-            console.log(JSON.stringify(data));
             resolve(data);
           },
             error => {
-              console.log(error.message);
               reject(error);
             });
     });

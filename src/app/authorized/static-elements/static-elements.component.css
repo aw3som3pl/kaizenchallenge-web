@@ -597,7 +597,7 @@ a, a:hover, a:focus {
   }
 }
 /* tablets/desktops and up ———– */
-@media (min-width: 993px) and (max-width: 1199px) {
+@media (min-width: 993px) and (max-width: 1199px), (max-height: 500px) {
 
   /* ---------------------------------------------------
    WRAPPER STYLE
@@ -614,7 +614,7 @@ a, a:hover, a:focus {
    CONTENT HOLDER STYLE
 ----------------------------------------------------- */
 
-  .content-holder{
+  .content-holder {
     background-color: var(--darkblue);
     padding: 0;
   }
@@ -629,13 +629,13 @@ a, a:hover, a:focus {
     z-index: 2;
   }
 
-  .sidebar-active{
+  .sidebar-active {
     padding-left: 250px;
     transition: all 0.6s;
   }
 
 
-  #sidebar {
+  #sidebar{
     min-width: 250px;
     max-width: 250px;
     height: 100%;
@@ -881,7 +881,7 @@ a, a:hover, a:focus {
   }
 }
 /* large desktops and up ———– */
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px){
 
   /* ---------------------------------------------------
    WRAPPER STYLE

@@ -8,12 +8,16 @@ export const environment = {
   getSubmissionReviewsEndpointURL: '/api/submission/GetReviews',
   sendNewSubmissionReviewDataEndpointURL: '/api/submission/CreateReview',
   updateSubmissionDataEndpointURL: '/api/submission/UpdateSubmission',
-  loadAllUsersDataEndpointURL: '/api/user/GetUsersOverall',
+  loadAllUsersDataEndpointURL: '/api/search/SearchUsers',
   loadFilteredSubmissionsListDataEndpointURL: '/api/search/GetSubmissions',
   sendNewLikeActionEndpointURL: '/api/submission/UpdateSubmission/Like',
   sendNewCommentEndpointURL: '/api/submission/UpdateSubmission/CreateComment',
   getSubmissionAttachmentsEndpointURL: '/api/submission/GetAttachments',
   loadSubmissionCommentsEndpointURL: '/api/submission/GetComments',
   loadSubmissionLikesEndpointURL: '/api/submission/GetLikes',
-  getActiveNotificationsCountEndpointURL: '/api/Notifications/GetNotifications'
+  getActiveNotificationsCountEndpointURL: '/api/Notifications/GetNotifications',
+  updateUnreadNotificationsCountEndpointURL: '/api/Notifications/GetUnreadNotificationCount',
+  markNotificationsAsReadEndpointURL: '/api/Notifications/MarkAsRead',
+  fetchEmployeeDataEndpointURL: '/api/user/GetUser',
+  updateUserDataEndpointURL: '/api/admin/UpdateUser'
 };

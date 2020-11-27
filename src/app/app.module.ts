@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModules} from './material.module';
 import { StaticElementsComponent } from './authorized/static-elements/static-elements.component';
 import { ChartsModule } from 'ng2-charts';
-import { environment } from '../environments/environment';
 import { AngularFireModule} from '@angular/fire';
 import { TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -44,8 +43,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { NotificationDialogComponent } from './shared/components/notification-dialog/notification-dialog.component';
 import { ChoiceDialogComponent } from './shared/components/choice-dialog/choice-dialog.component';
 import {MatBadgeModule} from '@angular/material/badge';
-import { NotificationsDialogComponent } from './notifications-dialog/notifications-dialog.component';
 import {projectConfig} from '../config/project-config';
+import { UsrProfileComponent } from './authorized/users/users-search/users-details/usr-profile/usr-profile.component';
+import { UsrStatsComponent } from './authorized/users/users-search/users-details/usr-stats/usr-stats.component';
 
 
 @NgModule({
@@ -80,7 +80,8 @@ import {projectConfig} from '../config/project-config';
     UploadTaskEditComponent,
     NotificationDialogComponent,
     ChoiceDialogComponent,
-    NotificationsDialogComponent,
+    UsrProfileComponent,
+    UsrStatsComponent,
   ],
     imports: [
         BrowserModule,

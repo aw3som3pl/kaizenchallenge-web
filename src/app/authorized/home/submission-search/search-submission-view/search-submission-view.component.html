@@ -179,7 +179,7 @@
     </div>
     <div *ngIf="currentActiveTab!== activeTabs.REVIEWS && currentActiveTab!== activeTabs.COMMENTS" id="interaction-options" class="row text-large p-2">
       <div class="col">
-        <button *ngIf="isUpdatedDataReadyForUpload()" (click)="updateSubmissionData()"
+        <button *ngIf="isUpdatedDataReadyForUpload()" (click)="updateSubmissionData()" [disabled]="isSendingUpdate"
                 mat-raised-button class="upload-edit-button mr-2" [ngClass]="{'valid' : isLocalDataValid(currentActiveTab), 'invalid' : !isLocalDataValid(currentActiveTab)}">
           <mat-icon>save</mat-icon>
           <span class="sm-hidden ml-2 mr-2">Zapisz i aktualizuj</span>
@@ -189,9 +189,9 @@
           <mat-icon>check</mat-icon>
           <span class="sm-hidden ml-2 mr-2">Zatwierdź zmiany</span>
         </button>
-        <button mat-raised-button class="like-button mr-2" [ngClass]="{'already-liked' : isLiked}" (click)="performLikeAction()">
+        <button mat-raised-button class="like-button mr-2" [ngClass]="{'already-liked' : isLiked}" (click)="performLikeAction()" [disabled]="isSendingLike">
           <mat-icon class="ml-2">thumb_up</mat-icon>
-          <span class="sm-hidden ml-2">Wesprzyj</span>
+          <span class="sm-hidden ml-2">Polub</span>
           <mat-chip class="ml-2 text-large pointer-events-disabled white-chip">
             {{this.loadedSubmission.likeCount}}
           </mat-chip>

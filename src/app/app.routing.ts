@@ -3,7 +3,6 @@ import {LoginComponent} from './login/login.component';
 import {StaticElementsComponent} from './authorized/static-elements/static-elements.component';
 import {IsAuthenticatedGuard} from './shared/guards/is-authenticated.guard';
 import {HomeComponent} from './authorized/home/home.component';
-import {IsAdminGuard} from './shared/guards/is-admin.guard';
 import {SubmissionSearchComponent} from './authorized/home/submission-search/submission-search.component';
 import {SubmissionResultsComponent} from './authorized/home/submission-results/submission-results.component';
 import {CommunicatorComponent} from './authorized/communicator/communicator.component';
@@ -44,12 +43,12 @@ const routes: Routes = [
         {path: 'search', canActivate: [IsAuthenticatedGuard], component: UsersSearchComponent,
         children: [
           {path: 'listing', canActivate: [IsAuthenticatedGuard], component: UsersListingComponent},
-          {path: 'details', canActivate: [IsAuthenticatedGuard], component: UsersDetailsComponent},
+          {path: 'user', canActivate: [IsAuthenticatedGuard], component: UsersDetailsComponent},
         ]},
       ]},
       {path: 'creativity-ranking', canActivate: [IsAuthenticatedGuard], component: CreativityRankingComponent},
       {path: 'oee-simulator', canActivate: [IsAuthenticatedGuard], component: OeeSimulatorComponent},
-      {path: 'admin-panel', canActivate: [IsAuthenticatedGuard, IsAdminGuard], component: AdminPanelComponent}
+      {path: 'admin-panel', canActivate: [IsAuthenticatedGuard], component: AdminPanelComponent}
     ]},
   { path: 'login', component: LoginComponent },
 // { path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},

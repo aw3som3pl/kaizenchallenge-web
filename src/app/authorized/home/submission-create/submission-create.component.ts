@@ -14,6 +14,7 @@ import {EuploadAction} from '../../../shared/enums/Eupload-action.enum';
 import {Reviewer} from '../../../shared/models/Reviewer';
 import {InewSubmissionResponse} from '../../../shared/models/response/interfaces/inew-submission-response';
 import {EsubmissionTypeEnum} from '../../../shared/enums/Esubmission-type.enum';
+import {ArraysService} from '../../../shared/parsers/arrays.service';
 
 @Component({
   selector: 'app-create',
@@ -22,6 +23,8 @@ import {EsubmissionTypeEnum} from '../../../shared/enums/Esubmission-type.enum';
 })
 export class SubmissionCreateComponent implements OnInit {
   @ViewChild('stepper') stepper;
+
+  isSendingSubmission = false;
 
   reviewersList = [];
   isLoadingReviewers = false;
@@ -59,8 +62,9 @@ export class SubmissionCreateComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               public parseService: ParseService,
-              public homeService: CreateSubmissionService,
+              public createSubmissionService: CreateSubmissionService,
               public sessionService: SessionService,
+              public arraysService: ArraysService,
               private translate: TranslateService) {
 
 
@@ -69,7 +73,7 @@ export class SubmissionCreateComponent implements OnInit {
       category: ['', [Validators.required]],
       topic: ['', [Validators.required,  Validators.minLength(10), Validators.maxLength(120)]],
       description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(600)]],
-      additional: ['', [Validators.required, Validators.maxLength(150)]],
+      additional: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(150)]],
       additionalValue: ['', [Validators.required, Validators.maxLength(9)]],
       additionalUnit: ['', Validators.required],
     });
@@ -159,7 +163,7 @@ export class SubmissionCreateComponent implements OnInit {
 
   onLoadReviewersList(designatedAreas: number[], designatedRoles: number[]) {
     this.isLoadingReviewers = true;
-    this.homeService.getReviewersList( new ReviewerRequest(designatedAreas, designatedRoles))
+    this.createSubmissionService.getReviewersList( new ReviewerRequest(designatedAreas, designatedRoles))
       .then((result: IreviewerResponse) => {
           this.reviewersList = result.reviewers;
           this.isLoadingReviewers = false;
@@ -172,10 +176,12 @@ export class SubmissionCreateComponent implements OnInit {
 
   onSendSubmissionData() {
     if (this.submissionStep2Form.valid) {
-      this.homeService.sendNewSubmissionData(this.homeService.parseSubmissionForms(this.currentSubmissionType, this.submissionStep1Form, this.submissionStep2Form, this.uploadedFilesUrls))
+      this.isSendingSubmission = true;
+      this.createSubmissionService.sendNewSubmissionData(this.createSubmissionService.parseSubmissionForms(this.currentSubmissionType, this.submissionStep1Form, this.submissionStep2Form, this.uploadedFilesUrls))
         .then((success: InewSubmissionResponse) => {
           this.submissionResponseId = success.submissionId;
           this.submissionCreationDate = success.timestampUpdated;
+          this.isSendingSubmission = false;
           this.stepper.next();
         });
     }
@@ -190,7 +196,7 @@ export class SubmissionCreateComponent implements OnInit {
       case 2:
         if (this.submissionStep1Form.valid) {
           if (this.currentSubmissionType === EsubmissionTypeEnum.IDEA) {
-            this.onLoadReviewersList(this.submissionStep1Form.get('areas').value, [1]);  // zawsze do liderów
+            this.onLoadReviewersList(this.submissionStep1Form.get('areas').value, this.createSubmissionService.getNextReviewerRole(this.sessionService.getUserRole()));  // zawsze do następnego po sobie!
           }
           if (this.currentSubmissionType === EsubmissionTypeEnum.PROBLEM) {
             this.onLoadReviewersList(this.submissionStep1Form.get('areas').value, [1, 2, 3, 4]);  // do wszystkich ról
@@ -253,18 +259,6 @@ export class SubmissionCreateComponent implements OnInit {
 
   parseTypedResource(path: string): string {
     return `Home.SubmissionForm.${this.currentSubmissionType.toString()}.${path}`;
-  }
-
-  areaArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  categoryArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  additionalUnitArrayPrototype(n: number): any[] {
-    return Array(n);
   }
 
   toggleSubmissionType(type: EsubmissionTypeEnum): void {

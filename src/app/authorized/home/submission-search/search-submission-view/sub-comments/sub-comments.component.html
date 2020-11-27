@@ -20,7 +20,7 @@
       </div>
     </div>
     <div *ngIf="commentsListing" class="col-12 m-0 p-0">
-      <div *ngFor="let comment of this.commentsListing">
+      <div *ngFor="let comment of this.commentsListing; trackBy: trackByCommentId">
         <div class="container-fluid">
         <div class="comment row m-0 mt-2">
           <div class="col-12 d-flex justify-content-center m-0 p-0">
@@ -28,7 +28,7 @@
               <fieldset class="border p-2 w-100 h-100">
                 <legend class="comment-header w-auto text-medium d-inline-flex justify-content-start">
                     <span class="ml-2 mr-2"><strong> {{comment.authorName}} </strong></span>
-                    <jn-star-rating class="mr-2">4</jn-star-rating>
+                    <jn-star-rating class="mr-2" [ngModel]="parseService.calculateStarCount(comment.authorExp)"></jn-star-rating>
                 </legend>
                 <span class="text-small">
                   {{comment.commentMesage}}
@@ -55,7 +55,7 @@
         </form>
       </div>
       <div class="col-3 col-sm-2 m-0 p-0 my-auto text-center align-items-center">
-        <button mat-fab class="send-comment-button" type="submit" (click)="sendNewComment()">
+        <button mat-fab class="send-comment-button" type="submit" (click)="sendNewComment()" [disabled]="isSendingComment">
           <mat-icon>send</mat-icon>
         </button>
       </div>

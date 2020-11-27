@@ -11,7 +11,7 @@
 /node_modules
 
 #config
-src/config/project-config.ts
+src/config
 
 # profiling files
 chrome-profiler-events*.json

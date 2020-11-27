@@ -7,6 +7,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {ParseService} from '../../shared/parsers/parse.service';
 import {SessionService} from '../../shared/services/session.service';
 import {RegistrationForm} from '../../shared/models/RegistrationForm';
+import {ArraysService} from '../../shared/parsers/arrays.service';
+import {IapiError} from '../../shared/models/interfaces/iapi-error';
 
 @Component({
   selector: 'app-admin-panel',
@@ -16,8 +18,11 @@ import {RegistrationForm} from '../../shared/models/RegistrationForm';
 export class AdminPanelComponent implements OnInit {
 
   registrationForm: FormGroup;
-  statusLabelSuccess: string;
-  statusLabelFailure: string;
+
+  statusVariant: number;
+  operationOutcome = OperationOutcome;
+
+  errorType: number;
 
   nameValid: AbstractControl;
   surnameValid: AbstractControl;
@@ -26,6 +31,7 @@ export class AdminPanelComponent implements OnInit {
   passwordValid: AbstractControl;
   roleValid: AbstractControl;
   areasValid: AbstractControl;
+  accountStateValid: AbstractControl;
 
   isPreformingRegistration = false;
 
@@ -37,7 +43,8 @@ export class AdminPanelComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private registerService: RegisterService,
               public parseService: ParseService,
-              private sessionService: SessionService,
+              public arraysService: ArraysService,
+              public sessionService: SessionService,
               public translate: TranslateService) {
 
     this.registrationForm = this.formBuilder.group({
@@ -48,6 +55,7 @@ export class AdminPanelComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', [Validators.required]],
       areas: ['', [Validators.required]],
+      state: [sessionService.getUserState(), [Validators.required]]
     });
 
     this.nameValid = this.registrationForm.controls.name;
@@ -57,6 +65,7 @@ export class AdminPanelComponent implements OnInit {
     this.passwordValid = this.registrationForm.controls.password;
     this.roleValid = this.registrationForm.controls.role;
     this.areasValid = this.registrationForm.controls.areas;
+    this.accountStateValid = this.registrationForm.controls.state;
   }
 
   ngOnInit(): void {
@@ -67,6 +76,7 @@ export class AdminPanelComponent implements OnInit {
     this.registrationForm.get('password').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.forceValidAgain());
     this.registrationForm.get('role').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.forceValidAgain());
     this.registrationForm.get('areas').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.forceValidAgain());
+    this.registrationForm.get('state').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.forceValidAgain());
   }
 
   forceValidAgain(): void {
@@ -77,103 +87,48 @@ export class AdminPanelComponent implements OnInit {
     this.passwordValid.updateValueAndValidity();
     this.roleValid.updateValueAndValidity();
     this.areasValid.updateValueAndValidity();
+    this.accountStateValid.updateValueAndValidity();
   }
 
   get f(): any {
     return this.registrationForm.controls;
   }
 
-  onChange(event) {
-    console.log(event);
-  }
-
   onSubmit(): void {
     // stop here if form is invalid
+    this.statusVariant = null;
 
     if (this.registrationForm.invalid) {
-      this.setRegisterErrorStatusLabel(RegisterStatus.INCORRECT_FORM);
       return;
     }
 
     const registerData = new RegistrationForm(this.registrationForm.value);
-    console.log(registerData);
 
     this.isPreformingRegistration = true;
 
-
     this.registerService.preformRegistrationAttempt(registerData)
       .then(success => {
-          this.setRegisterSuccessStatusLabel(RegisterStatus.REGISTRATION_SUCCESSFUL);
-          this.registrationForm.reset();
+          this.statusVariant = OperationOutcome.SUCCESS;
+          this.isPreformingRegistration = false;
+          console.log(this.statusVariant);
+          this.onReset();
         },
-        failure => {
-          console.log(failure.message);
-          this.setRegisterErrorStatusLabel(RegisterStatus.INVALID_CREDENTIALS);
+        (failure: IapiError ) => {
+          this.statusVariant = OperationOutcome.ERROR;
+          this.errorType = failure.ErrorCode;
+          this.isPreformingRegistration = false;
         });
   }
 
-  setRegisterErrorStatusLabel(status: RegisterStatus): void {
-    switch (status) {
-      case RegisterStatus.CONN_REFUSED:
-        this.statusLabelFailure = 'odmowa dostępu';
-        this.isPreformingRegistration = false;
-        return;
-      case RegisterStatus.INVALID_CREDENTIALS:
-        this.statusLabelFailure = 'odmowa dostępu';
-        this.isPreformingRegistration = false;
-        return;
-      case RegisterStatus.ALREADY_REGISTERED:
-        this.statusLabelFailure = 'użytkownik już zarejestrowany';
-        this.isPreformingRegistration = false;
-        return;
-      case RegisterStatus.ID_IN_USE:
-        this.statusLabelFailure = 'ID jest w użyciu';
-        this.isPreformingRegistration = false;
-        return;
-      default:
-        this.statusLabelFailure = null;
-        this.isPreformingRegistration = false;
-        return;
-    }
-  }
-
-  setRegisterSuccessStatusLabel(status: RegisterStatus): void {
-    switch (status) {
-      case RegisterStatus.REGISTRATION_SUCCESSFUL:
-        this.statusLabelSuccess = 'Pomyślnie zarejestrowano nowego użytkownika';
-        this.isPreformingRegistration = false;
-        return;
-      default:
-        this.statusLabelSuccess = null;
-        this.isPreformingRegistration = false;
-        return;
-    }
-  }
-
-  areaArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  roleArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  testClick(): void {
-    this.sessionService.reloadUserData().then(success => {
-      console.log(success);
-    },
-      failure => {
-      console.log(failure);
-      });
+  onReset() {
+    this.registrationForm.reset({
+      state: this.sessionService.getUserState()
+    });
   }
 
 }
 
-enum RegisterStatus {
-  CONN_REFUSED,
-  INCORRECT_FORM,
-  INVALID_CREDENTIALS,
-  ALREADY_REGISTERED,
-  ID_IN_USE,
-  REGISTRATION_SUCCESSFUL
+enum OperationOutcome {
+  SUCCESS,
+  ERROR
 }

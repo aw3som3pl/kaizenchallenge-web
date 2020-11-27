@@ -32,6 +32,8 @@ export class SubReviewsComponent implements OnInit {
   @Input() loadedSubmission: SubmissionContent;
   @Output() reviewAction = new EventEmitter<EeventActionEnum>();
 
+  isSendingReview = false;
+
   isReviewCreatorFolded = true;
 
   isLoadingReviews = false;
@@ -85,7 +87,7 @@ export class SubReviewsComponent implements OnInit {
     this.reviewForm.get('reviewStatus').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.reviewFormForceValidAgain());
     this.reviewForm.get('nextReviewer').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.reviewFormForceValidAgain());
 
-    this.isAssignedReviewer = this.subReviewService.checkIsReviewer(this.loadedSubmission.currentReviewerId);
+    this.isAssignedReviewer = this.subReviewService.checkIsReviewer(this.loadedSubmission.currentReviewerId, this.loadedSubmission.areas);
   }
 
   ngOnDestroy(): void {
@@ -100,7 +102,7 @@ export class SubReviewsComponent implements OnInit {
 
     if ( this.currentReviewStatus !== this.reviewNextStatusValid.value){
       this.currentReviewStatus = this.reviewNextStatusValid.value;
-      this.populateReviewersList(this.currentReviewStatus);
+      this.populateReviewersList(this.currentReviewStatus, this.loadedSubmission.type);
     }
   }
 
@@ -116,20 +118,23 @@ export class SubReviewsComponent implements OnInit {
 
   sendReview(){
     if (this.reviewForm.valid){
+      this.isSendingReview = true;
       this.subReviewService.sendReviewData(this.reviewForm, this.loadedSubmission.currentReviewerId, this.loadedSubmission.submissionId)
         .then( (success: InewReviewResponse) => {
           console.log(success);
+          this.isSendingReview = false;
           this.emitReviewAction(EeventActionEnum.SEND_SUCCESS);
         },
           failure => {
-          this.emitReviewAction(EeventActionEnum.SEND_FAILURE);
+            this.isSendingReview = false;
+            this.emitReviewAction(EeventActionEnum.SEND_FAILURE);
           });
     }
   }
 
-  populateReviewersList(reviewStatus: number) {
+  populateReviewersList(reviewStatus: number, submissionType: number) {
     const rs = EreviewersSourceEnum;
-    const reviewersSource: EreviewersSourceEnum = this.subReviewService.determineReviewerSource(reviewStatus);
+    const reviewersSource: EreviewersSourceEnum = this.subReviewService.determineReviewerSource(reviewStatus, submissionType);
 
     switch (reviewersSource){
       case rs.FROM_DATABASE:

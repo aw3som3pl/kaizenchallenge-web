@@ -73,7 +73,7 @@ export class SubReviewService {
         && !reviewersIds.find(id => id === entry.userId))
       {
         reviewersIds.push(entry.userId);
-        reviewersFromHistory.push(new Reviewer(null, null, entry.userId, entry.entityName, entry.userRole));
+        reviewersFromHistory.push(new Reviewer(null, null, entry.userId, entry.userEmployeeId, entry.entityName, entry.userRole));
       }
     }
     console.log(reviewersFromHistory);
@@ -135,31 +135,32 @@ export class SubReviewService {
               case s.DO_POPRAWY:
                 return [s.ZATWIERDZONO_KOORDYNATOR, s.ZMIANA_RECENZENTA];
               case s.DO_SPRAWDZENIA_KOORDYNATOR:
-                return [s.DO_POPRAWY, s.WDROZONE, s.ZMIANA_RECENZENTA, s.ARCHIWUM];
+                return [s.DO_POPRAWY, s.ZATWIERDZONO_KOORDYNATOR, s.WDROZONE, s.ARCHIWUM];
               case s.ZATWIERDZONO_KOORDYNATOR:
                 return [s.WDROZONE, s.ARCHIWUM];
               case s.WDROZONE:
                 return [s.ARCHIWUM];
               case s.ARCHIWUM:
-                return null;
+                return [s.ZATWIERDZONO_KOORDYNATOR, s.ZMIANA_RECENZENTA, s.DO_POPRAWY, s.WDROZONE];
               default:
-                return [s.ZMIANA_RECENZENTA, s.ARCHIWUM];
+                return [s.ZMIANA_RECENZENTA, s.DO_POPRAWY];
             }
           case t.PROBLEM:
             switch (currentStatus) {
               case s.DO_POPRAWY:
                 return [s.ZATWIERDZONO_KOORDYNATOR, s.ZMIANA_RECENZENTA];
               case s.DO_SPRAWDZENIA_KOORDYNATOR:
+                return [s.DO_POPRAWY, s.ZATWIERDZONO_KOORDYNATOR, s.ROZWIAZANY, s.ARCHIWUM];
               case s.NOWE_ZGLOSZENIE:
-                return [s.DO_POPRAWY, s.ROZWIAZANY, s.ZMIANA_RECENZENTA, s.ARCHIWUM];
+                return [s.DO_POPRAWY, s.ZATWIERDZONO_KOORDYNATOR, s.ROZWIAZANY, s.ZMIANA_RECENZENTA, s.ARCHIWUM];
               case s.ZATWIERDZONO_KOORDYNATOR:
                 return [s.ROZWIAZANY, s.ARCHIWUM];
               case s.ROZWIAZANY:
                 return [s.ARCHIWUM];
               case s.ARCHIWUM:
-                return null;
+                return [s.ZATWIERDZONO_KOORDYNATOR, s.ZMIANA_RECENZENTA, s.DO_POPRAWY, s.ROZWIAZANY];
               default:
-                return [s.ZMIANA_RECENZENTA, s.ARCHIWUM];
+                return [s.ZMIANA_RECENZENTA, s.DO_POPRAWY];
             }
           default:
             return null;
@@ -170,6 +171,7 @@ export class SubReviewService {
         const statusArray = Array.from(Array(13).keys());
         statusArray.splice(0, 1); // bez NOWE ZGLOSZENIE
         statusArray.splice(0, 1); // bez EDYCJA
+        console.log(statusArray);
         return statusArray;
       default:
         return null;
@@ -193,7 +195,7 @@ export class SubReviewService {
           case s.WDROZONE:
           case s.ROZWIAZANY:
           case s.ARCHIWUM:
-            break;
+            break;  // WYCHODZIMY DO SPRAWDZENIA CZY JEST SYS ADMINEM / KOORDYNATOREM
           case s.DO_SPRAWDZENIA_LIDER:
             return [r.LEADER];
           case s.DO_SPRAWDZENIA_KIEROWNIK:
@@ -205,9 +207,11 @@ export class SubReviewService {
           case s.ZATWIERDZONO_KIEROWNIK:
             return [r.COORDINATOR];
           case s.ZATWIERDZONO_KOORDYNATOR:
-            break;
+            return [r.COORDINATOR];
           case s.ZMIANA_RECENZENTA:
-            return [currentReviewerRole];
+            const roleArray = Array.from(Array(5).keys());
+            roleArray.splice(0, 1); // bez UZYTKOWNIK
+            return roleArray;
           default:
             break;
         }
@@ -220,7 +224,7 @@ export class SubReviewService {
           case s.WDROZONE:
           case s.ROZWIAZANY:
           case s.ARCHIWUM:
-            break;
+            break; // WYCHODZIMY DO SPRAWDZENIA CZY JEST SYS ADMINEM / KOORDYNATOREM
           case s.DO_SPRAWDZENIA_LIDER:
             return [r.LEADER];
           case s.DO_SPRAWDZENIA_KIEROWNIK:
@@ -232,9 +236,11 @@ export class SubReviewService {
           case s.ZATWIERDZONO_KIEROWNIK:
             return [r.COORDINATOR];
           case s.ZATWIERDZONO_KOORDYNATOR:
-            break;
+            return [r.COORDINATOR];
           case s.ZMIANA_RECENZENTA:
-            return [currentReviewerRole];
+            const roleArray = Array.from(Array(5).keys());
+            roleArray.splice(0, 1); // bez UZYTKOWNIK
+            return roleArray;
           default:
             break;
         }
@@ -242,6 +248,7 @@ export class SubReviewService {
 
     switch (currentUserRole) {
       case r.SYS_ADMIN:
+      case r.COORDINATOR:
         const roleArray = Array.from(Array(5).keys());
         roleArray.splice(0, 1); // bez UZYTKOWNIK
         return roleArray;
@@ -265,8 +272,9 @@ export class SubReviewService {
     }
   }
 
-  determineReviewerSource(reviewStatus: EsubmissionStatusEnum): number {
+  determineReviewerSource(reviewStatus: EsubmissionStatusEnum, submissionType: number): number {
 
+    const t = EsubmissionTypeEnum;
     const r = EsubmissionStatusEnum;
     const rs = EreviewersSourceEnum;
 
@@ -279,6 +287,16 @@ export class SubReviewService {
       case r.ARCHIWUM:
       case r.ZATWIERDZONO_KOORDYNATOR:
         return rs.NO_REVIEWER;
+      case r.ZMIANA_RECENZENTA:
+        switch (submissionType) {
+          case t.IDEA:
+            return rs.FROM_DATABASE;
+          case t.PROBLEM:
+            return rs.FROM_HISTORY;
+          default:
+            break;
+        }
+        break;
       default:
         return rs.FROM_DATABASE;
     }
@@ -358,18 +376,22 @@ export class SubReviewService {
     }
   }
 
-  checkIsReviewer(assignedReviewerId: number): boolean{
+  checkIsReviewer(assignedReviewerId: number, submissionAreas: []): boolean{
 
     const r = Erole;
 
     switch (this.sessionService.getUserRole()) {
-      case r.SYS_ADMIN:
+      case r.SYS_ADMIN: // SYS ADMIN MOŻE WSZYSTKIE
         return true;
+      case r.COORDINATOR: // TYLKO WTEDY GDY PRZYNAJMNIEJ JEDEN OBSZAR SIE POKRYWA
+        const overlappingAreas = submissionAreas.filter(submissionArea => {
+          return this.sessionService.getUserAreas().some(userArea => userArea === submissionArea); // take the ! out and you're done
+        });
+        console.log('OVERLAPPING AREAS: ' + overlappingAreas);
+        return overlappingAreas ? overlappingAreas.length > 0 :  false;
       default:
-        break;
+        return this.sessionService.getUserId() === assignedReviewerId;
     }
-
-    return this.sessionService.getUserId() === assignedReviewerId;
   }
 
 }

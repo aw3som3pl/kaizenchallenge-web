@@ -1,34 +1,39 @@
 /* Extra small devices (phones, up to 480px) */
-
-
-.notification{
+fieldset {
+  position: relative;
   border-radius: 10px;
-  border-color: var(--lightgrey);
-  background-color: var(--blue);
-  border-width: 3px;
   border-style: solid;
-  width: 100%;
-}
-
-.notification:hover{
-  border-color: var(--orange);
+  border-width: 3px !important;
+  border-color: var(--grey) !important;
+  width: fit-content;
   cursor: pointer;
 }
 
-.notification-header{
-  padding: 4px;
+fieldset:hover {
+  border-style: dashed !important;
+  border-color: var(--green) !important;
+}
+
+fieldset.was-read {
+  opacity: 0.4 !important;
+}
+
+legend{
+  cursor: pointer;
+}
+
+.notification-title{
+  border-radius: 10px;
+  background-color: var(--blue);
   color: var(--white);
 }
 
 .notification-body{
-  background-color: var(--white);
-  color: var(--black);
-  padding: 10px;
+
 }
 
 .notification-footer{
-  padding-right: 10px;
-  color: var(--white);
+  color: var(--black);
 }
 
 @media screen and (max-width: 746px) {

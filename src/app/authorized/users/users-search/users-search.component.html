@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Authorized skeleton view</title>
 </head>
 
@@ -21,21 +20,27 @@
                   <div class="col-6 pr-0">
                     <mat-form-field class="w-100" appearance="outline">
                       <mat-label>Filtruj po obszarze</mat-label>
-                      <mat-select formControlName="areas" multiple  [disabled]="this.userIdValid.value">
-                        <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
-                          {{parseService.parseArea(i) | translate}}
+                      <mat-select #area formControlName="areas" multiple  [disabled]="this.userIdValid.value">
+                        <mat-option *ngFor="let areaIndex of arraysService.areaArrayPrototype(sessionService.getUserState(), sessionService.getUserAreas())" [value]="areaIndex">
+                          {{parseService.parseArea(areaIndex) | translate}}
                         </mat-option>
                       </mat-select>
+                      <button mat-button *ngIf="area.value" matSuffix mat-icon-button aria-label="Clear" (click)="areasValid.setValue(null); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
                     </mat-form-field>
                   </div>
                   <div class="col-6 pl-2">
                     <mat-form-field class="w-100" appearance="outline">
                       <mat-label>Filtruj po roli</mat-label>
-                      <mat-select formControlName="roles" multiple  [disabled]="this.userIdValid.value">
-                        <mat-option *ngFor="let role of roleArrayPrototype(5); let i = index" [value]="i">
-                          {{parseService.parseRole(i) | translate}}
+                      <mat-select #roles formControlName="roles" multiple  [disabled]="this.userIdValid.value">
+                        <mat-option *ngFor="let role of arraysService.roleTypeArrayPrototype_Default()" [value]="role">
+                          {{parseService.parseRole(role) | translate}}
                         </mat-option>
                       </mat-select>
+                      <button mat-button *ngIf="roles.value" matSuffix mat-icon-button aria-label="Clear" (click)="rolesValid.setValue(null); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
                     </mat-form-field>
                   </div>
                 </div>
@@ -45,17 +50,20 @@
                   <div class="col-6 pr-0">
                     <mat-form-field class="w-100" appearance="outline">
                       <mat-label>Ułóż w kolejności</mat-label>
-                      <mat-select formControlName="orderByExp"  [disabled]="this.userIdValid.value">
-                        <mat-option *ngFor="let orderByIndex of orderByExpArrayPrototype(5); let i = index" [value]="i">
-                          {{parseService.parseOrderBy(i) | translate}}
+                      <mat-select #orderBy formControlName="orderBy"  [disabled]="this.userIdValid.value">
+                        <mat-option *ngFor="let orderByIndex of arraysService.orderByArrayPrototype_UserSearch()" [value]="orderByIndex">
+                          {{parseService.parseOrderBy_USR(orderByIndex) | translate}}
                         </mat-option>
                       </mat-select>
+                      <button mat-button *ngIf="orderBy.value !== 4 " matSuffix mat-icon-button aria-label="Clear" (click)="orderByValid.setValue(4); $event.stopPropagation()">
+                        <mat-icon>close</mat-icon>
+                      </button>
                     </mat-form-field>
                   </div>
                   <div class="col-6 pl-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>ID użytkownika</mat-label>
-                      <input matInput formControlName="userId" type="number" #userId maxlength="10" placeholder="ID użytkownika">
+                      <input matInput formControlName="userId" type="text" #userId maxlength="10" placeholder="ID użytkownika">
                       <mat-hint align="start"><strong></strong>Wyszukaj po ID</mat-hint>
                       <mat-hint align="end">{{userId.value.length}} / 10</mat-hint>
                     </mat-form-field>
@@ -76,16 +84,17 @@
         </div>
       </form>
       <div id="paginator-bar" class="row m-0 p-0">
-        <div class="col-12 d-inline-flex justify-content-between">
+        <div class="col-12 d-inline-flex justify-content-between my-2">
           <button mat-button class="export-button text-medium my-auto">
             <span class="sm-hidden mr-2">Eksportuj </span>
             <svg-icon src="../../assets/img/svg/excel.svg" [applyClass]="false" svgClass="export-button-icon"></svg-icon>
           </button>
-          <mat-paginator class="text-medium" style="background-color: transparent; color: var(--black)"
-                         [hidePageSize]="true"
-                         [length]=""
-                         [pageSize]="pageSize"
-                         (page)="pageEvent = $event">
+          <mat-paginator *ngIf="currentUsersCount" class="text-medium" style="background-color: transparent; color: var(--black)"
+                         [hidePageSize]="false"
+                         [length]="currentUsersCount"
+                         [pageSize]="currentPageSize"
+                         [pageSizeOptions]="pageSizeOptions"
+                         (page)="onSearchUserPageEvent($event)">
           </mat-paginator>
           <button mat-button class="toggle-filter-button text-medium my-auto" (click)="this.usersService.toggleSearchFilterFolded()">
             <span *ngIf="this.usersService.isSearchFilterFolded" class="sm-hidden mr-2">Pokaż filtry</span>

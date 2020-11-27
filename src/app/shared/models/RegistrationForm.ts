@@ -8,6 +8,7 @@ export class RegistrationForm implements IRegistrationForm{
   public employeeID: string;
   public role: number;
   public areas: [number];
+  public state: string;
 
   constructor(init?: Partial<RegistrationForm>) {
     Object.assign(this, init);

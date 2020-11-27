@@ -58,17 +58,24 @@ export class StaticElementsComponent implements OnInit {
       this.sidebarOpen = isVisible;
     });
 
-    const userSessionTimerSubscription = timer(0, 180000).pipe(  // Co 10 sekund update
+    const userSessionTimerSubscription = timer(0, 300000).pipe(  // Co 2 minuty update
       switchMap(() => this.sessionService.fetchNewIdToken()))
       .subscribe((userData: IuserFull) => {
-        console.log('USER UPDATED');
-        this.activeNotificationsCount = userData.activeNotificationsCount;
         this.starRating = this.parseService.calculateStarCount(userData.experience);
       });
+
+    const notificationsUpdateTimerSubscription = timer(0, 180000).pipe(  // Co 20 sekund update
+      switchMap(() => this.sessionService.updateUnreadNotificationsCount()))
+      .subscribe((updatedNotificationsCount: number) => {
+        this.activeNotificationsCount = updatedNotificationsCount;
+      });
+
+    this.activeNotificationsCount = this.sessionService.getUserActiveNotificationsCount();
 
     this.subscriptions.add(routerSubscription);
     this.subscriptions.add(sidebarVisibleSubscription);
     this.subscriptions.add(userSessionTimerSubscription);
+    this.subscriptions.add(notificationsUpdateTimerSubscription);
   }
 
   ngOnDestroy() {
@@ -82,11 +89,12 @@ export class StaticElementsComponent implements OnInit {
   openNotificationsDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = 'some data';
+    dialogConfig.disableClose = true;
 
     const dialogRef = this.matDialog.open(NotificationDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(value => {
-
+    dialogRef.afterClosed().subscribe((loadedNotificationsIds: number[]) => {
+      this.sessionService.markNotificationsAsRead(loadedNotificationsIds);
     });
   }
 
@@ -95,10 +103,26 @@ export class StaticElementsComponent implements OnInit {
     });
   }
   navbarNavigateToSubmissionSearch(): void {
-    this.router.navigate(['authenticated/home/search/listing']).then( success => {
+    this.router.navigate(['authenticated/home/search/listing'], {
+      queryParams: {
+        areas: this.sessionService.getUserAreas(),
+        },
+      }
+    ).then( success => {
     });
   }navbarNavigateToSubmissionResults(): void {
     this.router.navigate(['authenticated/home/results']).then( success => {
+    });
+  }
+
+  sidebarNavigateToProfile(): void {
+    this.router.navigate(['authenticated/users/search/user'], {
+        queryParams: {
+          userId: this.sessionService.getEmployeeId(),
+          activeTab: 0
+        }
+      }
+    ).then( success => {
     });
   }
 
@@ -111,7 +135,12 @@ export class StaticElementsComponent implements OnInit {
       });
   }
   sidebarNavigateToUsers(): void {
-    this.router.navigate(['authenticated/users/search/listing']).then( success => {
+    this.router.navigate(['authenticated/users/search/listing'], {
+      queryParams: {
+        areas: this.sessionService.getUserAreas(),
+      }
+    }
+  ).then( success => {
     });
   }
 

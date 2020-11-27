@@ -1,39 +1,48 @@
 <div class="row m-0">
-  <div class="col-12 d-inline-flex justify-content-between">
-    <span class="text-header my-auto">Powiadomienia</span>
-    <mat-icon (click)="close()">close</mat-icon>
+  <div class="col-12 p-0 d-inline-flex justify-content-between">
+    <svg-icon src="../../assets/img/svg/notifications.svg" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+    <span class="text-header my-auto mx-4">Powiadomienia</span>
+    <mat-icon class="my-auto" style="cursor: pointer" (click)="close()">close</mat-icon>
   </div>
 </div>
 <mat-dialog-content class="p-0">
-  <div class="row m-0">
-    <div class="col-12 m-0 p-0">
-      <div class="notifications-container p-2 m-0">
-        <div *ngFor="let notification of this.notificationsListing">
-          <div class="notification m-0 mt-4" (click)="openNotificationLink(notification.url)">
-            <div class="row m-0 notification-header text-medium">
-              <div class="col-12 m-0 d-inline-flex justify-content-between">
-                <span class="text-uppercase my-auto">{{notification.header}}</span>
-                <mat-chip-list>
-                  <mat-chip class="pointer-events-disabled p-2" [ngStyle]="parseService.parseHistoryAndReviewStatusChipDisplayStyle(notification.type)">
-                    <span class="text-small text-uppercase text-center">{{parseService.parseStatus(notification.type) | translate}}</span>
-                  </mat-chip>
-                </mat-chip-list>
-              </div>
+    <div class="row m-0">
+      <div class="col-12 m-0 p-0">
+        <div class="container-fluid" *ngIf="!areNotificationsLoaded">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center p-4">
+              <span class="text-medium my-auto mr-2">Ładuję powiadomienia...</span>
+              <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="30"></mat-progress-spinner>
             </div>
-            <div class="row m-0 text-small">
-              <div class="col-12 notification-body">
-                <strong>{{notification.title}}: </strong>
-                {{notification.description}}
-              </div>
+          </div>
+        </div>
+        <div class="container-fluid" *ngIf="areNotificationsLoaded && !notificationsListing">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center p-4">
+              <span class="text-medium my-auto mr-2">Brak nowych powiadomień</span>
             </div>
-            <div class="row m-0 notification-footer text-misc">
-              <div class="col-12 p-0 d-block text-right">
-                {{parseService.parseTimestampToDate(notification.created)}}
+          </div>
+        </div>
+        <div *ngIf="notificationsListing && areNotificationsLoaded" class="notifications-container p-2 m-0">
+          <div *ngFor="let notification of this.notificationsListing">
+            <fieldset class="border p-2 w-100 h-100" (click)="openNotificationLink(notification.url)" [ngClass]="{'was-read': notification.wasRead}" [ngStyle]="parseService.parseSubmissionStatusChipDisplayStyle(notification.type)">
+              <legend class="notification-title w-auto text-medium d-inline-flex justify-content-start" [ngStyle]="parseService.parseHistoryAndReviewStatusChipDisplayStyle(notification.type)">
+                <span class="ml-2 mr-2"><strong> {{notification.title}}: </strong></span>
+                <span class="mr-2"><strong> {{parseService.parseStatus(notification.type) | translate}} </strong></span>
+              </legend>
+              <div class="row m-0 text-medium">
+                  <div class="col-12 m-0 p-0 text-medium text-center">
+                    {{notification.description}}
+                  </div>
               </div>
-            </div>
+              <div class="row m-0 text-misc notification-footer">
+                <div class="col-12 p-0 d-block text-right">
+                  {{parseService.parseTimestampToDate(notification.created)}}
+                </div>
+              </div>
+            </fieldset>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </mat-dialog-content>

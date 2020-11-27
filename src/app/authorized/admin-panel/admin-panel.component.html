@@ -46,39 +46,60 @@
               <mat-form-field class="form-field ml-2" appearance="outline">
                 <mat-label>Uprawnienia</mat-label>
                 <mat-select formControlName="role" required>
-                  <mat-option *ngFor="let roleIndex of roleArrayPrototype(6); let i = index" [value]="i">
-                    {{parseService.parseRole(i) | translate}}
+                  <mat-option *ngFor="let roleIndex of arraysService.roleTypeArrayPrototype_Default()" [value]="roleIndex">
+                    {{parseService.parseRole(roleIndex) | translate}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="row">
-            <mat-form-field class="d-block w-100 ml-2" appearance="outline">
-              <mat-label>Obszary</mat-label>
-              <mat-select formControlName="areas" required multiple>
-                <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
-                  {{parseService.parseArea(i) | translate}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <div *ngIf="areasValid.value" class="row m-0 mb-2">
+              <div class="col-12 p-0">
+                <mat-chip-list>
+                  <mat-chip class="blue-chip text-medium pointer-events-disabled"
+                            *ngFor="let area of areasValid.value">
+                    {{parseService.parseArea(area) | translate}}
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-12 p-0">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Obszary</mat-label>
+                  <mat-select formControlName="areas" required multiple>
+                    <mat-option *ngFor="let areaIndex of arraysService.areaArrayPrototype(sessionService.getUserState(), sessionService.getUserAreas())" [value]="areaIndex">
+                      {{parseService.parseArea(areaIndex) | translate}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngIf="sessionService.checkSysAdminPrivilege()" class="row m-0">
+              <div class="col-12 p-0">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Status Konta Użytkownika</mat-label>
+                  <mat-select formControlName="state" required>
+                    <mat-option value="A">{{parseService.parseUserState("A") | translate}}</mat-option>
+                    <mat-option value="T">{{parseService.parseUserState("T") | translate}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
             <div class="row m-0">
               <div class="mb-3 w-100">
-                <div *ngIf="statusLabelFailure" class="notification_container_failure">
-                  <div class="text-center">{{statusLabelFailure}}</div>
-                </div>
-              </div>
-              <div class="mb-3 w-100">
-                <div *ngIf="statusLabelSuccess" class="notification_container_success">
-                  <div class="text-center">{{statusLabelSuccess}}</div>
+                <div *ngIf="statusVariant !== null" [ngClass]="{'notification_container_failure' : statusVariant === operationOutcome.ERROR, 'notification_container_success' : statusVariant === operationOutcome.SUCCESS}">
+                  <div *ngIf="statusVariant === operationOutcome.ERROR" class="text-center">{{ this.parseService.parseApiError(errorType) | translate }}</div>
+                  <div *ngIf="statusVariant === operationOutcome.SUCCESS" class="text-center">{{ 'Messages.Admin.RegistrationSuccess' | translate }}</div>
                 </div>
               </div>
             </div>
             <div class="row m-0 justify-content-end">
-              <button mat-raised-button class="d-flex d-block m-2 float-right" type="submit" (click)="onSubmit()" style="background-color: var(--darkblue); color: var(--white)">Zarejestruj</button>
-              <button mat-raised-button class="d-flex d-block m-2 float-right" type="reset" style="background-color: var(--red); color: var(--white)">Wyczyść</button>
+              <button mat-raised-button class="d-flex m-2 float-right" type="submit" (click)="onSubmit()" [disabled]="isPreformingRegistration" style="background-color: var(--darkblue); color: var(--white)">
+               Zarejestruj
+              </button>
+              <button mat-raised-button class="d-flex d-block m-2 float-right" type="button" (click)="onReset()" style="background-color: var(--red); color: var(--white)">Wyczyść</button>
             </div>
           </div>
         </div>

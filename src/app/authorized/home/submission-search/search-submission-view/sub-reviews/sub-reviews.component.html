@@ -118,7 +118,7 @@
                 </p>
               </div>
               <div class="col-4 m-0 my-auto text-center align-items-center">
-                <button mat-fab class="send-review-button my-auto" (click)="sendReview()">
+                <button mat-fab class="send-review-button my-auto" (click)="sendReview()" [disabled]="isSendingReview">
                   <svg-icon src="../../assets/img/svg/send_review.svg" [applyClass]="false" svgClass="send-review-icon"></svg-icon>
                 </button>
               </div>

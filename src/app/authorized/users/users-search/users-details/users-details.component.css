@@ -1,0 +1,174 @@
+/* ---------------------------------------------------
+GLOBAL
+----------------------------------------------------- */
+body{
+  margin: 0;
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.user-view-header{
+  border-radius: 10px 0 0 0;
+  background-color: var(--darkblue);
+  color: var(--white);
+}
+
+.user-view-editable-layout{
+  background-color: var(--darkblue);
+}
+
+.user-view-editable-notice {
+  background-color: var(--white);
+  color: var(--black);
+  border-width: 3px;
+  border-style: solid;
+  border-color: var(--orange);
+}
+
+.user-view-editable-update-button{
+  background-color: var(--orange);
+  border-radius: 0;
+}
+
+.back-to-search-button {
+  background-color: var(--white);
+  color: var(--darkblue);
+}
+
+.save-changes-button {
+  background-color: var(--green);
+  color: var(--black);
+}
+
+.abort-changes-button {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.edit-profile-button {
+  background-color: var(--orange);
+  color: var(--black);
+}
+
+.status-indicator{
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.back-to-search-button svg-icon{
+  fill: var(--white);
+}
+
+.user-data-container{
+  background-color: var(--darkblue);
+}
+
+#user-navigation mat-tab{
+  margin: 0;
+  padding: 0;
+}
+
+#user-navigation .tab-content{
+  background-color: var(--white);
+  flex-direction: row;
+  flex: 1;
+}
+
+#user-navigation .interactive-button span.menu-item{
+
+}
+#user-navigation .interactive-button {
+  display: block;
+  padding: 5px;
+  background: var(--darkblue);
+  color: var(--white);
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+}
+#user-navigation .active > a, a[aria-expanded="true"] {
+  color: var(--black) !important;
+  background: var(--white);
+  border-style: none !important;
+}
+#user-navigation .interactive-button:hover{
+  color: var(--white);
+  background: var(--blue);
+  cursor: pointer;
+}
+
+#interaction-options {
+  position: fixed;
+  z-index: 4;
+  bottom: 0;
+  right: 1%;
+}
+
+.editable-icon{
+  vertical-align: middle;
+  margin: auto auto auto 2px;
+  color: var(--orange);
+}
+
+.editable-icon-valid{
+  vertical-align: middle;
+  margin: auto auto auto 2px;
+  color: var(--green);
+}
+
+.confirm-edit-button {
+  padding: 5px;
+  background-color: var(--orange);
+  color: var(--black);
+}
+
+.confirm-edit-button.valid {
+  padding: 5px;
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.confirm-edit-button.invalid {
+  padding: 5px;
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.upload-edit-button {
+  padding: 5px;
+  background-color: var(--darkblue);
+  color: var(--white);
+}
+
+.reviewer-icon{
+  vertical-align: middle;
+  margin: auto auto auto 2px;
+  color: var(--white);
+}
+
+/* Extra small devices (phones, up to 480px) */
+@media screen and (max-width: 746px) {
+
+
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 746px) and (max-width: 991px) {
+
+}
+/* tablets/desktops and up ———– */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+/* large desktops and up ———– */
+@media screen and (min-width: 1200px) {
+
+}
+
+

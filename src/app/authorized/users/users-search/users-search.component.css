@@ -18,7 +18,6 @@ a, a:hover, a:focus {
 
 .search-filter-container{
   padding: 0;
-  background-color: var(--white);
 }
 
 .search-filter-folded {
@@ -59,7 +58,6 @@ a, a:hover, a:focus {
 
 #paginator-bar .toggle-filter-button{
   color: var(--black);
-  background-color: var(--white);
 }
 
 #paginator-bar .toggle-filter-icon{

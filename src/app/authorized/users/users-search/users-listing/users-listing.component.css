@@ -14,6 +14,11 @@ tr.element-row:not(.expanded-row):active {
   background: #efefef;
 }
 
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type {
+  padding: 0;
+}
+
 .element-row td {
   border-bottom-width: 0;
 }
@@ -23,10 +28,18 @@ tr.element-row:not(.expanded-row):active {
   display: flex;
 }
 
+mat-chip-list{
+  width: 100%;
+}
 
 .users-container{
   background-color: var(--white);
   width: 100%;
+}
+
+.show-account-button{
+  background-color: var(--darkblue);
+  color: var(--white);
 }
 
 

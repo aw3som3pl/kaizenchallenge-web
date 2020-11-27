@@ -86,8 +86,8 @@
                     <mat-form-field class="w-100 mt-4" appearance="outline">
                       <mat-label>{{ parseTypedResource('Contents.areaPlaceholder') | translate}}</mat-label>
                       <mat-select formControlName="areas" required multiple>
-                        <mat-option *ngFor="let areaIndex of areaArrayPrototype(21); let i = index" [value]="i">
-                          {{parseService.parseArea(i) | translate}}
+                        <mat-option *ngFor="let areaIndex of arraysService.areaArrayPrototype(sessionService.getUserState(), sessionService.getUserAreas())" [value]="areaIndex">
+                          {{parseService.parseArea(areaIndex) | translate}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -95,8 +95,8 @@
                       <mat-form-field class="w-100" appearance="outline">
                         <mat-label>{{ parseTypedResource('Contents.categoryPlaceholder') | translate}}</mat-label>
                         <mat-select formControlName="category" required>
-                          <mat-option *ngFor="let categoryIndex of categoryArrayPrototype(8); let i = index" [value]="i">
-                            {{parseService.parseCategory(i) | translate}}
+                          <mat-option *ngFor="let categoryIndex of arraysService.categoryArrayPrototype()" [value]="categoryIndex">
+                            {{parseService.parseCategory(categoryIndex) | translate}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -164,8 +164,8 @@
                           <mat-form-field class="w-50 pl-2"  appearance="outline">
                             <mat-label>Jednostka</mat-label>
                             <mat-select formControlName="additionalUnit">
-                              <mat-option *ngFor="let additionalUnitIndex of additionalUnitArrayPrototype(6); let i = index" [value]="i">
-                                {{parseService.parseAdditionalUnit(i) | translate}}
+                              <mat-option *ngFor="let additionalUnitIndex of arraysService.additionalUnitArrayPrototype()" [value]="additionalUnitIndex">
+                                {{parseService.parseAdditionalUnit(additionalUnitIndex) | translate}}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -244,9 +244,9 @@
                       </div>
                     </div>
                     <div class="mt-4">
-                      <button mat-raised-button class="float-right step-button-finish text-large" (click)="onSendSubmissionData()">{{ 'Home.Labels.sendButtonLabel' | translate}}</button>
-                      <button mat-raised-button matStepperPrevious class="float-left step-button-back text-large" (click)="onStepNavigation(1)">{{ 'Home.Labels.previousStep' | translate}}</button>
-                      <button mat-raised-button class="ml-2 float-left step-button-reset text-large" (click)="stepper.reset()">Resetuj</button>
+                      <button mat-raised-button class="float-right step-button-finish text-large" (click)="onSendSubmissionData()" [disabled]="isSendingSubmission">{{ 'Home.Labels.sendButtonLabel' | translate}}</button>
+                      <button mat-raised-button matStepperPrevious class="float-left step-button-back text-large" (click)="onStepNavigation(1)" [disabled]="isSendingSubmission">{{ 'Home.Labels.previousStep' | translate}}</button>
+                      <button mat-raised-button class="ml-2 float-left step-button-reset text-large" (click)="stepper.reset()" [disabled]="isSendingSubmission">Resetuj</button>
                     </div>
                   </div>
                   <div class="col-md-4">

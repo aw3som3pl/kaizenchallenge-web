@@ -73,10 +73,38 @@ export class SessionService {
     });
   }
 
+  updateUnreadNotificationsCount(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      if (this.getUserIdToken()) {
+      this.http.get(`${projectConfig.apiBaseUrl}${environment.updateUnreadNotificationsCountEndpointURL}`)
+        .subscribe( (data: number) => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          });
+      } else {
+        resolve(0);
+      }
+    });
+  }
+
   getActiveNotificationsList(startIndex: number, batchSize: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http.get(`${projectConfig.apiBaseUrl}${environment.getActiveNotificationsCountEndpointURL}/${startIndex}/${batchSize}`)
         .subscribe( (data: [InotificationsListingResponse]) => {
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          });
+    });
+  }
+
+  markNotificationsAsRead(notificationIds: number[]): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http.post(`${projectConfig.apiBaseUrl}${environment.markNotificationsAsReadEndpointURL}`, JSON.stringify(notificationIds))
+        .subscribe( (data: boolean) => {
             resolve(data);
           },
           error => {
@@ -94,8 +122,16 @@ export class SessionService {
     return this.authorizedUser.uId;
   }
 
+  getEmployeeId(): string {
+    return this.authorizedUser.employeeId;
+  }
+
   getUserRole(): number {
     return this.authorizedUser.role;
+  }
+
+  getUserState(): string {
+    return this.authorizedUser.state;
   }
 
   getUserAreas(): number[] {
@@ -104,6 +140,10 @@ export class SessionService {
 
   getUserExp(): number {
     return this.authorizedUser.experience;
+  }
+
+  getUserActiveNotificationsCount(): number {
+    return this.authorizedUser ? this.authorizedUser.activeNotificationsCount : 0;
   }
 
   persistUserData(user: UserFull): void {
@@ -125,6 +165,18 @@ export class SessionService {
 
   removeUserIdToken(){
     localStorage.removeItem('idt');
+  }
+
+  checkAdminPrivilege(): boolean {
+    return this.authorizedUser ? this.authorizedUser.role > 3 : false;
+  }
+
+  checkSysAdminPrivilege(): boolean {
+    return this.authorizedUser ? this.authorizedUser.role > 4 : false;
+  }
+
+  checkTestStatusActive(): boolean {
+    return this.authorizedUser ? this.authorizedUser.state === 'T' : false;
   }
 
   navigateToLogin(): void {

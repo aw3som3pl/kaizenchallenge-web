@@ -6,4 +6,5 @@ export interface IRegistrationForm {
   password: string;
   role: number;
   areas: [number];
+  state: string;
 }

@@ -7,6 +7,7 @@ import {SearchListingService} from './service/search-listing.service';
 import {IsubmissionListingResponse} from '../../../../shared/models/response/interfaces/isubmission-listing-response';
 import {Subscription} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {SessionService} from '../../../../shared/services/session.service';
 
 @Component({
   selector: 'app-listing',
@@ -37,6 +38,7 @@ export class SearchListingComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private searchListingService: SearchListingService,
+              private sessionService: SessionService,
               public parseService: ParseService) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class SearchListingComponent implements OnInit {
     const newListingSub = this.activatedRoute.queryParamMap
       .subscribe(params => {
         this.newListingRequest = new SubmissionListingRequest(
-          params.has('areas') ? params.getAll('areas').map(Number) : null,
+          params.has('areas') ? params.getAll('areas').map(Number) : this.searchListingService.loadEligibleAreas(this.sessionService.getUserState(), this.sessionService.getUserAreas()),
           params.has('authorType') ? +params.get('authorType') : null,
           params.has('currentPageSize') ?  +params.get('currentPageSize') : 10,
         params.has('category') ? params.getAll('category').map(Number) : null,
@@ -73,7 +75,6 @@ export class SearchListingComponent implements OnInit {
       .then( (success: IsubmissionListingResponse) => {
         this.isLoadingSubmissions = false;
 
-        console.log(this.submissionListing);
         if (success.searchResult.length > 0){
           this.submissionListing = success.searchResult;
         } else {

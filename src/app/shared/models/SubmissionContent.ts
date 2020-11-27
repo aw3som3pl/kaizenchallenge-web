@@ -10,6 +10,7 @@ export class SubmissionContent implements IsubmissionContent{
   areas: [];
   attachmentsCount: number;
   authorId: number;
+  authorEmployeeId: string;
   authorName: string;
   category: number;
   commentCount: number;
@@ -28,6 +29,8 @@ export class SubmissionContent implements IsubmissionContent{
   editorRole: number;
   editorName: string;
   currentReviewerId: number;
+  editorEmployeeId: string;
+  currentReviewerEmployeeId: string;
   isLiked: boolean;
 
 }

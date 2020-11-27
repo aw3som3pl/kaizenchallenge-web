@@ -36,8 +36,12 @@ export class ParseService {
     return 'Shared.additionalUnitArray.' + unit;
   }
 
-  parseOrderBy(orderBy: number): string {
-    return 'Shared.orderByArray.' + orderBy;
+  parseOrderBy_SUB(orderBySUB: number): string {
+    return 'Shared.orderBySUBArray.' + orderBySUB;
+  }
+
+  parseOrderBy_USR(orderByUSR: number): string {
+    return 'Shared.orderByUSRArray.' + orderByUSR;
   }
 
   parseAuthorType(author: number): string {
@@ -47,6 +51,15 @@ export class ParseService {
   parseResultsType(type: number): string {
     return 'Shared.resultsType.' + type;
   }
+
+  parseUserState(type: string): string {
+    return 'Shared.userStatus.' + type;
+  }
+
+  parseApiError(type: number): string {
+    return 'Errors.Api.' + type;
+  }
+
 
   parseTimestampToDate(timestamp: string): string {
     if (timestamp) {
@@ -60,7 +73,7 @@ export class ParseService {
   calculateStarCount(exp: number): number{
     if ( exp < 400){
       return 0;
-    } else if (exp < 800 ){
+    } else if (exp < 800){
       return 1;
     } else if (exp < 1600){
       return 2;

@@ -29,22 +29,15 @@ export class IdtokenHeaderInterceptor implements HttpInterceptor {
         .pipe(
           retry(1),
             catchError((error: HttpErrorResponse) => {
-
-            let errorMessage = '';
-
-            if (error.error instanceof ErrorEvent){ // CLIENT Errors
-              errorMessage = `Error: ${error.error.message}`;
-              return throwError(errorMessage);
-            }
-            if (error.error as IapiError){  // API Errors
-              const apiError: IapiError = error.error as IapiError;
-              errorMessage = `API Error:\nCode {${EapiError[apiError.ErrorCode]}}\nCause {${apiError.Message}}`;
-              console.error(errorMessage);
-              return throwError(errorMessage);
-            } else { // Other Server Errors
-              errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-              return throwError(errorMessage);
-            }
+              if (error.error instanceof ErrorEvent){ // CLIENT Errors
+                return throwError(error);
+              }
+              if (error.error as IapiError){  // API Errors
+                const apiError: IapiError = error.error as IapiError;
+                return throwError(apiError);
+              } else { // Other Server Errors
+                return throwError(error);
+              }
             },
           )
         );

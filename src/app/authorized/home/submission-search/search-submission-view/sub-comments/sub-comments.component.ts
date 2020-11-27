@@ -21,6 +21,8 @@ export class SubCommentsComponent implements OnInit {
 
   @Input() submissionId;
 
+  isSendingComment = false;
+
   areCommentsLoaded: boolean;
   commentsListing: [Icomment] = null;
 
@@ -51,24 +53,34 @@ export class SubCommentsComponent implements OnInit {
 
   sendNewComment() {
     if (this.commentForm.valid){
-      this.subCommentsService.sendNewComment(new NewComment(this.commentMessageValid.value, this.submissionId))
+      this.isSendingComment = true;
+      const newComment = new NewComment(this.commentMessageValid.value, this.submissionId);
+      this.subCommentsService.sendNewComment(newComment)
         .then( (success: InewCommentResponse) => {
           console.log(success);
           this.loadCommentsList();
           this.commentForm.reset();
-        });
+          this.isSendingComment = false;
+        },
+          failure => {
+            this.isSendingComment = false;
+          });
     }
+  }
+
+  updateCommentsList() {
+
   }
 
   loadCommentsList() {
     this.areCommentsLoaded = false;
-    this.subCommentsService.getCommentsList( new CommentsListingRequest(50, 0, this.submissionId))
+    this.subCommentsService.getCommentsList( new CommentsListingRequest(10, 0, this.submissionId))
       .then((success: IcommentsListingResponse) => {
         this.areCommentsLoaded = true;
         console.log(success);
         if (success.comments.length > 0) {
           this.commentsListing = success.comments;
-          this.commentsListing = [...this.commentsListing];
+       //   this.commentsListing = [...this.commentsListing];
         }
       },
         failure => {
@@ -76,6 +88,10 @@ export class SubCommentsComponent implements OnInit {
           this.commentsListing = null;
         }
       );
+  }
+
+  trackByCommentId(index: number, el: Icomment): number {
+    return el.commentId;
   }
 
   scrollToBottom(): void {

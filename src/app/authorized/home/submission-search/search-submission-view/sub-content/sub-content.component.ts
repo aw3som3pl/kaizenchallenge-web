@@ -8,6 +8,9 @@ import {SubmissionContentUpdate} from '../../../../../shared/models/events/Submi
 import {SubmissionViewService} from '../service/submission-view.service';
 import {Observable, Subscription} from 'rxjs';
 import {SubmissionAttachmentsUpdate} from '../../../../../shared/models/events/SubmissionAttachmentsUpdate';
+import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import {ArraysService} from '../../../../../shared/parsers/arrays.service';
+import {SessionService} from '../../../../../shared/services/session.service';
 
 @Component({
   selector: 'app-sub-content',
@@ -36,6 +39,8 @@ export class SubContentComponent implements OnInit {
   additionalUnitValid: AbstractControl;
 
   constructor(public parseService: ParseService,
+              public sessionService: SessionService,
+              public arraysService: ArraysService,
               private submissionViewService: SubmissionViewService,
               public translate: TranslateService,
               private formBuilder: FormBuilder) {
@@ -47,7 +52,6 @@ export class SubContentComponent implements OnInit {
       this.initializeSubmissionEditForm();
 
       this.updateValidityCheck.subscribe( state => {
-        console.log(state);
         this.updateSubmissionContentObject();
       });
     }
@@ -63,9 +67,9 @@ export class SubContentComponent implements OnInit {
       category: [this.loadedSubmission.category, [Validators.required]],
       topic: [this.loadedSubmission.topic, [Validators.required,  Validators.minLength(10), Validators.maxLength(120)]],
       description: [this.loadedSubmission.description, [Validators.required, Validators.minLength(10), Validators.maxLength(600)]],
-      additional: [this.loadedSubmission.additional, [Validators.maxLength(150)]],
-      additionalValue: [this.loadedSubmission.additionalValue, [Validators.maxLength(12)]],
-      additionalUnit: [this.loadedSubmission.additionalUnit],
+      additional: [this.loadedSubmission.additional, [Validators.minLength(20), Validators.maxLength(150)]],
+      additionalValue: [this.loadedSubmission.additionalValue, [Validators.maxLength(9)]],
+      additionalUnit: [this.loadedSubmission.additionalUnit, null],
     });
 
     this.areasValid = this.contentEditForm.controls.areas;
@@ -86,6 +90,9 @@ export class SubContentComponent implements OnInit {
   }
 
   editContentsFormForceValidAgain(): void {
+
+    this.emitSubmissionContentUpdateAction(false);
+
     this.areasValid.updateValueAndValidity();
     this.categoryValid.updateValueAndValidity();
     this.topicValid.updateValueAndValidity();
@@ -96,7 +103,7 @@ export class SubContentComponent implements OnInit {
   }
 
   updateSubmissionContentObject(){
-    if (this.contentEditForm.valid) {
+    if (this.contentEditForm.valid && this.checkAdditionalRequired()) {
       this.loadedSubmission.areas = this.areasValid.value;
       this.loadedSubmission.category = this.categoryValid.value;
       this.loadedSubmission.topic = this.topicValid.value;
@@ -112,29 +119,43 @@ export class SubContentComponent implements OnInit {
     if (valid) {
       this.submissionContentUpdateAction
         .emit(new SubmissionContentUpdate(true));
-      console.log('CONTENT EMIT: VALID');
     } else {
       this.submissionContentUpdateAction
         .emit(new SubmissionContentUpdate(false));
-      console.log('CONTENT EMIT: INVALID');
     }
   }
+
+  checkAdditionalRequired(): boolean {
+    if (this.additionalValueValid.value || this.additionalUnitValid.value || this.additionalValid.value){
+      this.toggleAdditionalRequired(true);
+      this.editContentsFormForceValidAgain();
+      return true;
+    } else {
+      this.toggleAdditionalRequired(false);
+      this.editContentsFormForceValidAgain();
+      return false;
+    }
+  }
+
+  toggleAdditionalRequired(isRequired: boolean) {
+    const additionalValueControl = this.contentEditForm.get('additionalValue');
+    const additionalUnitControl = this.contentEditForm.get('additionalUnit');
+    const additionalControl = this.contentEditForm.get('additional');
+
+    if (isRequired){
+      additionalControl.setValidators([Validators.required, Validators.minLength(20), Validators.maxLength(150)]);
+      additionalValueControl.setValidators([Validators.required, Validators.maxLength(9)]);
+      additionalUnitControl.setValidators(Validators.required);
+    } else {
+      additionalControl.setValidators(null);
+      additionalValueControl.setValidators(null);
+      additionalUnitControl.setValidators(null);
+    }
+  }
+
 
   parseTypedResource(path: string): string {
     return `Home.Search.SubmissionView.${this.loadedSubmission.type}.${path}`;
   }
-
-  areaArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  categoryArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
-  additionalUnitArrayPrototype(n: number): any[] {
-    return Array(n);
-  }
-
 
 }

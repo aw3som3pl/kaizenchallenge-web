@@ -29,7 +29,7 @@
                     {{this.sessionService.getUserData().name}} {{this.sessionService.getUserData().surname}}
                   </div>
                   <div class="row m-0">
-                    <jn-star-rating [ngModel]="this.starRating"></jn-star-rating>
+                    <jn-star-rating [ngModel]="this.parseService.calculateStarCount(this.sessionService.getUserExp())"></jn-star-rating>
                   </div>
                   <div class="row m-0">
                     <a class="interactive-button-small text-small">
@@ -53,13 +53,13 @@
                 <svg-icon src="../../assets/img/svg/new_submission.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.COMMUNICATOR}">
+            <li class="sm-hidden" [ngClass]="{ 'active': currenMenutSelection === menuSelector.COMMUNICATOR}">
               <a class="interactive-button">
                 <span class="container menu-item text-large">Komunikator</span>
                 <svg-icon src="../../assets/img/svg/chat.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.KNOWLEDGEBASE }">
+            <li  class="sm-hidden" [ngClass]="{ 'active': currenMenutSelection === menuSelector.KNOWLEDGEBASE }">
               <a class="interactive-button">
                 <span class="container menu-item text-large">Baza Wiedzy</span>
                 <svg-icon src="../../assets/img/svg/knowledge.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
@@ -85,13 +85,13 @@
                 <svg-icon src="../../assets/img/svg/ranking.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.OEE_SIMULATOR }">
+            <li  class="sm-hidden" [ngClass]="{ 'active': currenMenutSelection === menuSelector.OEE_SIMULATOR }">
               <a class="interactive-button">
                 <span class="container menu-item text-large">OEE Simulator</span>
                 <svg-icon src="../../assets/img/svg/oee.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
-            <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.ADMIN_PANEL }">
+            <li *ngIf="sessionService.checkAdminPrivilege()" [ngClass]="{ 'active': currenMenutSelection === menuSelector.ADMIN_PANEL }">
               <a class="interactive-button-long admin" (click)="sidebarNavigateToAdminPanel()">
                 <span class="container menu-item text-medium">Panel Administracyjny</span>
                 <svg-icon src="../../assets/img/svg/admin_panel.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>

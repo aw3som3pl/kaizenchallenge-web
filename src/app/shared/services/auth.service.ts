@@ -25,7 +25,9 @@ export class AuthService {
             }, error => {
               reject(error);
             });
-        }, failure => {});
+        }, failure => {
+          reject(failure);
+        });
 
     });
   }

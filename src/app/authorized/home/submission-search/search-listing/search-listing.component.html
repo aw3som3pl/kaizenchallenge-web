@@ -50,17 +50,17 @@
                   </mat-chip>
                 </mat-chip-list>
               </div>
-              <div *ngSwitchCase="submissionsTableHeaders[5]">
+              <div *ngSwitchCase="submissionsTableHeaders[5]" (click)="openSubmissionViewById(element.submissionId)">
                 <mat-chip-list class="d-inline-block chips-inline">
-                  <mat-chip class="text-large pointer-events-disabled p-2 white-chip">
+                  <mat-chip class="text-large pointer-events-disabled p-2 transparent-chip">
                     <mat-icon class="mr-2">thumb_up</mat-icon>
                     <span>{{element.likeCount}}</span>
                   </mat-chip>
-                  <mat-chip class="text-large pointer-events-disabled p-2 white-chip">
+                  <mat-chip class="text-large pointer-events-disabled p-2 transparent-chip">
                     <mat-icon class="mr-2">comment</mat-icon>
                     <span>{{element.commentCount}}</span>
                   </mat-chip>
-                  <mat-chip class="text-large pointer-events-disabled p-2 white-chip">
+                  <mat-chip class="text-large pointer-events-disabled p-2 transparent-chip">
                     <mat-icon class="mr-2">rate_review</mat-icon>
                     <span>{{element.reviewCount}}</span>
                   </mat-chip>
@@ -90,7 +90,7 @@
                    <fieldset class="border p-2 w-100 h-100">
                      <legend class="w-auto text-medium"><strong> Obszar </strong></legend>
                      <mat-chip-list class="d-inline-flex">
-                       <div *ngFor="let area of element.area; let i = index">
+                       <div *ngFor="let area of element.area">
                          <mat-chip class="pointer-events-disabled p-2 darkblue-chip">
                            <span class="text-small text-uppercase chip-text">{{parseService.parseArea(area) | translate}}</span>
                          </mat-chip>

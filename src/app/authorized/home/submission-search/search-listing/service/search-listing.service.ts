@@ -4,6 +4,8 @@ import {SubmissionListingRequest} from '../../../../../shared/models/request/Sub
 import {environment} from '../../../../../../environments/environment';
 import {IsubmissionListingResponse} from '../../../../../shared/models/response/interfaces/isubmission-listing-response';
 import {projectConfig} from '../../../../../../config/project-config';
+import {EaccountStateEnum} from '../../../../../shared/enums/EaccountState.enum';
+import {SessionService} from '../../../../../shared/services/session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +24,17 @@ export class SearchListingService {
             reject(error);
           });
     });
+  }
+
+  loadEligibleAreas(accountState: string, accountBoundAreas: number[]): any {
+
+    const s = EaccountStateEnum;
+
+    switch (accountState) {
+      case s.ACTIVE:
+        return null;
+      case s.TEST:
+        return accountBoundAreas;
+    }
   }
 }

@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ParseService} from '../../../../shared/parsers/parse.service';
 import {MatTabGroup} from '@angular/material/tabs';
 import {SubmissionSearchService} from '../service/submission-search.service';
-import {LocationStrategy} from '@angular/common';
 import {SubmissionContentUpdate} from '../../../../shared/models/events/SubmissionContentUpdate';
 import {IsubmissionUpdateResponse} from '../../../../shared/models/response/interfaces/isubmission-update-response';
 import {EeventActionEnum} from '../../../../shared/enums/Eevent-action.enum';
@@ -27,6 +26,9 @@ import {EsubmissionAttachmentsEditValidityEnum} from '../../../../shared/enums/E
 export class SearchSubmissionViewComponent implements OnInit {
 
   @ViewChild('submissionTabGroup') submissionTabGroup: MatTabGroup;
+
+  isSendingLike = false;
+  isSendingUpdate = false;
 
   // Shared events
   editableContentValidityCheck: Subject<boolean> = new Subject<boolean>();
@@ -117,24 +119,32 @@ export class SearchSubmissionViewComponent implements OnInit {
   }
 
   updateSubmissionData() {
+    this.isSendingUpdate = true;
     this.submissionViewService.sendSubmissionUpdateData(
       this.submissionViewService.prepareSubmissionForUpdate(this.loadedSubmission, this.attachmentsURLs))
       .then( (success: IsubmissionUpdateResponse) => {
         console.log(success.timestampUpdated);
         this.reloadContentsData();
+        this.isSendingUpdate = false;
       },
         failure => {
-        console.log(failure);
+          console.log(failure);
+          this.isSendingUpdate = false;
         });
   }
 
   performLikeAction() {
+    this.isSendingLike = true;
     this.submissionViewService.sendSubmissionLike( new LikeActionRequest(!this.isLiked, this.loadedSubmission.submissionId))
       .then( (success: IlikeActionResponse) => {
         console.log(success);
         this.isLiked = !this.isLiked;
         this.loadedSubmission.likeCount = success.newLikeCount;
-      });
+        this.isSendingLike = false;
+      },
+        failure => {
+          this.isSendingLike = false;
+        });
   }
 
 
@@ -147,6 +157,10 @@ export class SearchSubmissionViewComponent implements OnInit {
       },
       queryParamsHandling: 'merge'
     });
+  }
+
+  forceTabChange(newTabIndex: number){
+    this.currentActiveTab = newTabIndex;
   }
 
   onTabChange($event: any){
@@ -180,6 +194,7 @@ export class SearchSubmissionViewComponent implements OnInit {
 
     if (contentUpdate.contentFormValid){
       this.submissionContentEditFormValidity = s.CONTENT_VALID;
+      this.forceTabChange(3); // TAB ATTACHMENTS
     } else {
       this.submissionContentEditFormValidity = s.CONTENT_INVALID;
     }
@@ -194,6 +209,7 @@ export class SearchSubmissionViewComponent implements OnInit {
       this.loadedSubmission.attachmentsCount = attachmentsUpdate.attachmentsCount;
       this.attachmentsURLs = attachmentsUpdate.attachmentURLs;
       this.submissionAttachmentsEditFormValidity = s.ATTACHMENTS_UPLOADED;
+      this.forceTabChange(0); // TAB CONTENT
     } else {
       this.submissionAttachmentsEditFormValidity = s.ATTACHMENTS_UPLOADING;
     }
@@ -219,12 +235,12 @@ export class SearchSubmissionViewComponent implements OnInit {
     }
   }
 
-  determineReviewerId(): number {
+  determineReviewerId(): number | string {
     if (this.loadedSubmission.editor) {
-      return this.loadedSubmission.editor;
+      return this.loadedSubmission.editorEmployeeId;
     }
     else {
-      return this.loadedSubmission.currentReviewerId;
+      return this.loadedSubmission.currentReviewerEmployeeId;
     }
   }
 
