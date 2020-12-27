@@ -13,8 +13,9 @@ export class SubmissionListingRequest implements IsubmissionListingRequest{
   timestampSearchEnd: string;
   timestampSearchStart: string;
   type: number[];
+  employeeId: string;
 
-  constructor(areas: number[], authorType: number, batchSize: number, category: number[], orderBy: number[], startIndex: number, status: number[], timestampSearchEnd: string, timestampSearchStart: string, type: number[]) {
+  constructor(areas: number[], authorType: number, batchSize: number, category: number[], orderBy: number[], startIndex: number, status: number[], timestampSearchEnd: string, timestampSearchStart: string, type: number[], employeeId: string) {
     this.areas = areas;
     this.authorType = authorType;
     this.batchSize = batchSize;
@@ -25,6 +26,7 @@ export class SubmissionListingRequest implements IsubmissionListingRequest{
     this.timestampSearchEnd = timestampSearchEnd;
     this.timestampSearchStart = timestampSearchStart;
     this.type = type;
+    this.employeeId = employeeId;
 
     if (type) {
       if (type.length > 1) {

@@ -10,6 +10,7 @@ import {User} from 'firebase';
 import {Router} from '@angular/router';
 import {InotificationsListingResponse} from '../models/response/interfaces/inotifications-listing-response';
 import {projectConfig} from '../../../config/project-config';
+import {EaccountStateEnum} from '../enums/EaccountState.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +112,19 @@ export class SessionService {
             reject(error);
           });
     });
+  }
+
+  loadEligibleAreas(): any {
+
+    const userState = this.getUserState();
+    const s = EaccountStateEnum;
+
+    switch (userState) {
+      case s.ACTIVE:
+        return null;
+      case s.TEST:
+        return this.getUserAreas();
+    }
   }
 
   getUserData(): UserFull {

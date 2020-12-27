@@ -130,6 +130,10 @@ export class StaticElementsComponent implements OnInit {
     this.router.navigate(['authenticated/admin-panel']).then( success => {
     });
   }
+  sidebarNavigateToCreativityRanking(): void {
+    this.router.navigate(['authenticated/creativity-ranking']).then( success => {
+    });
+  }
   sidebarNavigateToSubmissions(): void {
     this.router.navigate(['authenticated/home/create']).then( success => {
       });

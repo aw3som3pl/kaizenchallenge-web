@@ -109,23 +109,32 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 pl-2 pr-0">
+            <div class="col-sm-6 pl-2 pr-0 m-0">
               <div class="row">
-                <div class="col-6 pr-0">
+                <div class="col-sm-4 col-6 pr-0">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>ID zgłoszenia</mat-label>
-                    <input matInput #subId formControlName="submissionId" type="number" #submissionId maxlength="10" placeholder="ID Zgłoszenia">
-                    <mat-hint align="start"><strong></strong>Wyszukaj po ID</mat-hint>
+                    <mat-label>ID Zgłoszenia</mat-label>
+                    <input matInput formControlName="submissionId" type="number" #submissionId maxlength="10" placeholder="ID Zgłoszenia">
                     <mat-hint align="end">{{submissionId.value.length}} / 10</mat-hint>
-                    <button mat-button *ngIf="subId.value" matSuffix mat-icon-button aria-label="Clear" (click)="submissionIdValid.setValue(null); $event.stopPropagation()">
+                    <button mat-button *ngIf="submissionId.value" matSuffix mat-icon-button aria-label="Clear" (click)="submissionIdValid.setValue(null); $event.stopPropagation()">
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
                 </div>
-                <div class="col-6 pl-2 my-auto">
+                <div class="col-sm-4 col-6 pl-2 pr-sm-0">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>ID Użytkownika</mat-label>
+                    <input matInput formControlName="employeeId" type="text" #employeeId maxlength="10" placeholder="ID Użytkownika">
+                    <mat-hint align="end">{{employeeId.value.length}} / 10</mat-hint>
+                    <button mat-button *ngIf="employeeId.value" matSuffix mat-icon-button aria-label="Clear" (click)="employeeIdValid.setValue(null); $event.stopPropagation()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-4 col-12 my-auto">
                   <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Ogranicz do autora</mat-label>
-                    <mat-select #author formControlName="authorType" [disabled]="this.submissionIdValid.value">
+                    <mat-select #author formControlName="authorType" [disabled]="this.submissionIdValid.value || this.employeeIdValid.value">
                       <mat-option *ngFor="let authorIndex of arraysService.authorTypeArrayPrototype()" [value]="authorIndex">
                         {{parseService.parseAuthorType(authorIndex) | translate}}
                       </mat-option>
@@ -153,19 +162,19 @@
       <div id="paginator-bar" class="row m-0 p-0">
         <div class="col-12 d-inline-flex justify-content-between">
           <button mat-button class="export-button text-medium my-auto">
-            <span class="sm-hidden mr-2">Eksportuj </span>
-            <svg-icon src="../../assets/img/svg/excel.svg" [applyClass]="false" svgClass="export-button-icon"></svg-icon>
+            <span class="md-hidden sm-hidden mr-2">Eksportuj </span>
+            <mat-icon>get_app</mat-icon>
           </button>
-          <mat-paginator *ngIf="currentSubmissionsCount" class="text-medium" style="background-color: transparent; color: var(--black)"
-                          [hidePageSize]="false"
+          <mat-paginator *ngIf="currentSubmissionsCount" class="text-small" style="background-color: transparent; color: var(--black)"
+                          [hidePageSize]="isPageSizeHidden"
                           [length]="currentSubmissionsCount"
                           [pageSize]="currentPageSize"
                           [pageSizeOptions]="pageSizeOptions"
                           (page)="onPageEvent($event)">
           </mat-paginator>
           <button mat-button class="toggle-filter-button text-medium my-auto" (click)="this.submissionSearchService.toggleSearchFilterFolded()">
-            <span *ngIf="this.submissionSearchService.isSearchFilterFolded" class="sm-hidden mr-2">Pokaż filtry</span>
-            <span *ngIf="!this.submissionSearchService.isSearchFilterFolded" class="sm-hidden mr-2">Ukryj filtry</span>
+            <span *ngIf="this.submissionSearchService.isSearchFilterFolded" class="md-hidden sm-hidden mr-2">Pokaż filtry</span>
+            <span *ngIf="!this.submissionSearchService.isSearchFilterFolded" class="md-hidden sm-hidden mr-2">Ukryj filtry</span>
             <svg-icon *ngIf="this.submissionSearchService.isSearchFilterFolded" src="../../assets/img/svg/search.svg" class="toggle-filter-icon" [ngClass]="{'isOpen' : true}" [svgStyle]="{'width.px': '20', 'height.px': '30'}"></svg-icon>
             <svg-icon *ngIf="!this.submissionSearchService.isSearchFilterFolded" src="../../assets/img/svg/arrow_up.svg" class="toggle-filter-icon" [ngClass]="{'isOpen' : true}" [svgStyle]="{'width.px': '20', 'height.px': '30'}"></svg-icon>
           </button>

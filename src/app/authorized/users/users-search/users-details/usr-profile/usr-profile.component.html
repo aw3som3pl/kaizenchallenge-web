@@ -71,10 +71,83 @@
     </div>
   </form>
   <div *ngIf="!isEditorVisible">
-    <div class="row m-0">
-      <div class="col-sm-12 mt-4 p-0 p-sm-2">
+    <div class="row m-0 mt-4 p-0">
+      <div class="col-sm col-4 p-2 text-right my-auto">
+        <img class="profile-large" src="../../assets/img/placeholder/circular-photo.jpg" alt="none">
+      </div>
+      <div class="col-sm col-8 p-2 pr-0 text-header my-auto">
+        <div class="row m-0">
+          <div class="col-sm-12 p-0 m-0">
+            <div class="row m-0">
+              <div class="col-12 m-0 p-0 text-left">
+                {{this.loadedUser.name}} {{this.loadedUser.surname}}
+                <div class="row m-0 p-0">
+                  <div class="col-sm-8 col-12 p-0">
+                    <span class="d-inline-flex">
+                      <jn-star-rating [ngModel]="this.parseService.calculateStarCount(this.loadedUser.experience)"></jn-star-rating>
+                      <span class="my-auto pl-2 d-inline-flex justify-content-between text-header">
+                        <mat-icon class="sm-hidden pr-1 my-auto">engineering</mat-icon>
+                        <span class="my-auto text-center">{{this.loadedUser.experience}}</span>
+                      </span>
+                    </span>
+                    <mat-progress-bar mode="determinate" [value]="this.parseService.calculatePercentToNextLevel(this.loadedUser.experience)"></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row m-0 mt-2">
+              <div class="col-12 m-0 p-0 text-left text-medium">
+                <span class="d-inline-flex">
+                  <span>{{this.loadedUser.email || 'amc@amc.waw.pl'}}</span>
+                </span>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-12 m-0 mt-2 p-0 text-left text-medium">
+                <mat-chip-list class="align-content-center">
+                  <mat-chip class="text-large pointer-events-disabled p-2" [ngStyle]="parseService.parseRoleChipDisplayStyle(loadedUser.role)">
+                    <span class="text-medium text-uppercase">{{parseService.parseRole(loadedUser.role) | translate}}</span>
+                  </mat-chip>
+                  <mat-chip class="text-large pointer-events-disabled p-2" [ngStyle]="parseService.parseAccountStateChipDisplayStyle(loadedUser.state)">
+                    <span class="text-medium text-uppercase">{{parseService.parseAccountStateType(loadedUser.state) | translate}}</span>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl col-12 p-0 p-sm-2 text-medium my-auto">
+        <div class="row m-0 mt-2">
+          <div class="col-12 p-0 my-auto text-right d-xl-block d-inline-flex justify-content-center">
+              <mat-chip class="darkblue-chip p-2 m-0 mt-1 mr-1 w-sm-100 justify-content-sm-between text-medium">
+                <mat-icon class="mx-1">thumbs_up_down</mat-icon>
+                <span class="mr-1 sm-hidden">Polubienia</span>
+                <span class="counter-container">{{loadedUser.receivedLikeCount}}</span>
+              </mat-chip>
+              <mat-chip class="darkblue-chip p-2 m-0 mt-1 mr-1 w-sm-100 justify-content-sm-between text-medium">
+                <mat-icon class="mx-1">comment</mat-icon>
+                <span class="mr-1 sm-hidden">Komentarze</span>
+                <span class="counter-container">{{loadedUser.commentCount}}</span>
+              </mat-chip>
+              <mat-chip class="darkblue-chip p-2 m-0 mt-1 mr-1 w-sm-100 justify-content-sm-between text-medium">
+                <svg-icon class="mx-1" src="../../assets/img/svg/idea.svg" applyClass [svgStyle]="{'width.px': '20','height.px': '20'}"></svg-icon>
+                <span class="mr-1 sm-hidden">Pomysły</span>
+                <span class="counter-container">{{loadedUser.upgradeCount}}</span>
+              </mat-chip>
+              <mat-chip class="darkblue-chip p-2 m-0 mt-1 mr-1 w-sm-100 justify-content-sm-between text-medium">
+                <svg-icon class="mx-1" src="../../assets/img/svg/problem.svg" applyClass [svgStyle]="{'width.px': '20','height.px': '20'}"></svg-icon>
+                <span class="mr-1 sm-hidden">Problemy</span>
+                <span class="counter-container">{{loadedUser.problemCount}}</span>
+              </mat-chip>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-0 mt-2">
+      <div class="col-12 p-0 p-sm-2 text-header text-left my-auto">
         <fieldset class="border p-2 w-100 h-100">
-          <legend class="w-auto text-header"><strong> Obszar </strong></legend>
+          <legend class="w-auto text-header px-2"><strong> Przypisane obszary </strong></legend>
           <mat-chip-list class="d-inline-flex">
             <mat-chip class="text-medium pointer-events-disabled blue-chip" *ngFor="let area of this.loadedUser.areas">
               {{parseService.parseArea(area) | translate}}
@@ -83,19 +156,92 @@
         </fieldset>
       </div>
     </div>
-    <div class="row m-0">
-      <div class="col-12 mt-4 p-0 p-sm-2">
+    <div class="row m-0 mt-2">
+      <div class="col-12 p-0 p-sm-2 text-header text-left my-auto">
         <fieldset class="border p-2 w-100 h-100">
-          <legend class="w-auto text-header"><strong> IMIĘ </strong></legend>
-          {{loadedUser.name}}
-        </fieldset>
-      </div>
-    </div>
-    <div class="row m-0">
-      <div class="col-12 mt-4 p-0 p-sm-2">
-        <fieldset class="border p-2 w-100 h-100">
-          <legend class="w-auto text-header"><strong> NAZWISKO </strong></legend>
-          {{loadedUser.surname}}
+          <legend class="w-100 my-auto text-header px-2 d-inline-flex justify-content-between text-nowrap">
+            <span class="my-auto">
+              <strong> Ostatnia aktywność </strong>
+            </span>
+            <mat-chip class="darkblue-chip p-2 m-0 ml-1 justify-content-sm-between" (click)="openUserSubmissions()">
+              <mat-icon class="">zoom_in</mat-icon>
+              <span class="mr-1 sm-hidden">Pokaż zgłoszenia użytkownika</span>
+              <span class="counter-container sm-hidden">{{loadedUser.upgradeCount + loadedUser.problemCount}}</span>
+            </mat-chip>
+          </legend>
+          <div class="container-fluid" *ngIf="isLoadingSubmissions">
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center">
+                <span class="text-header my-auto mr-5">Ładuję zgłoszenia...</span>
+                <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid" *ngIf="!isLoadingSubmissions && !latestSubmissions">
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center">
+                <span class="text-header my-auto mr-5">Brak zgłoszeń</span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="latestSubmissions && !isLoadingSubmissions">
+            <div *ngFor="let submission of this.latestSubmissions">
+              <div class="container-fluid p-0" (click)="openSubmissionViewById(submission.submissionId)">
+                <div class="comment row m-0 mt-2">
+                  <div class="col-12 d-flex justify-content-center m-0 p-0">
+                    <div class="row m-0 w-100">
+                      <fieldset class="submission border w-100 h-100" [class.is-idea-border]="submission.type === 0" [class.is-problem-border]="submission.type === 1">
+                        <legend class="submission-header w-auto text-medium text-sm-left text-center d-inline-flex justify-content-between">
+                          <span class="ml-2">{{submission.authorName}}</span>
+                          <jn-star-rating class="ml-2 text-nowrap my-auto" [ngModel]="parseService.calculateStarCount(submission.authorExp)"></jn-star-rating>
+                          <span class="ml-2 mr-2 text-uppercase"><strong> {{parseService.parseCategory(submission.category) | translate}} </strong></span>
+                        </legend>
+                        <span class="ml-2 mr-2 mb-2 text-header d-block">
+                      {{submission.topic}}
+                    </span>
+                        <span class="d-block text-right submission-footer" [class.is-idea-background]="submission.type === 0" [class.is-problem-background]="submission.type === 1">
+                      <mat-chip-list class="ml-2 d-inline-block chips-inline float-left">
+                        <mat-chip class="pointer-events-disabled transparent-chip p-0 m-0 mr-1">
+                          <span class="text-medium text-uppercase"><strong>{{parseService.parseStatus(submission.status) | translate}}</strong></span>
+                        </mat-chip>
+                      </mat-chip-list>
+                      <mat-chip-list class="ml-2 pointer-events-disabled d-inline-block chips-inline float-right">
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1">today</mat-icon>
+                          {{this.parseService.parseTimestampToSimpleDate(submission.timestampCreated)}}
+                        </mat-chip>
+                      </mat-chip-list>
+                      <mat-chip-list class="pointer-events-disabled d-inline-block chips-inline">
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 like-style">thumb_up</mat-icon>
+                            <span class="mr-1 sm-hidden like-style">Polubienia</span>
+                            <span class="counter-container">{{submission.likeCount}}</span>
+                        </mat-chip>
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 comments-style">comment</mat-icon>
+                            <span class="mr-1 sm-hidden comments-style">Komentarze</span>
+                            <span class="counter-container">{{submission.commentCount}}</span>
+                        </mat-chip>
+                         <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 comments-style">attach_file</mat-icon>
+                            <span class="mr-1 sm-hidden comments-style">Załączniki</span>
+                            <span class="counter-container">{{submission.attachmentsCount}}</span>
+                        </mat-chip>
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 reviews-style">rate_review</mat-icon>
+                            <span class="mr-1 sm-hidden">Recenzje</span>
+                            <span class="counter-container">{{submission.reviewCount}}</span>
+                        </mat-chip>
+                      </mat-chip-list>
+
+                    </span>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </fieldset>
       </div>
     </div>

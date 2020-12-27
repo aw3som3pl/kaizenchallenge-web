@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, HostListener} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {ScreenSize} from './shared/enums/screen-size.enum';
+import {ResizeService} from './shared/services/resize-service.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,34 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent {
   title = 'kaizenchallenge-web';
 
-  constructor( public translate: TranslateService) {
+  prefix = 'is-';
+  sizes = [
+    {
+      id: ScreenSize.XS, name: 'xs',
+      css: `d-block d-sm-none`
+    },
+    {
+      id: ScreenSize.SM, name: 'sm',
+      css: `d-none d-sm-block d-md-none`
+    },
+    {
+      id: ScreenSize.MD, name: 'md',
+      css: `d-none d-md-block d-lg-none`
+    },
+    {
+      id: ScreenSize.LG, name: 'lg',
+      css: `d-none d-lg-block d-xl-none`
+    },
+    {
+      id: ScreenSize.XL, name: 'xl',
+      css: `d-none d-xl-block`
+    },
+  ];
+
+  constructor(
+    private elementRef: ElementRef,
+    private resizeSvc: ResizeService,
+    public translate: TranslateService) {
     translate.addLangs(['pl']);
     translate.setDefaultLang('pl');
   }
@@ -57,5 +86,23 @@ export class AppComponent {
     Array.from(colors.entries()).forEach(([name, value]) => {
       document.body.style.setProperty(`--${name}`, value);
     });
+  }
+
+  ngAfterViewInit() {
+    this.detectScreenSize();
+  }
+
+  @HostListener('window:resize', [])
+  private onResize() {
+    this.detectScreenSize();
+  }
+
+  private detectScreenSize() {
+    const currentSize = this.sizes.find(x => {
+      const el = this.elementRef.nativeElement.querySelector(`.${this.prefix}${x.id}`);
+      return window.getComputedStyle(el).display !== 'none';
+    });
+
+    this.resizeSvc.onResize(currentSize.id);
   }
 }

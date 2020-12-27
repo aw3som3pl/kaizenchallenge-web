@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import {RegistrationForm} from '../../../../shared/models/RegistrationForm';
 import {environment} from '../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {ReviewerRequest} from '../../../../shared/models/request/ReviewerRequest';
 import {IreviewerResponse} from '../../../../shared/models/response/interfaces/ireviewer-response';
-import {EuploadAction} from '../../../../shared/enums/Eupload-action.enum';
 import {FormGroup} from '@angular/forms';
 import {NewSubmission} from '../../../../shared/models/NewSubmission';
 import {InewSubmissionResponse} from '../../../../shared/models/response/interfaces/inew-submission-response';

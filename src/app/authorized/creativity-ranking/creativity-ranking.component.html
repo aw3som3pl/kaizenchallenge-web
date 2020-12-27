@@ -9,12 +9,269 @@
 </head>
 
 <body class="content-holder">
+
 <div class="background-layer">
   <div class="content-container vh-100">
-    <div class="row m-0">
-      <div class="col-lg-6">
+    <div class="container-fluid" *ngIf="isLoadingCreativityRanking">
+      <div class="row" style="height: 50vh">
+        <div class="col-12 d-flex justify-content-center">
+          <span class="text-header my-auto mr-5">Ładuję Ranking...</span>
+          <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
+        </div>
       </div>
-      <div class="col-lg-6">
+    </div>
+    <div class="container-fluid" *ngIf="!isLoadingCreativityRanking && !creativityRankingListing">
+      <div class="row" style="height: 50vh">
+        <div class="col-12 d-flex justify-content-center">
+          <span class="text-header my-auto mr-5">Brak osób w rankingu</span>
+        </div>
+      </div>
+    </div>
+    <div class="creativity-listing">
+      <div class="row m-0">
+        <div class="col-xl m-0">
+          <div class="row m-0 mt-2">
+            <div class="col-12 m-0 p-0">
+              <fieldset *ngIf="creativityRankingListing && !isLoadingCreativityRanking" class="leaders border leaders-content-container w-100">
+                <legend class="leaders-header w-auto text-header d-inline-flex justify-content-start">
+                  <mat-icon class="leader-icon my-auto ml-2">emoji_events</mat-icon>
+                  <span class="ml-2 mr-2 my-auto"><strong>Liderzy kreatywności</strong></span>
+                </legend>
+                <div class="row m-0 w-100">
+                  <div class="col-12 p-0 m-0 text-header text-center my-auto w-100">
+                    <table mat-table [dataSource]="this.creativityRankingListing | slice:0:5" class="mat-elevation-z0 w-100">
+                      <ng-container matColumnDef="0">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">0</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span class="mr-2"><strong>{{this.creativityRankingListing.indexOf(element) + 1}}.</strong></span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="1">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">1</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span class="mr-2 text-nowrap">{{element.name}}</span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="2">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">2</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span class="user-id mr-2 sm-hidden">{{element.employeeId}}</span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="3">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">3</th>
+                        <td mat-cell *matCellDef="let element">
+                          <jn-star-rating class="sm-hidden text-nowrap" [ngModel]="this.parseService.calculateStarCount(element.experience)"></jn-star-rating>
+                          <mat-progress-bar mode="determinate" [value]="this.parseService.calculatePercentToNextLevel(element.experience)"></mat-progress-bar>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="4">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">4</th>
+                        <td mat-cell *matCellDef="let element">
+                          <div class="ideas-counter-container ml-2">
+                            <svg-icon src="../../assets/img/svg/idea.svg" applyClass class="sm-hidden" [svgStyle]="{'width.px': '20','height.px': '20'}"></svg-icon>
+                            <span class="submission-counter ml-2 mr-2 my-auto">{{element.upgradeCount}}</span>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="5">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">5</th>
+                        <td mat-cell *matCellDef="let element">
+                          <div class="problems-counter-container">
+                            <svg-icon src="../../assets/img/svg/problem.svg" applyClass class="sm-hidden" [svgStyle]="{'width.px': '20','height.px': '20'}"></svg-icon>
+                            <span class="submission-counter ml-2 mr-2 my-auto">{{element.problemCount}}</span>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="6">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">6</th>
+                        <td mat-cell *matCellDef="let element">
+                          <div class="exp-counter-container d-inline-flex">
+                            <mat-icon class="my-auto exp-icon sm-hidden">engineering</mat-icon>
+                            <span class="submission-counter ml-2 mr-2 my-auto">{{element.experience}}</span>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="['0', '1', '2', '3', '4', '5', '6']" style="display: none"></tr>
+                      <tr mat-row class="creativity-listing-row" *matRowDef="let element; columns: ['0', '1', '2', '3', '4', '5', '6'];" (click)="navigateToProfile(element.employeeId)"></tr>
+                    </table>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="row m-0 mt-2">
+            <div class="col-12 m-0 p-0">
+              <fieldset *ngIf="creativityRankingListing && !isLoadingCreativityRanking" class="pretenders border pretenders-content-container w-100">
+                <legend class="pretenders-header w-auto text-header d-inline-flex justify-content-start">
+                  <mat-icon class="pretender-icon my-auto ml-2">grade</mat-icon>
+                  <span class="ml-2 mr-2 my-auto"><strong>Wschodzące gwiazdy</strong></span>
+                </legend>
+                <div class="row m-0 w-100">
+                  <div class="col-12 p-0 m-0 text-header text-center my-auto w-100">
+                    <table mat-table [dataSource]="this.creativityRankingListing | slice:5" class="mat-elevation-z0 w-100">
+                      <ng-container matColumnDef="0">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">0</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span class="mr-2"><strong>{{this.creativityRankingListing.indexOf(element) + 1}}.</strong></span>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="1">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">1</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span class="mr-2 text-nowrap">{{element.name}}</span>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="2">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">2</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span class="user-id mr-2 sm-hidden">{{element.employeeId}}</span>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="3">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">3</th>
+                        <td mat-cell *matCellDef="let element">
+                          <jn-star-rating class="sm-hidden text-nowrap" [ngModel]="this.parseService.calculateStarCount(element.experience)"></jn-star-rating>
+                          <mat-progress-bar mode="determinate" [value]="this.parseService.calculatePercentToNextLevel(element.experience)"></mat-progress-bar>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="4">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">4</th>
+                        <td mat-cell *matCellDef="let element">
+                          <div class="ideas-counter-container ml-2">
+                            <svg-icon src="../../assets/img/svg/idea.svg" applyClass class="sm-hidden" [svgStyle]="{'width.px': '20','height.px': '20'}"></svg-icon>
+                            <span class="submission-counter ml-2 mr-2 my-auto">{{element.upgradeCount}}</span>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="5">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">5</th>
+                        <td mat-cell *matCellDef="let element">
+                          <div class="problems-counter-container">
+                            <svg-icon src="../../assets/img/svg/problem.svg" applyClass class="sm-hidden" [svgStyle]="{'width.px': '20','height.px': '20'}"></svg-icon>
+                            <span class="submission-counter ml-2 mr-2 my-auto">{{element.problemCount}}</span>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="6">
+                        <th mat-header-cell *matHeaderCellDef style="display: none">6</th>
+                        <td mat-cell *matCellDef="let element">
+                          <div class="exp-counter-container d-inline-flex">
+                            <mat-icon class="my-auto exp-icon sm-hidden">engineering</mat-icon>
+                            <span class="submission-counter ml-2 mr-2 my-auto">{{element.experience}}</span>
+                          </div>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="['0', '1', '2', '3', '4', '5', '6']" style="display: none"></tr>
+                      <tr mat-row class="creativity-listing-row" *matRowDef="let element; columns: ['0', '1', '2', '3', '4', '5', '6'];" (click)="navigateToProfile(element.employeeId)"></tr>
+                    </table>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl m-0 p-0">
+          <div class="row m-0 mt-2">
+            <div class="col-12 m-0 p-0">
+              <fieldset *ngIf="mostActiveIdeasList && !isLoadingMostActiveIdeas" class="p-2 most-active-ideas border most-active-ideas-container">
+                <legend class="most-active-ideas-header w-auto text-header d-inline-flex justify-content-start">
+                  <mat-icon class="most-active-ideas-icon my-auto ml-2">emoji_objects</mat-icon>
+                  <span class="ml-2 mr-2 my-auto"><strong>Najlepsze pomysły</strong></span>
+                </legend>
+                <div class="row m-0 w-100">
+                  <div class="col-12 p-0 m-0 text-header my-auto w-100">
+                    <div *ngFor="let submission of this.mostActiveIdeasList">
+                      <div class="container-fluid p-0" (click)="openSubmissionViewById(submission.submissionId)">
+                        <div class="comment row m-0 mt-2">
+                          <div class="col-12 d-flex justify-content-center m-0 p-0">
+                            <div class="row m-0 w-100">
+                              <fieldset class="submission border w-100 h-100" [class.is-idea-border]="submission.type === 0" [class.is-problem-border]="submission.type === 1">
+                                <legend class="submission-header w-auto text-medium d-inline-flex justify-content-between">
+                                  <span class="ml-2">{{submission.authorName}}</span>
+                                  <jn-star-rating class="ml-2 text-nowrap my-auto" [ngModel]="parseService.calculateStarCount(submission.authorExp)"></jn-star-rating>
+                                  <span class="ml-2 mr-2 text-uppercase"><strong> {{parseService.parseCategory(submission.category) | translate}} </strong></span>
+                                </legend>
+                                <span class="ml-2 mr-2 mb-2 text-header text-left d-block">
+                                  {{submission.topic}}
+                                </span>
+                                <mat-chip-list class="d-inline-block chips-inline submission-footer w-100"  [class.is-idea-background]="submission.type === 0" [class.is-problem-background]="submission.type === 1">
+                                  <mat-chip class="pointer-events-disabled transparent-chip p-0 m-0 ml-1 text-medium">
+                                    <span class="text-medium text-uppercase"><strong>{{parseService.parseStatus(submission.status) | translate}}</strong></span>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="row m-0 mt-2">
+            <div class="col-12 m-0 p-0">
+              <fieldset *ngIf="mostActiveProblemsList && !isLoadingMostActiveProblems" class="p-2 most-active-problems border most-active-problems-container">
+                <legend class="most-active-problems-header w-auto text-header d-inline-flex justify-content-start">
+                  <mat-icon class="most-active-problems-icon my-auto ml-2">report_problem</mat-icon>
+                  <span class="ml-2 mr-2 my-auto"><strong>Największe problemy</strong></span>
+                </legend>
+                <div class="row m-0 w-100">
+                  <div class="col-12 p-0 m-0 text-header my-auto w-100">
+                    <div *ngFor="let submission of this.mostActiveProblemsList">
+                      <div class="container-fluid p-0" (click)="openSubmissionViewById(submission.submissionId)">
+                        <div class="comment row m-0 mt-2">
+                          <div class="col-12 d-flex justify-content-center m-0 p-0">
+                            <div class="row m-0 w-100">
+                              <fieldset class="submission border w-100 h-100" [class.is-idea-border]="submission.type === 0" [class.is-problem-border]="submission.type === 1">
+                                <legend class="submission-header w-auto text-medium d-inline-flex justify-content-between">
+                                  <span class="ml-2">{{submission.authorName}}</span>
+                                  <jn-star-rating class="ml-2 text-nowrap my-auto" [ngModel]="parseService.calculateStarCount(submission.authorExp)"></jn-star-rating>
+                                  <span class="ml-2 mr-2 text-uppercase"><strong> {{parseService.parseCategory(submission.category) | translate}} </strong></span>
+                                </legend>
+                                <span class="ml-2 mr-2 mb-2 text-header text-left d-block">
+                                  {{submission.topic}}
+                                </span>
+                                <mat-chip-list class="d-inline-block chips-inline submission-footer w-100"  [class.is-idea-background]="submission.type === 0" [class.is-problem-background]="submission.type === 1">
+                                  <mat-chip class="pointer-events-disabled transparent-chip p-0 m-0 ml-1 text-medium">
+                                    <span class="text-medium text-uppercase"><strong>{{parseService.parseStatus(submission.status) | translate}}</strong></span>
+                                  </mat-chip>
+                                </mat-chip-list>
+                              </fieldset>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="interaction-options" class="row text-large p-2">
+      <div class="col">
+        <button mat-raised-button class="export-button mr-2">
+          <mat-icon>get_app</mat-icon>
+          <span class="sm-hidden ml-2 mr-2">Eksportuj</span>
+        </button>
+        <button mat-raised-button class="refresh-button mr-2" (click)="loadCreativityRankingList()" [disabled]="isLoadingCreativityRanking">
+          <mat-icon>cached</mat-icon>
+          <span class="sm-hidden ml-2 mr-2">Odśwież</span>
+        </button>
       </div>
     </div>
   </div>

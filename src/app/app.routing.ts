@@ -11,7 +11,6 @@ import {UsersComponent} from './authorized/users/users.component';
 import {CreativityRankingComponent} from './authorized/creativity-ranking/creativity-ranking.component';
 import {OeeSimulatorComponent} from './authorized/oee-simulator/oee-simulator.component';
 import {AdminPanelComponent} from './authorized/admin-panel/admin-panel.component';
-import {NgModule} from '@angular/core';
 import {SubmissionCreateComponent} from './authorized/home/submission-create/submission-create.component';
 import {SearchSubmissionViewComponent} from './authorized/home/submission-search/search-submission-view/search-submission-view.component';
 import {SearchListingComponent} from './authorized/home/submission-search/search-listing/search-listing.component';

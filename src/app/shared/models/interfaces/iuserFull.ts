@@ -15,4 +15,7 @@ export interface IuserFull {
   problemCount: number;
   upgradeCount: number;
   state: string;
+  lastLogon: string;
+  created: string;
+  email: string;
 }

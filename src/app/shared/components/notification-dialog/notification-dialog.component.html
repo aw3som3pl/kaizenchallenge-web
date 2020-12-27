@@ -25,7 +25,7 @@
         </div>
         <div *ngIf="notificationsListing && areNotificationsLoaded" class="notifications-container p-2 m-0">
           <div *ngFor="let notification of this.notificationsListing">
-            <fieldset class="border p-2 w-100 h-100" (click)="openNotificationLink(notification.url)" [ngClass]="{'was-read': notification.wasRead}" [ngStyle]="parseService.parseSubmissionStatusChipDisplayStyle(notification.type)">
+            <fieldset class="border p-2 w-100 h-100 mt-2" (click)="openNotificationLink(notification.url)" [ngClass]="{'was-read': notification.wasRead}" [ngStyle]="parseService.parseSubmissionStatusChipDisplayStyle(notification.type)">
               <legend class="notification-title w-auto text-medium d-inline-flex justify-content-start" [ngStyle]="parseService.parseHistoryAndReviewStatusChipDisplayStyle(notification.type)">
                 <span class="ml-2 mr-2"><strong> {{notification.title}}: </strong></span>
                 <span class="mr-2"><strong> {{parseService.parseStatus(notification.type) | translate}} </strong></span>

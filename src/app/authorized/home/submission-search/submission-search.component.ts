@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import {MatPaginatorIntl, PageEvent} from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import {SessionService} from '../../../shared/services/session.service';
 import {ParseService} from '../../../shared/parsers/parse.service';
@@ -11,6 +11,8 @@ import {Subscription} from 'rxjs';
 import {APP_DATE_FORMATS, AppDateAdapter} from '../../../shared/adapters/format-datepicker';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import {ArraysService} from '../../../shared/parsers/arrays.service';
+import {CustomPaginator} from '../../../shared/configs/PaginatorConfiguration';
+import {ResizeService} from '../../../shared/services/resize-service.service';
 
 @Component({
   selector: 'app-submission-search',
@@ -18,7 +20,8 @@ import {ArraysService} from '../../../shared/parsers/arrays.service';
   styleUrls: ['./submission-search.component.css'],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() }  // Here
   ]
 })
 export class SubmissionSearchComponent implements OnInit {
@@ -26,12 +29,13 @@ export class SubmissionSearchComponent implements OnInit {
   // Subscriptions
   private subscriptions = new Subscription();
 
-  pageSizeOptions: number[] = [10, 20, 30, 50];
+  pageSizeOptions: number[] = [20, 30, 40, 60, 100];
 
   // MatPaginator events
   pageEvent: PageEvent;
 
   // MatPaginator settings
+  isPageSizeHidden = false;
   currentPage = 1;
   currentStartIndex = 0;
   currentPageSize: number;
@@ -45,13 +49,15 @@ export class SubmissionSearchComponent implements OnInit {
   statusValid: AbstractControl;
   orderByValid: AbstractControl;
   typeValid: AbstractControl;
+  employeeIdValid: AbstractControl;
   dateRangeStartValid: AbstractControl;
   dateRangeEndValid: AbstractControl;
   submissionIdValid: AbstractControl;
   authorTypeValid: AbstractControl;
 
 
-  constructor(public translate: TranslateService,
+  constructor(private resizeService: ResizeService,
+              public translate: TranslateService,
               private formBuilder: FormBuilder,
               public submissionSearchService: SubmissionSearchService,
               public sessionService: SessionService,
@@ -66,6 +72,7 @@ export class SubmissionSearchComponent implements OnInit {
       status: [null],
       orderBy: [null],
       type: [null],
+      employeeId: [null],
       dateRangeStart: [null],
       dateRangeEnd: [this.getLocalDate()],
       submissionId: [null],
@@ -77,19 +84,25 @@ export class SubmissionSearchComponent implements OnInit {
     this.statusValid = this.searchForm.controls.status;
     this.orderByValid = this.searchForm.controls.orderBy;
     this.typeValid = this.searchForm.controls.type;
+    this.employeeIdValid = this.searchForm.controls.employeeId;
     this.dateRangeStartValid = this.searchForm.controls.dateRangeStart;
     this.dateRangeEndValid = this.searchForm.controls.dateRangeEnd;
     this.submissionIdValid = this.searchForm.controls.submissionId;
     this.authorTypeValid = this.searchForm.controls.authorType;
-
   }
 
   ngOnInit(): void {
+
+    const newPageSizeSub = this.resizeService.onResize$.subscribe( size => {
+      this.isPageSizeHidden = size < 1;
+    });
+
     this.searchForm.get('areas').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('category').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('status').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('orderBy').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('type').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
+    this.searchForm.get('employeeId').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('dateRangeStart').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('dateRangeEnd').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('submissionId').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
@@ -106,14 +119,15 @@ export class SubmissionSearchComponent implements OnInit {
         params.has('timestampSearchEnd') ? this.searchForm.get('dateRangeEnd').setValue(params.get('timestampSearchEnd')) : this.searchForm.get('dateRangeEnd').setValue(this.getLocalDate());
         params.has('orderBy') ? this.searchForm.get('orderBy').setValue(+params.get('orderBy')) : this.searchForm.get('orderBy').setValue(4);
         params.has('authorType') ? this.searchForm.get('authorType').setValue(+params.get('authorType')) : this.searchForm.get('authorType').setValue(0);
+        params.has('employeeId') ? this.searchForm.get('employeeId').setValue(params.get('employeeId')) : this.searchForm.get('employeeId').setValue(null);
         params.has('currentPage') ? this.currentPage = +params.get('currentPage') : this.currentPage = 1;
         params.has('currentStartIndex') ? this.currentStartIndex = +params.get('currentStartIndex') : this.currentStartIndex = 0;
-        params.has('currentPageSize') ? this.currentPageSize = +params.get('currentPageSize') : this.currentPageSize = 10;
+        params.has('currentPageSize') ? this.currentPageSize = +params.get('currentPageSize') : this.currentPageSize = 20;
         params.has('currentSubmissionsCount') ? this.currentSubmissionsCount = +params.get('currentSubmissionsCount') : this.currentSubmissionsCount = null;
       });
 
+    this.subscriptions.add(newPageSizeSub);
     this.subscriptions.add(newListingSub);
-
   }
 
   ngOnDestroy() {
@@ -126,6 +140,7 @@ export class SubmissionSearchComponent implements OnInit {
     this.statusValid.updateValueAndValidity();
     this.orderByValid.updateValueAndValidity();
     this.typeValid.updateValueAndValidity();
+    this.employeeIdValid.updateValueAndValidity();
     this.dateRangeStartValid.updateValueAndValidity();
     this.dateRangeEndValid.updateValueAndValidity();
     this.submissionIdValid.updateValueAndValidity();
@@ -169,6 +184,7 @@ export class SubmissionSearchComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParams: {
         type: this.typeValid ? this.typeValid.value : null,
+        employeeId: this.employeeIdValid ? this.employeeIdValid.value : null,
         areas: this.areasValid ? this.areasValid.value : Array.from(Array(21).keys()),
         category: this.categoryValid ? this.categoryValid.value : Array.from(Array(8).keys()),
         status: this.statusValid ? this.statusValid.value : this.arraysService.statusArrayPrototype(this.sessionService.getUserRole()),
@@ -178,7 +194,7 @@ export class SubmissionSearchComponent implements OnInit {
         authorType: this.authorTypeValid ? this.authorTypeValid.value : 0, // KAŻDY
         currentPage: this.currentPage ? this.currentPage : 1,
         currentStartIndex: this.currentStartIndex ? this.currentStartIndex : 0,
-        currentPageSize: this.currentPageSize ? this.currentPageSize : 10,
+        currentPageSize: this.currentPageSize ? this.currentPageSize : 20,
         currentSubmissionsCount: this.currentSubmissionsCount ? this.currentSubmissionsCount : null
       }
     });

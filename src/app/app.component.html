@@ -6,5 +6,6 @@
   <title>App</title>
 </head>
 <div id="base-container" class="container-fluid">
+  <div *ngFor="let s of sizes" class="{{s.css + ' ' + (prefix + s.id) }}"></div>
   <router-outlet></router-outlet>
 </div>

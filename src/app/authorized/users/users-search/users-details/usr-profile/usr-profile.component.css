@@ -6,11 +6,95 @@ fieldset {
   width: fit-content;
 }
 
+.counter-container {
+  padding: 2px 6px 2px 6px;
+  color: var(--white);
+}
+.submission {
+  padding: 10px 0px 0px 0px;
+}
+
+.submission-header{
+  border-radius: 10px;
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.submission-footer {
+  border-radius: 0px 0px 6px 6px;
+  padding: 5px 5px 0px 5px;
+}
+
+fieldset.submission {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px !important;
+  background-color: var(--white);
+  width: fit-content;
+  cursor: pointer;
+}
+
+.like-style {
+  color: var(--blue);
+}
+
+.comments-style {
+  color: var(--black);
+}
+
+.reviews-style {
+  color: var(--orange);
+}
+
+.is-idea-border{
+  border-color: var(--lightgreen) !important;
+}
+
+.is-problem-border{
+  border-color: var(--lightred) !important;
+}
+
+.is-idea-background{
+  background-color: var(--lightgreen) !important;
+}
+
+.is-problem-background{
+  background-color: var(--lightred) !important;
+}
+
+mat-icon {
+  transform: scale(0.7);
+}
+
+.counter-container{
+  padding: 2px 4px 2px 4px;
+  border-radius: 40%;
+  background-color: var(--white);
+  color: var(--black);
+}
+
+fieldset.submission.is-idea-border:hover {
+  border-color: var(--green) !important;
+}
+
+fieldset.submission.is-problem-border:hover {
+  border-color: var(--red) !important;
+}
+
+
+
+
 @media screen and (max-width: 746px) {
   .content-container {
     height: 80vh;
     overflow-y: auto;
     padding-bottom: 50%;
+  }
+
+  img.profile-large {
+    width: 80px;
+    height:  80px;
+    border-radius: 50%;
   }
 }
 /* Small devices (tablets, 768px and up) */
@@ -20,6 +104,12 @@ fieldset {
     overflow-y: auto;
     padding-bottom: 30%;
   }
+
+  img.profile-large {
+    width: 100px;
+    height:  100px;
+    border-radius: 50%;
+  }
 }
 /* tablets/desktops and up ———– */
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -28,6 +118,12 @@ fieldset {
     overflow-y: auto;
     padding-bottom: 30%;
   }
+
+  img.profile-large {
+    width: 120px;
+    height:  120px;
+    border-radius: 50%;
+  }
 }
 /* large desktops and up ———– */
 @media screen and (min-width: 1200px) {
@@ -35,6 +131,12 @@ fieldset {
     height: 90vh;
     overflow-y: auto;
     padding-bottom: 30%;
+  }
+
+  img.profile-large {
+    width: 140px;
+    height:  140px;
+    border-radius: 50%;
   }
 }
 

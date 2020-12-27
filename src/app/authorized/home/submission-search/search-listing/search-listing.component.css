@@ -22,26 +22,80 @@ tr.element-row:not(.expanded-row):active {
   overflow: hidden;
 }
 
-.is-idea{
-  background-color: var(--lightgreen);
-}
-
-.is-problem{
-  background-color: var(--lightred);
-}
-
 .users-container{
   background-color: var(--white);
   width: 100%;
 }
 
-fieldset {
+.submission {
+  padding: 10px 0px 0px 0px;
+}
+
+.submission-footer {
+  border-radius: 0px 0px 6px 6px;
+  padding: 5px 5px 0px 5px;
+}
+
+fieldset.submission {
   border-radius: 10px;
   border-style: solid;
   border-width: 3px !important;
-  border-color: var(--grey) !important;
   background-color: var(--white);
   width: fit-content;
+  cursor: pointer;
+}
+
+.like-style {
+  color: var(--blue);
+}
+
+.comments-style {
+  color: var(--black);
+}
+
+.reviews-style {
+  color: var(--orange);
+}
+
+.is-idea-border{
+  border-color: var(--lightgreen) !important;
+}
+
+.is-problem-border{
+  border-color: var(--lightred) !important;
+}
+
+.is-idea-background{
+  background-color: var(--lightgreen) !important;
+}
+
+.is-problem-background{
+  background-color: var(--lightred) !important;
+}
+
+mat-icon {
+  transform: scale(0.7);
+}
+
+.counter-container{
+  padding: 2px 4px 2px 4px;
+  border-radius: 40%;
+  background-color: var(--white);
+  color: var(--black);
+}
+
+fieldset.submission.is-idea-border:hover {
+  border-color: var(--green) !important;
+}
+
+fieldset.submission.is-problem-border:hover {
+  border-color: var(--red) !important;
+}
+
+.submission-header{
+  border-radius: 10px;
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 

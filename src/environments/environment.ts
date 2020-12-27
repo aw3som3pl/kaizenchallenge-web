@@ -19,5 +19,6 @@ export const environment = {
   updateUnreadNotificationsCountEndpointURL: '/api/Notifications/GetUnreadNotificationCount',
   markNotificationsAsReadEndpointURL: '/api/Notifications/MarkAsRead',
   fetchEmployeeDataEndpointURL: '/api/user/GetUser',
-  updateUserDataEndpointURL: '/api/admin/UpdateUser'
+  updateUserDataEndpointURL: '/api/admin/UpdateUser',
+  loadCreativityRankingListEndpointURL: '/api/statistics/GetMostActiveUsers'
 };

@@ -1,7 +1,7 @@
 .filled{
-  color: gold;
+  color: var(--orange);
 }
 
 .empty{
-  color: grey;
+  color: var(--blue);
 }

@@ -128,9 +128,9 @@
       "1": "Liczność zgłoszeń o danym statusie w okresie",
       "2": "Tabela aktywności obszarów w czasie"
     },
-    "userStatus": {
-      "A": "Konto aktywnego użytkownika",
-      "T": "Konto na potrzeby testów"
+    "accountState": {
+      "A": "Aktywny",
+      "T": "Tester"
     }
   },
 

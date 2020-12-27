@@ -5,20 +5,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class UsersService {
-  isSearchFilterFolded = false;
-  isSearchFilterEnabled = true;
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
-  toggleSearchFilterFolded() {
-    this.isSearchFilterFolded = !this.isSearchFilterFolded;
-  }
-
-  disableSearchFilter() {
-    this.isSearchFilterEnabled = false;
-  }
-
-  enableSearchFilter() {
-    this.isSearchFilterEnabled = true;
-  }
 }

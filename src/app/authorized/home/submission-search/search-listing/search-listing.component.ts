@@ -8,6 +8,7 @@ import {IsubmissionListingResponse} from '../../../../shared/models/response/int
 import {Subscription} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SessionService} from '../../../../shared/services/session.service';
+import {Isubmission} from '../../../../shared/models/interfaces/isubmission';
 
 @Component({
   selector: 'app-listing',
@@ -46,7 +47,7 @@ export class SearchListingComponent implements OnInit {
     const newListingSub = this.activatedRoute.queryParamMap
       .subscribe(params => {
         this.newListingRequest = new SubmissionListingRequest(
-          params.has('areas') ? params.getAll('areas').map(Number) : this.searchListingService.loadEligibleAreas(this.sessionService.getUserState(), this.sessionService.getUserAreas()),
+          params.has('areas') ? params.getAll('areas').map(Number) : this.sessionService.loadEligibleAreas(),
           params.has('authorType') ? +params.get('authorType') : null,
           params.has('currentPageSize') ?  +params.get('currentPageSize') : 10,
         params.has('category') ? params.getAll('category').map(Number) : null,
@@ -55,9 +56,8 @@ export class SearchListingComponent implements OnInit {
         params.has('status') ? params.getAll('status').map(Number) : null,
       params.has('timestampSearchEnd') ? params.get('timestampSearchEnd') : null,
           params.has('timestampSearchStart') ? params.get('timestampSearchStart') : null,
-        params.has('type') ? params.getAll('type').map(Number) : null);
-        console.log(this.newListingRequest);
-
+        params.has('type') ? params.getAll('type').map(Number) : null,
+          params.has('employeeId') ? params.get('employeeId') : null);
         this.loadFilteredSubmissions(this.newListingRequest);
       });
 
@@ -108,6 +108,10 @@ export class SearchListingComponent implements OnInit {
       },
       queryParamsHandling: 'merge'
     });
+  }
+
+  trackBySubmissionId(index: number, el: Isubmission): number {
+    return el.submissionId;
   }
 
 }

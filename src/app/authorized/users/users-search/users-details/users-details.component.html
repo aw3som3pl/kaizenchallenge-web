@@ -2,7 +2,7 @@
 <div class="container-fluid" *ngIf="isloadingUser">
   <div class="row" style="height: 50vh">
     <div class="col-12 d-flex justify-content-center">
-      <span class="text-header my-auto mr-5">Ładuję zgłoszenie... </span>
+      <span class="text-header my-auto mr-5">Ładuję użytkownika... </span>
       <mat-progress-spinner class="my-auto" mode="indeterminate" diameter="60"></mat-progress-spinner>
     </div>
   </div>
@@ -26,7 +26,7 @@
             <div class="col-8 pl-3 pt-2">
               <div class="my-auto">
                 <mat-chip-list class="float-right">
-                  <mat-chip *ngIf="isEditorOpened" class="text-large abort-changes-button p-2" (click)="toggleEditor(false)">
+                  <mat-chip *ngIf="isEditorOpened" class="text-large abort-changes-button p-2">
                     <mat-icon>undo</mat-icon>
                     <span class="text-uppercase ml-2 mr-2 sm-hidden">Anuluj</span>
                   </mat-chip>
@@ -34,8 +34,8 @@
                     <mat-icon>save</mat-icon>
                     <span class="text-uppercase ml-2 mr-2 sm-hidden">Zapisz</span>
                   </mat-chip>
-                  <mat-chip *ngIf="isEditable && !isEditorOpened" class="text-large edit-profile-button p-2" (click)="toggleEditor(true)">
-                    <mat-icon>spellcheck</mat-icon>
+                  <mat-chip *ngIf="isEditable && !isEditorOpened" class="text-large edit-profile-button p-2">
+                    <mat-icon>healing</mat-icon>
                     <span class="text-uppercase ml-2 mr-2 sm-hidden">Edytuj</span>
                   </mat-chip>
                 </mat-chip-list>

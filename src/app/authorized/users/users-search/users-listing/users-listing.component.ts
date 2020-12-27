@@ -35,7 +35,7 @@ export class UsersListingComponent implements OnInit {
   // Subscriptions
   private subscriptions = new Subscription();
 
-  usersTableHeaders = ['Obszary', 'ID', 'Imię i nazwisko', 'Rola'];
+  usersTableHeaders = ['ID', 'E-mail', 'Imię i nazwisko', 'Rola', 'Ostatnia aktywność', 'Rejestracja'];
   expandedUserShort: UserShort | null;
 
   constructor(private userListingService: UsersListingService,
@@ -52,11 +52,11 @@ export class UsersListingComponent implements OnInit {
       .subscribe(params => {
 
         const newListingRequest = new UsersListingRequest(
-          params.has('areas') ? params.getAll('areas').map(Number) : this.userListingService.loadEligibleAreas(this.sessionService.getUserState(), this.sessionService.getUserAreas()),
+          params.has('areas') ? params.getAll('areas').map(Number) : this.sessionService.loadEligibleAreas(),
           params.has('orderBy') ? +params.get('orderBy') : 0,
           params.has('roles') ?  params.getAll('roles').map(Number) : null,
           params.has('currentStartIndex') ?  +params.get('currentStartIndex') : 0,
-        params.has('currentPageSize') ?  +params.get('currentPageSize') : 10);
+        params.has('currentPageSize') ?  +params.get('currentPageSize') : 20);
 
         console.log(newListingRequest);
         this.loadFilteredUsers(newListingRequest);
@@ -68,6 +68,7 @@ export class UsersListingComponent implements OnInit {
 
   loadFilteredUsers(request: UsersListingRequest){
     this.isLoadingUsers = true;
+    this.loadedUsersListing = null;
 
     this.userListingService.loadUserOverallList(request)
       .then( (usersList: IusersListingResponse) => {

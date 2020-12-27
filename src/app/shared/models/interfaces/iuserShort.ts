@@ -5,4 +5,8 @@ export interface IuserShort {
   name: string;
   areas: [];
   role: number;
+  created: string;
+  experience: number;
+  lastLogon: string;
+  email: string;
 }

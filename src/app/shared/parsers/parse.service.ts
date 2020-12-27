@@ -4,6 +4,7 @@ import * as moment from 'moment/moment';
 import {Erole} from '../enums/Erole.enum';
 import {EsubmissionStatusEnum} from '../enums/Esubmission-status.enum';
 import {MatPaginator} from '@angular/material/paginator';
+import {EaccountStateEnum} from '../enums/EaccountState.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -60,11 +61,33 @@ export class ParseService {
     return 'Errors.Api.' + type;
   }
 
+  parseAccountStateType(state: string): string {
+    return 'Shared.accountState.' + state;
+  }
+
+  determineAccountState(state: string): number {
+    const s = EaccountStateEnum;
+    switch (state) {
+      case s.ACTIVE:
+        return 0;
+      case s.TEST:
+        return 1;
+    }
+  }
 
   parseTimestampToDate(timestamp: string): string {
     if (timestamp) {
       const date = moment.utc(timestamp).local();
       return date.format('DD/MM/YYYY HH:mm');
+    } else {
+      return '';
+    }
+  }
+
+  parseTimestampToSimpleDate(timestamp: string): string {
+    if (timestamp) {
+      const date = moment.utc(timestamp).local();
+      return date.format('DD/MM/YYYY');
     } else {
       return '';
     }
@@ -83,6 +106,22 @@ export class ParseService {
       return 4;
     } else {
       return 5;
+    }
+  }
+
+  calculatePercentToNextLevel(exp: number): number {
+    if ( exp < 400){
+      return Math.round(exp / 400 * 100);
+    } else if (exp < 800){
+      return Math.round(exp / 800 * 100);
+    } else if (exp < 1600){
+      return Math.round(exp / 1600 * 100);
+    } else if (exp < 3200){
+      return Math.round(exp / 3200 * 100);
+    } else if (exp < 6400){
+      return Math.round(exp / 6400 * 100);
+    } else {
+      return 100;
     }
   }
 
@@ -111,6 +150,17 @@ export class ParseService {
         return { 'background-color': 'var(--ADMIN)', 'color': 'var(--white)'};
       case r.SYS_ADMIN:
         return { 'background-color': 'var(--SYS_ADMIN)'};
+    }
+  }
+
+  parseAccountStateChipDisplayStyle(state: string): { [klass: string]: any|null } {
+
+    const s = EaccountStateEnum;
+    switch (state) {
+      case s.ACTIVE:
+        return { 'background-color': 'var(--white)', 'color': 'var(--green)'};
+      case s.TEST:
+        return { 'background-color': 'var(--orange)', 'color': 'var(--white)'};
     }
   }
 

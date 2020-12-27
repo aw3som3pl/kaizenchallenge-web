@@ -1,6 +1,3 @@
-import {IapiError} from './interfaces/iapi-error';
-import {IsubmissionContent} from './interfaces/isubmission-content';
-import {IsubmissionHistory} from './interfaces/isubmission-history';
 import {Isubmission} from './interfaces/isubmission';
 
 export class Submission implements Isubmission{

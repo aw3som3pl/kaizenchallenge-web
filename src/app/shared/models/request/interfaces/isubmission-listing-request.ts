@@ -9,4 +9,5 @@ export interface IsubmissionListingRequest {
   authorType: number;
   startIndex: number;
   batchSize: number;
+  employeeId: string;
 }

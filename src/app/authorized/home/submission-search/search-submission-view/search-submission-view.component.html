@@ -13,20 +13,20 @@
         <div class="row m-0 p-0">
           <div class="col-sm-7 text-large p-0">
             <div class="row m-0 p-0">
-              <div class="col-4 p-2">
+              <div class="col-3 p-2">
                 <div class="my-auto">
                   <mat-chip-list>
                     <mat-chip class="text-large back-to-search-button p-2" (click)="onBacktoSearch()">
-                      <svg-icon src="../../assets/img/svg/back_search.svg" class="mr-2" [svgStyle]="{'width.px': '20', 'height.px': '20'}"></svg-icon>
-                      <span class="text-uppercase mr-2">Wróć</span>
+                      <svg-icon src="../../assets/img/svg/back_search.svg" [svgStyle]="{'width.px': '20', 'height.px': '20'}"></svg-icon>
+                      <span class="text-uppercase mx-2 sm-hidden">Wróć</span>
                     </mat-chip>
                   </mat-chip-list>
                 </div>
               </div>
-              <div class="col-2 p-2 d-flex justify-content-end">
+              <div class="col p-2 d-flex justify-content-end">
                 <mat-chip-list>
-                  <mat-chip class="text-large pointer-events-disabled">
-                {{this.loadedSubmission.submissionId}}
+                  <mat-chip class="text-large pointer-events-disabled text-nowrap">
+                    ID: {{this.loadedSubmission.submissionId}}
                   </mat-chip>
                 </mat-chip-list>
               </div>
@@ -58,7 +58,7 @@
           <div class="col-12 p-0 m-0">
             <div class="d-inline-flex justify-content-center current-reviewer-info-container">
               <span class="d-flex align-items-center">
-                <mat-icon class="editable-icon" *ngIf="isEditable">spellcheck</mat-icon>
+                <mat-icon class="editable-icon" *ngIf="isEditable">healing</mat-icon>
                 <mat-icon class="reviewer-icon" *ngIf="!isEditable">rate_review</mat-icon>
               </span>
               <span style="color: var(--white)" class="my-auto ml-2 text-medium">
@@ -109,6 +109,9 @@
                   <div [ngClass]="{'active': currentActiveTab === activeTabs.REVIEWS}">
                     <a class="interactive-button">
                       <span class="container menu-item text-large">Recenzje</span>
+                      <span class="count-indicator d-inline-flex text-medium" *ngIf="loadedSubmission.reviewCount > 0">
+                        {{loadedSubmission.reviewCount}}
+                      </span>
                     </a>
                   </div>
                 </ng-template>
@@ -121,6 +124,9 @@
                   <div [ngClass]="{'active': currentActiveTab === activeTabs.COMMENTS}">
                     <a class="interactive-button">
                       <span class="container menu-item text-large">Komentarze</span>
+                      <span class="count-indicator d-inline-flex text-medium" *ngIf="loadedSubmission.commentCount > 0">
+                        {{loadedSubmission.commentCount}}
+                      </span>
                     </a>
                   </div>
                 </ng-template>
@@ -133,6 +139,9 @@
                   <div [ngClass]="{'active': currentActiveTab === activeTabs.ATTACHMENTS}">
                     <a class="interactive-button">
                       <span class="container menu-item text-large">Załączniki</span>
+                      <span class="count-indicator d-inline-flex text-medium" *ngIf="loadedSubmission.attachmentsCount > 0 && !isEditable">
+                        {{loadedSubmission.attachmentsCount}}
+                      </span>
                       <span *ngIf="isEditable && !isAttachmentsDataValid()">
                         <mat-icon class="editable-icon">new_releases</mat-icon>
                       </span>
@@ -186,10 +195,16 @@
         </button>
         <button *ngIf="isEditConfirmationRequired()"
                 mat-raised-button class="confirm-edit-button mr-2" [ngClass]="{'valid' : isLocalDataValid(currentActiveTab), 'invalid' : !isLocalDataValid(currentActiveTab)}" (click)="validateLocalData()">
-          <mat-icon>check</mat-icon>
-          <span class="sm-hidden ml-2 mr-2">Zatwierdź zmiany</span>
+          <span *ngIf="isLocalDataValid(currentActiveTab)" class="d-inline-flex">
+            <mat-icon class="my-auto">check</mat-icon>
+            <span class="sm-hidden ml-2 mr-2">Zatwierdzono</span>
+          </span>
+          <span *ngIf="!isLocalDataValid(currentActiveTab)" class="d-inline-flex">
+            <mat-icon class="my-auto">hourglass_empty</mat-icon>
+            <span class="sm-hidden ml-2 mr-2">Potwierdź zmiany</span>
+          </span>
         </button>
-        <button mat-raised-button class="like-button mr-2" [ngClass]="{'already-liked' : isLiked}" (click)="performLikeAction()" [disabled]="isSendingLike">
+        <button *ngIf="!isEditConfirmationRequired()" mat-raised-button class="like-button mr-2" [ngClass]="{'already-liked' : isLiked}" (click)="performLikeAction()" [disabled]="isSendingLike">
           <mat-icon class="ml-2">thumb_up</mat-icon>
           <span class="sm-hidden ml-2">Polub</span>
           <mat-chip class="ml-2 text-large pointer-events-disabled white-chip">

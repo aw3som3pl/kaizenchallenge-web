@@ -14,6 +14,11 @@ button:focus, button:active:focus, button.active:focus {
 
 /* GLOBAL */
 
+/* CONTROLS */
+.w-sm-100{
+  width: 100%;
+}
+
 .pointer-events-disabled {
   pointer-events: none;
 }
@@ -35,7 +40,6 @@ button:focus, button:active:focus, button.active:focus {
 
 .transparent-chip {
   background-color: transparent !important;
-  color: var(--darkblue) !important;
 }
 
 .orange-chip {
@@ -63,6 +67,32 @@ button .mat-button-wrapper {
   padding: 0 !important;
 }
 /* APP SEARCH SUBMISSION */
+
+app-submission-search .mat-paginator-container {
+  min-height: 0 !important;
+}
+app-submission-search mat-paginator .mat-form-field-wrapper {
+  padding-bottom: 1.1em !important;
+}
+
+app-submission-search mat-paginator mat-form-field{
+  margin-top: 0 !important;
+}
+
+app-submission-search mat-paginator mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+app-submission-search mat-paginator mat-form-field .mat-form-field-underline {
+  display: none;
+}
+
+app-submission-search mat-paginator .mat-form-field-infix {
+  border-top: 0 !important;
+}
+app-submission-search mat-paginator .mat-form-field-wrapper {
+  padding-bottom: 1.1em;
+}
 
 app-submission .mat-tab-body-wrapper{
 
@@ -112,6 +142,34 @@ app-sub-reviews .mat-form-field-outline{
 app-sub-history mat-chip-list{
   display: flex;
   justify-content: center;
+}
+
+/* APP SEARCH USERS */
+
+app-users-search .mat-paginator-container {
+  min-height: 0 !important;
+}
+app-users-search mat-paginator .mat-form-field-wrapper {
+  padding-bottom: 1.1em !important;
+}
+
+app-users-search mat-paginator mat-form-field{
+  margin-top: 0 !important;
+}
+
+app-users-search mat-paginator mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+app-users-search mat-paginator mat-form-field .mat-form-field-underline {
+  display: none;
+}
+
+app-users-search mat-paginator .mat-form-field-infix {
+  border-top: 0 !important;
+}
+app-users-search mat-paginator .mat-form-field-wrapper {
+  padding-bottom: 1.1em;
 }
 
 /* APP USERS LISTING */
@@ -187,6 +245,18 @@ app-sub-comments .mat-form-field-outline{
     display: none;
   }
 
+  .w-sm-100{
+    width: auto;
+  }
+
+  .w-md-100{
+    width: auto;
+  }
+
+  .w-lg-100{
+    width: auto;
+  }
+
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 746px) and (max-width: 991px) {
@@ -217,6 +287,18 @@ app-sub-comments .mat-form-field-outline{
     display: none;
   }
 
+  .w-sm-100{
+    width: 100%;
+  }
+
+  .w-md-100{
+    width: auto;
+  }
+
+  .w-lg-100{
+    width: auto;
+  }
+
 }
 /* tablets/desktops and up ———– */
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -245,6 +327,18 @@ app-sub-comments .mat-form-field-outline{
 
   .lg-hidden{
     display: none;
+  }
+
+  .w-sm-100{
+    width: 100%;
+  }
+
+  .w-md-100{
+    width: 100%;
+  }
+
+  .w-lg-100{
+    width: auto;
   }
 }
 /* large desktops and up ———– */
@@ -278,6 +372,18 @@ app-sub-comments .mat-form-field-outline{
 
   .xl-hidden{
     display: none;
+  }
+
+  .w-sm-100{
+    width: 100%;
+  }
+
+  .w-md-100{
+    width: 100%;
+  }
+
+  .w-lg-100{
+    width: 100%;
   }
 }
 

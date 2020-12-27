@@ -1,19 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubmissionContent} from '../../../../../shared/models/SubmissionContent';
 import {ParseService} from '../../../../../shared/parsers/parse.service';
 import {TranslateService} from '@ngx-translate/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {distinctUntilChanged} from 'rxjs/operators';
-import {SubmissionContentUpdate} from '../../../../../shared/models/events/SubmissionContentUpdate';
 import {Observable, Subscription} from 'rxjs';
-import {SubmissionAttachmentsUpdate} from '../../../../../shared/models/events/SubmissionAttachmentsUpdate';
-import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {ArraysService} from '../../../../../shared/parsers/arrays.service';
 import {SessionService} from '../../../../../shared/services/session.service';
 import {UserFull} from '../../../../../shared/models/UserFull';
 import {UserProfileService} from './service/user-profile.service';
 import {UserDataUpdate} from '../../../../../shared/models/events/UserDataUpdate';
 import {UserUpdateRequest} from '../../../../../shared/models/request/UserUpdateRequest';
+import {Submission} from '../../../../../shared/models/Submission';
+import {SubmissionListingRequest} from '../../../../../shared/models/request/SubmissionListingRequest';
+import {IsubmissionListingResponse} from '../../../../../shared/models/response/interfaces/isubmission-listing-response';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-usr-profile',
@@ -28,10 +28,16 @@ export class UsrProfileComponent implements OnInit {
 
   @Output() userDataUpdateAction = new EventEmitter<UserDataUpdate>();
 
+  totalSubmissionsCount = 0;
+
+  isLoadingSubmissions;
+
   // Subscriptions Manager
   subscriptions: Subscription;
 
   userEditForm: FormGroup;
+
+  latestSubmissions: [Submission];
 
   areasValid: AbstractControl;
   employeeIdValid: AbstractControl;
@@ -44,6 +50,8 @@ export class UsrProfileComponent implements OnInit {
   constructor(private userProfileService: UserProfileService,
               public parseService: ParseService,
               public sessionService: SessionService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
               public arraysService: ArraysService,
               public translate: TranslateService,
               private formBuilder: FormBuilder) {
@@ -54,6 +62,7 @@ export class UsrProfileComponent implements OnInit {
     if (this.isEditorVisible && this.loadedUser){
       this.initializeSubmissionEditForm();
     }
+    this.loadRecentSubmissions(this.loadedUser.employeeId);
   }
 
   ngOnDestroy(): void {
@@ -97,6 +106,47 @@ export class UsrProfileComponent implements OnInit {
     this.experienceValid.updateValueAndValidity();
     this.roleValid.updateValueAndValidity();
     this.stateValid.updateValueAndValidity();
+  }
+
+  loadRecentSubmissions(employeeId: string){
+    this.isLoadingSubmissions = true;
+
+    this.userProfileService.loadRecentSubmissionsList(employeeId)
+      .then( (success: IsubmissionListingResponse) => {
+          this.isLoadingSubmissions = false;
+
+          if (success.searchResult.length > 0){
+            this.latestSubmissions = success.searchResult;
+          } else {
+            this.latestSubmissions = null;
+          }
+          this.totalSubmissionsCount = success.searchResultCount;
+        },
+        failure => {
+          this.isLoadingSubmissions = false;
+          this.latestSubmissions = null;
+        });
+  }
+
+  openUserSubmissions(): void {
+    this.router.navigate(['authenticated/home/search/listing'], {
+        queryParams: {
+          employeeId: this.loadedUser.employeeId,
+        },
+      }
+    ).then(success => {
+    });
+  }
+
+  openSubmissionViewById(submissionId: number){
+    console.log(submissionId);
+    this.router.navigate(['authenticated/home/search/submission'], {
+      queryParams: {
+        submissionId: submissionId.toString(),
+        activeTab: '0'
+      },
+      queryParamsHandling: 'merge'
+    });
   }
 
   emitUserDataUpdateEvent(validityState: boolean){

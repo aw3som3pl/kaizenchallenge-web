@@ -46,6 +46,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {projectConfig} from '../config/project-config';
 import { UsrProfileComponent } from './authorized/users/users-search/users-details/usr-profile/usr-profile.component';
 import { UsrStatsComponent } from './authorized/users/users-search/users-details/usr-stats/usr-stats.component';
+import {ResizeService} from './shared/services/resize-service.service';
+
 
 
 @NgModule({
@@ -105,7 +107,9 @@ import { UsrStatsComponent } from './authorized/users/users-search/users-details
         MatDialogModule,
         MatBadgeModule
     ],
-  providers: [{
+  providers: [
+    ResizeService,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: IdtokenHeaderInterceptor,
     multi: true,

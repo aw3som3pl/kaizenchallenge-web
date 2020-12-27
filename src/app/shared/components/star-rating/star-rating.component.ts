@@ -43,9 +43,7 @@ export class StarRatingComponent implements ControlValueAccessor{
     }
   }
   rate(rating: number): void {
-    if (!this.disabled) {
-      this.writeValue(rating);
-    }
+
   }
 
   // Allows Angular to update the model (rating).

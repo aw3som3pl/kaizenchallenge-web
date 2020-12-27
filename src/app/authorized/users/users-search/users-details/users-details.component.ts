@@ -7,8 +7,6 @@ import {UsersSearchService} from '../service/users-search.service';
 import {UserFull} from '../../../../shared/models/UserFull';
 import {IuserFull} from '../../../../shared/models/interfaces/iuserFull';
 import {Subject} from 'rxjs';
-import {SubmissionContentUpdate} from '../../../../shared/models/events/SubmissionContentUpdate';
-import {EsubmissionContentEditValidityEnum} from '../../../../shared/enums/Esubmission-content-edit-validity.enum';
 import {UserDataUpdate} from '../../../../shared/models/events/UserDataUpdate';
 
 @Component({

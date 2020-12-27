@@ -17,101 +17,62 @@
   <div class="row m-0">
     <div class="col-12 p-0 users-container">
       <div *ngIf="submissionListing && !isLoadingSubmissions">
-        <table mat-table [dataSource]="submissionListing" multiTemplateDataRows class="mat-elevation-z1">
-          <ng-container matColumnDef="{{column}}" *ngFor="let column of submissionsTableHeaders; let i = index">
-            <th mat-header-cell class="text-center" *matHeaderCellDef> {{column}} </th>
-            <td mat-cell class="text-medium p-2 text-center align-items-center" style="cursor: pointer" *matCellDef="let element" [ngSwitch]="column">
-              <div *ngSwitchCase="submissionsTableHeaders[0]">
-                <button mat-button (click)="expandedSubmission = expandedSubmission === element ? null : element">
-                  <mat-icon>expand_more</mat-icon>
-                </button>
-              </div>
-              <div *ngSwitchCase="submissionsTableHeaders[1]" (click)="openSubmissionViewById(element.submissionId)">
-                <mat-chip-list>
-                  <mat-chip class="pointer-events-disabled p-2 white-chip">
-                    <span class="text-medium text-uppercase text-center">{{element.submissionId}}</span>
-                  </mat-chip>
-                </mat-chip-list>
-              </div>
-              <div *ngSwitchCase="submissionsTableHeaders[2]" (click)="openSubmissionViewById(element.submissionId)">
-                <mat-chip-list>
-                  <mat-chip class="text-large pointer-events-disabled p-2" [ngStyle]="parseService.parseHistoryAndReviewStatusChipDisplayStyle(element.status)">
-                    <span class="text-medium text-uppercase chip-text">{{parseService.parseStatus(element.status) | translate}}</span>
-                  </mat-chip>
-                </mat-chip-list>
-              </div>
-              <div *ngSwitchCase="submissionsTableHeaders[3]" (click)="openSubmissionViewById(element.submissionId)">
-                <strong>{{element.authorName}}</strong>
-              </div>
-              <div *ngSwitchCase="submissionsTableHeaders[4]" (click)="openSubmissionViewById(element.submissionId)">
-                <mat-chip-list>
-                  <mat-chip class="text-large pointer-events-disabled p-2 blue-chip">
-                    <span class="text-medium text-uppercase chip-text">{{parseService.parseCategory(element.category) | translate}}</span>
-                  </mat-chip>
-                </mat-chip-list>
-              </div>
-              <div *ngSwitchCase="submissionsTableHeaders[5]" (click)="openSubmissionViewById(element.submissionId)">
-                <mat-chip-list class="d-inline-block chips-inline">
-                  <mat-chip class="text-large pointer-events-disabled p-2 transparent-chip">
-                    <mat-icon class="mr-2">thumb_up</mat-icon>
-                    <span>{{element.likeCount}}</span>
-                  </mat-chip>
-                  <mat-chip class="text-large pointer-events-disabled p-2 transparent-chip">
-                    <mat-icon class="mr-2">comment</mat-icon>
-                    <span>{{element.commentCount}}</span>
-                  </mat-chip>
-                  <mat-chip class="text-large pointer-events-disabled p-2 transparent-chip">
-                    <mat-icon class="mr-2">rate_review</mat-icon>
-                    <span>{{element.reviewCount}}</span>
-                  </mat-chip>
-                </mat-chip-list>
-              </div>
-              <div *ngSwitchCase="submissionsTableHeaders[6]" (click)="openSubmissionViewById(element.submissionId)">
-                {{parseService.parseTimestampToDate(element.timestampCreated)}}
-              </div>
-            </td>
-          </ng-container>
+        <div *ngFor="let submission of this.submissionListing; trackBy: trackBySubmissionId">
+          <div class="container-fluid" (click)="openSubmissionViewById(submission.submissionId)">
+            <div class="comment row m-0 mt-2">
+              <div class="col-12 d-flex justify-content-center m-0 p-0">
+                <div class="row m-0 w-100">
+                  <fieldset class="submission border w-100 h-100" [class.is-idea-border]="submission.type === 0" [class.is-problem-border]="submission.type === 1">
+                    <legend class="submission-header w-auto text-medium text-sm-left text-center d-inline-flex justify-content-between">
+                      <span class="ml-2">{{submission.authorName}}</span>
+                      <jn-star-rating class="ml-2 text-nowrap my-auto" [ngModel]="parseService.calculateStarCount(submission.authorExp)"></jn-star-rating>
+                      <span class="ml-2 mr-2 text-uppercase"><strong> {{parseService.parseCategory(submission.category) | translate}} </strong></span>
+                    </legend>
+                    <span class="ml-2 mr-2 mb-2 text-header d-block">
+                      {{submission.topic}}
+                    </span>
+                    <span class="d-block text-right submission-footer" [class.is-idea-background]="submission.type === 0" [class.is-problem-background]="submission.type === 1">
+                      <mat-chip-list class="ml-2 d-inline-block chips-inline float-left">
+                        <mat-chip class="pointer-events-disabled transparent-chip p-0 m-0 mr-1">
+                          <span class="text-medium text-uppercase"><strong>{{parseService.parseStatus(submission.status) | translate}}</strong></span>
+                        </mat-chip>
+                      </mat-chip-list>
+                      <mat-chip-list class="ml-2 pointer-events-disabled d-inline-block chips-inline float-right">
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1">today</mat-icon>
+                          {{this.parseService.parseTimestampToSimpleDate(submission.timestampCreated)}}
+                        </mat-chip>
+                      </mat-chip-list>
+                      <mat-chip-list class="pointer-events-disabled d-inline-block chips-inline">
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 like-style">thumb_up</mat-icon>
+                            <span class="mr-1 sm-hidden like-style">Polubienia</span>
+                            <span class="counter-container">{{submission.likeCount}}</span>
+                        </mat-chip>
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 comments-style">comment</mat-icon>
+                            <span class="mr-1 sm-hidden comments-style">Komentarze</span>
+                            <span class="counter-container">{{submission.commentCount}}</span>
+                        </mat-chip>
+                         <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 comments-style">attach_file</mat-icon>
+                            <span class="mr-1 sm-hidden comments-style">Załączniki</span>
+                            <span class="counter-container">{{submission.attachmentsCount}}</span>
+                        </mat-chip>
+                        <mat-chip class="transparent-chip p-0 m-0 mr-1 text-medium">
+                            <mat-icon class="mr-1 reviews-style">rate_review</mat-icon>
+                            <span class="mr-1 sm-hidden">Recenzje</span>
+                            <span class="counter-container">{{submission.reviewCount}}</span>
+                        </mat-chip>
+                      </mat-chip-list>
 
-          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-          <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let element" [attr.colspan]="submissionsTableHeaders.length" [class.is-idea]="element.type === 0"
-                [class.is-problem]="element.type === 1">
-              <div class="element-detail" [@detailExpand]="element == expandedSubmission ? 'expanded' : 'collapsed'">
-                <div class="row mt-3">
-                  <div class="col-12">
-                    <fieldset class="border p-2 w-100 h-100">
-                      <legend class="w-auto text-medium"><strong> Temat </strong></legend>
-                      {{element.topic}}
-                    </fieldset>
-                  </div>
+                    </span>
+                  </fieldset>
                 </div>
-               <div class="row mb-3">
-                 <div class="col-12">
-                   <fieldset class="border p-2 w-100 h-100">
-                     <legend class="w-auto text-medium"><strong> Obszar </strong></legend>
-                     <mat-chip-list class="d-inline-flex">
-                       <div *ngFor="let area of element.area">
-                         <mat-chip class="pointer-events-disabled p-2 darkblue-chip">
-                           <span class="text-small text-uppercase chip-text">{{parseService.parseArea(area) | translate}}</span>
-                         </mat-chip>
-                       </div>
-                     </mat-chip-list>
-                   </fieldset>
-                 </div>
-               </div>
               </div>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="submissionsTableHeaders; sticky: true"></tr>
-          <tr mat-row *matRowDef="let element; columns: submissionsTableHeaders"
-              class="element-row"
-              [class.is-idea]="element.type === 0"
-              [class.is-problem]="element.type === 1"
-              [class.example-expanded-row]="expandedSubmission === element">
-          </tr>
-          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" ></tr>
-        </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

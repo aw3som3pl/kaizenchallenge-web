@@ -11,9 +11,8 @@
 
 <body>
   <div class="container-fluid px-0 h-100">
-    <div class="row no-gutters d-flex h-100 position-relative overflow-hidden">
+    <div class="row no-gutters d-flex h-100 position-relative">
     <div class="p-0 h-100">
-      <!-- fixed sidebar -->
       <div class="position-fixed h-100 align-self-start sidebar">
        <nav id="sidebar" [ngClass]="{ 'folded': !sidebarOpen }">
           <div class="sidebar-header">
@@ -23,7 +22,9 @@
           <ul class="profile-info">
             <li>
               <div class="row">
-                <div class="col-5 image-holder-center"><img class="profile-large" src="../../assets/img/placeholder/circular-photo.jpg" alt="none"></div>
+                <div class="col-5 image-holder-center">
+                  <img class="profile-large" src="../../assets/img/placeholder/circular-photo.jpg" alt="none">
+                </div>
                 <div class="col-7 m-0 pl-0">
                   <div class="row m-0 text-medium text-left">
                     {{this.sessionService.getUserData().name}} {{this.sessionService.getUserData().surname}}
@@ -31,7 +32,7 @@
                   <div class="row m-0">
                     <jn-star-rating [ngModel]="this.parseService.calculateStarCount(this.sessionService.getUserExp())"></jn-star-rating>
                   </div>
-                  <div class="row m-0">
+                  <div class="row m-0" (click)="sidebarNavigateToProfile()">
                     <a class="interactive-button-small text-small">
                       <span class="container">Profil</span>
                     </a>
@@ -42,7 +43,7 @@
           </ul>
           <ul class="Options">
             <li class="profile-info-small">
-              <a class="interactive-button-profile">
+              <a class="interactive-button-profile" (click)="sidebarNavigateToProfile()">
                 <span class="container menu-item text-large">Profil</span>
                 <svg-icon src="../../assets/img/svg/profile.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
@@ -80,15 +81,15 @@
               </a>
             </li>
             <li [ngClass]="{ 'active': currenMenutSelection === menuSelector.CREATIVITY_RANKING }">
-              <a class="interactive-button-long">
+              <a class="interactive-button-long" (click)="sidebarNavigateToCreativityRanking()">
                 <span class="container menu-item text-medium">Ranking Kreatywności</span>
                 <svg-icon src="../../assets/img/svg/ranking.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
               </a>
             </li>
             <li  class="sm-hidden" [ngClass]="{ 'active': currenMenutSelection === menuSelector.OEE_SIMULATOR }">
               <a class="interactive-button">
-                <span class="container menu-item text-large">OEE Simulator</span>
-                <svg-icon src="../../assets/img/svg/oee.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '30'}"></svg-icon>
+                <span class="container menu-item text-large">LEAN Simulator</span>
+                <svg-icon src="../../assets/img/svg/witness.svg" applyClass class="menu-icon" [svgStyle]="{'width.px': '30', 'height.px': '25'}"></svg-icon>
               </a>
             </li>
             <li *ngIf="sessionService.checkAdminPrivilege()" [ngClass]="{ 'active': currenMenutSelection === menuSelector.ADMIN_PANEL }">
