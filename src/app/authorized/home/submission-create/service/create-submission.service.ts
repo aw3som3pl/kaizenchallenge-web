@@ -55,6 +55,8 @@ export class CreateSubmissionService {
         return [userRole + 1];
       case r.COORDINATOR:
         return [userRole];
+      default:
+        return [userRole];
     }
   }
 

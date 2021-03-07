@@ -14,30 +14,30 @@
           <ng-container matColumnDef="{{column}}" *ngFor="let column of usersTableHeaders; let i = index">
             <th mat-header-cell class="text-center" *matHeaderCellDef> {{column}} </th>
             <td mat-cell class="text-medium text-center align-items-center" *matCellDef="let element" [ngSwitch]="column">
-              <div *ngSwitchCase="usersTableHeaders[0]" (click)="openProfileViewById(element.employeeId)">
+              <div *ngSwitchCase="usersTableHeaders[0]">
                 <mat-chip-list>
                   <mat-chip class="pointer-events-disabled p-2">
                     <span class="text-medium text-uppercase text-center">{{element.employeeId}}</span>
                   </mat-chip>
                 </mat-chip-list>
               </div>
-              <div *ngSwitchCase="usersTableHeaders[1]" (click)="openProfileViewById(element.employeeId)">
+              <div *ngSwitchCase="usersTableHeaders[1]">
                 <span>{{element.email}}</span>
               </div>
-              <div *ngSwitchCase="usersTableHeaders[2]" (click)="openProfileViewById(element.employeeId)">
+              <div *ngSwitchCase="usersTableHeaders[2]">
                 <span>{{element.name}}</span>
               </div>
-              <div *ngSwitchCase="usersTableHeaders[3]" (click)="openProfileViewById(element.employeeId)">
+              <div *ngSwitchCase="usersTableHeaders[3]">
                 <mat-chip-list>
                   <mat-chip class="text-large pointer-events-disabled p-2" [ngStyle]="parseService.parseRoleChipDisplayStyle(element.role)">
                     <span class="text-medium text-uppercase">{{parseService.parseRole(element.role) | translate}}</span>
                   </mat-chip>
                 </mat-chip-list>
               </div>
-              <div *ngSwitchCase="usersTableHeaders[4]" (click)="openProfileViewById(element.employeeId)">
+              <div *ngSwitchCase="usersTableHeaders[4]">
                 <span>{{this.parseService.parseTimestampToDate(element.lastLogon) || 'brak aktywności'}}</span>
               </div>
-              <div *ngSwitchCase="usersTableHeaders[5]" (click)="openProfileViewById(element.employeeId)">
+              <div *ngSwitchCase="usersTableHeaders[5]">
                 <span>{{this.parseService.parseTimestampToSimpleDate(element.created) || 'brak aktywności'}}</span>
               </div>
             </td>
@@ -52,11 +52,11 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="usersTableHeaders; sticky: false"></tr>
-          <tr mat-row *matRowDef="let element; columns: usersTableHeaders;"
+          <tr mat-row *matRowDef="let element; columns: usersTableHeaders;" (click)="openProfileViewById(element.employeeId)"
               class="element-row"
               [class.example-expanded-row]="expandedUserShort === element">
           </tr>
-          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" ></tr>
         </table>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SubmissionSearchService {
 
-  isSearchFilterFolded = false;
+  isSearchFilterFolded = true;
   isSearchFilterEnabled = true;
 
   toggleSearchFilterFolded() {

@@ -20,6 +20,7 @@ td.mat-cell:first-of-type {
 }
 
 .element-row td {
+  cursor: pointer;
   border-bottom-width: 0;
 }
 

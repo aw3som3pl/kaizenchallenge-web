@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {MatPaginatorIntl, PageEvent} from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import {SessionService} from '../../../shared/services/session.service';
@@ -24,7 +24,7 @@ import {ResizeService} from '../../../shared/services/resize-service.service';
     { provide: MatPaginatorIntl, useValue: CustomPaginator() }  // Here
   ]
 })
-export class SubmissionSearchComponent implements OnInit {
+export class SubmissionSearchComponent implements OnInit, OnDestroy {
 
   // Subscriptions
   private subscriptions = new Subscription();
@@ -66,6 +66,9 @@ export class SubmissionSearchComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute) {
 
+    this.onResize(null, window.innerWidth);
+    console.log(window.innerWidth);
+
     this.searchForm = this.formBuilder.group({
       areas: [null],
       category: [null],
@@ -91,11 +94,12 @@ export class SubmissionSearchComponent implements OnInit {
     this.authorTypeValid = this.searchForm.controls.authorType;
   }
 
-  ngOnInit(): void {
+  @HostListener('window:resize', ['$event'])
+  onResize(event? , windowSize?) {
+    this.isPageSizeHidden = windowSize ? windowSize < 350 : window.innerWidth < 350;
+  }
 
-    const newPageSizeSub = this.resizeService.onResize$.subscribe( size => {
-      this.isPageSizeHidden = size < 1;
-    });
+  ngOnInit(): void {
 
     this.searchForm.get('areas').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
     this.searchForm.get('category').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.searchFormForceValidAgain());
@@ -126,7 +130,6 @@ export class SubmissionSearchComponent implements OnInit {
         params.has('currentSubmissionsCount') ? this.currentSubmissionsCount = +params.get('currentSubmissionsCount') : this.currentSubmissionsCount = null;
       });
 
-    this.subscriptions.add(newPageSizeSub);
     this.subscriptions.add(newListingSub);
   }
 

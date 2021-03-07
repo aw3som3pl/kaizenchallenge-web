@@ -11,7 +11,6 @@ import {IreviewerResponse} from '../../../shared/models/response/interfaces/irev
 import {UploadRequest} from '../../../shared/models/events/UploadRequest';
 import {UploadState} from '../../../shared/models/events/UploadState';
 import {EuploadAction} from '../../../shared/enums/Eupload-action.enum';
-import {Reviewer} from '../../../shared/models/Reviewer';
 import {InewSubmissionResponse} from '../../../shared/models/response/interfaces/inew-submission-response';
 import {EsubmissionTypeEnum} from '../../../shared/enums/Esubmission-type.enum';
 import {ArraysService} from '../../../shared/parsers/arrays.service';
@@ -107,6 +106,15 @@ export class SubmissionCreateComponent implements OnInit {
 
     this.submissionStep2Form.get('reviewer').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.step2ForceValidAgain());
     this.submissionStep2Form.get('fileDescription').valueChanges.pipe(distinctUntilChanged()).subscribe(() => this.step2ForceValidAgain());
+
+    this.showIdeaDescriptionTemplate();
+
+  }
+
+  showIdeaDescriptionTemplate() {
+    if (this.currentSubmissionType === this.submissionType.IDEA) {
+      this.descriptionIdValid.setValue('Sytuacja przed:\n\n\n\n\n\n Sytuacja po:');
+    }
   }
 
   step1ForceValidAgain(): void {
@@ -255,6 +263,8 @@ export class SubmissionCreateComponent implements OnInit {
     this.stepper.reset();
     this.uploadedFilesUrls = [];
     this.files = [];
+
+    this.showIdeaDescriptionTemplate();
   }
 
   parseTypedResource(path: string): string {

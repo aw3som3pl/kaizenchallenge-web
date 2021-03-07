@@ -83,24 +83,28 @@
                       </mat-chip>
                     </mat-chip-list>
 
-                    <mat-form-field class="w-100 mt-4" appearance="outline">
-                      <mat-label>{{ parseTypedResource('Contents.areaPlaceholder') | translate}}</mat-label>
-                      <mat-select formControlName="areas" required multiple>
-                        <mat-option *ngFor="let areaIndex of arraysService.areaArrayPrototype(sessionService.getUserState(), sessionService.getUserAreas())" [value]="areaIndex">
-                          {{parseService.parseArea(areaIndex) | translate}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <p>
-                      <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>{{ parseTypedResource('Contents.categoryPlaceholder') | translate}}</mat-label>
-                        <mat-select formControlName="category" required>
-                          <mat-option *ngFor="let categoryIndex of arraysService.categoryArrayPrototype()" [value]="categoryIndex">
-                            {{parseService.parseCategory(categoryIndex) | translate}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </p>
+                    <div class="row mt-4">
+                      <div class="col-6">
+                        <mat-form-field class="w-100" appearance="outline">
+                          <mat-label>{{ parseTypedResource('Contents.areaPlaceholder') | translate}}</mat-label>
+                          <mat-select formControlName="areas" required multiple>
+                            <mat-option *ngFor="let areaIndex of arraysService.areaArrayPrototype(sessionService.getUserState(), sessionService.getUserAreas())" [value]="areaIndex">
+                              {{parseService.parseArea(areaIndex) | translate}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-6">
+                          <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>{{ parseTypedResource('Contents.categoryPlaceholder') | translate}}</mat-label>
+                            <mat-select formControlName="category" required>
+                              <mat-option *ngFor="let categoryIndex of arraysService.categoryArrayPrototype()" [value]="categoryIndex">
+                                {{parseService.parseCategory(categoryIndex) | translate}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                      </div>
+                    </div>
                     <p>
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label >Tytuł</mat-label>
@@ -112,7 +116,7 @@
                     <p>
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Opis</mat-label>
-                        <textarea matInput formControlName="description" #description maxlength="600" placeholder="" required>{{ parseTypedResource('Contents.descriptionPlaceholder') | translate}}</textarea>
+                        <textarea matInput style="height: 220px" formControlName="description" #description maxlength="600" required>{{ parseTypedResource('Contents.descriptionPlaceholder') | translate}}</textarea>
                         <mat-hint align="start">{{ parseTypedResource('Contents.descriptionHint') | translate}}</mat-hint>
                         <mat-hint align="end">{{description.value.length}} / 600</mat-hint>
                       </mat-form-field>
@@ -176,7 +180,7 @@
                 </div>
                 <div class="row-cols-1">
                   <button mat-raised-button matStepperNext class="float-right  step-button-next text-large" (click)="onStepNavigation(2)">Następny krok</button>
-                  <button mat-raised-button class="float-left  step-button-reset text-large" (click)="stepper.reset()">Resetuj</button>
+                  <button mat-raised-button class="float-left  step-button-reset text-large" (click)="onStepperReset()">Resetuj</button>
                 </div>
               </form>
             </mat-step>
@@ -246,7 +250,7 @@
                     <div class="mt-4">
                       <button mat-raised-button class="float-right step-button-finish text-large" (click)="onSendSubmissionData()" [disabled]="isSendingSubmission">{{ 'Home.Labels.sendButtonLabel' | translate}}</button>
                       <button mat-raised-button matStepperPrevious class="float-left step-button-back text-large" (click)="onStepNavigation(1)" [disabled]="isSendingSubmission">{{ 'Home.Labels.previousStep' | translate}}</button>
-                      <button mat-raised-button class="ml-2 float-left step-button-reset text-large" (click)="stepper.reset()" [disabled]="isSendingSubmission">Resetuj</button>
+                      <button mat-raised-button class="ml-2 float-left step-button-reset text-large" (click)="onStepperReset()" [disabled]="isSendingSubmission">Resetuj</button>
                     </div>
                   </div>
                   <div class="col-md-4">

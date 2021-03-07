@@ -81,8 +81,8 @@
                 <mat-form-field class="w-100" appearance="outline">
                   <mat-label>Status Konta Użytkownika</mat-label>
                   <mat-select formControlName="state" required>
-                    <mat-option value="A">{{parseService.parseUserState("A") | translate}}</mat-option>
-                    <mat-option value="T">{{parseService.parseUserState("T") | translate}}</mat-option>
+                    <mat-option value="A">{{parseService.parseAccountStateType("A") | translate}}</mat-option>
+                    <mat-option value="T">{{parseService.parseAccountStateType("T") | translate}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>

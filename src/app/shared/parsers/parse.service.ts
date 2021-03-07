@@ -53,10 +53,6 @@ export class ParseService {
     return 'Shared.resultsType.' + type;
   }
 
-  parseUserState(type: string): string {
-    return 'Shared.userStatus.' + type;
-  }
-
   parseApiError(type: number): string {
     return 'Errors.Api.' + type;
   }

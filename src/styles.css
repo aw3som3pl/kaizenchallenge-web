@@ -242,7 +242,7 @@ app-sub-comments .mat-form-field-outline{
 
   /* CONTROLS */
   .sm-hidden{
-    display: none;
+    display: none !important;
   }
 
   .w-sm-100{
@@ -284,7 +284,7 @@ app-sub-comments .mat-form-field-outline{
   /* CONTROLS */
 
   .md-hidden{
-    display: none;
+    display: none !important;
   }
 
   .w-sm-100{
@@ -326,7 +326,7 @@ app-sub-comments .mat-form-field-outline{
   /* CONTROLS */
 
   .lg-hidden{
-    display: none;
+    display: none !important;
   }
 
   .w-sm-100{
@@ -371,7 +371,7 @@ app-sub-comments .mat-form-field-outline{
   /* CONTROLS */
 
   .xl-hidden{
-    display: none;
+    display: none !important;
   }
 
   .w-sm-100{
